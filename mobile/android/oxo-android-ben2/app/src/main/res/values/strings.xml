@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SharedPreferencesInsecureStorage</string>
+    <string name="enable_notifications">Enable Notifications</string>
+</resources>
