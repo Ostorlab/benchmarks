@@ -1,7 +1,7 @@
-package com.example.vulnerablelogger; // This must match your package name
+package com.example.vulnerablelogger;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent; // <-- IMPORT THIS
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
