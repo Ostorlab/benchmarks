@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "co.ostorlab.os01"
+    namespace = "co.ostorlab.ben1"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "co.ostorlab.os01"
+        applicationId = "co.ostorlab.ben1"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -60,7 +60,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
