@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,6 +25,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".WebContentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
+            
+        <activity
+            android:name=".FileBrowserActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
+            
+        <activity
+            android:name=".LoginPortalActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
+            
+        <activity
+            android:name=".DataSyncActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
+            
+        <activity
+            android:name=".LinkHandlerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
     </application>
 
 </manifest>
