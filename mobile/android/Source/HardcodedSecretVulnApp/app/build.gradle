@@ -1,0 +1,75 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace 'com.example.hardcodedsecretvulnapp'
+    compileSdk 36
+    
+    buildFeatures {
+        buildConfig true
+    }
+
+    defaultConfig {
+        applicationId "com.example.hardcodedsecretvulnapp"
+        minSdk 31
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        buildConfigField "String", "API_KEY", "\"sk-proj-2mK9nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU\""
+        buildConfigField "String", "SECRET_TOKEN", "\"ghp_7R8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pL\""
+        buildConfigField "String", "AWS_SECRET_KEY", "\"wJalrXUtnFEMI/K7MDENG+bPxRfiCYzK8vN9mQ2sL5pF8tY1uI4eW0zX3cV7bN\""
+        buildConfigField "String", "DATABASE_PASSWORD", "\"Kp9mN7vRsL3pF6tY1uI\""
+        buildConfigField "String", "ENCRYPTION_KEY", "\"7R8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM\""
+        buildConfigField "String", "JWT_SECRET", "\"9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM4nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN\""
+        buildConfigField "String", "FIREBASE_API_KEY", "\"AIzaSyD9mQ2sL5pF8tY1uI4eW0zX3cV7bN6kL3pQ9rT8wE5yU2iO7pLkM4nQ7v\""
+        buildConfigField "String", "STRIPE_SECRET_KEY", "\"sk_live_51H2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM4nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA\""
+        buildConfigField "String", "OAUTH_CLIENT_SECRET", "\"847392615-2mK9nQ7vR8sL3pF6tY1uI4eW0zX5cV.apps.googleusercontent.com\""
+        buildConfigField "String", "TWILIO_AUTH_TOKEN", "\"6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT\""
+        buildConfigField "String", "PROD_DB_URL", "\"jdbc:mysql://prod-server.example.com:3306/vulnerable_db?user=admin&password=Kp9mN7vRsL3pF6tY1uI\""
+        buildConfigField "String", "PRIVATE_KEY", "\"-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7R8sL3pF6tY...\""
+        
+        manifestPlaceholders = [
+            API_KEY: "sk-proj-2mK9nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU",
+            SECRET_TOKEN: "ghp_7R8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pL",
+            AWS_SECRET_ACCESS_KEY: "wJalrXUtnFEMI/K7MDENG+bPxRfiCYzK8vN9mQ2sL5pF8tY1uI4eW0zX3cV7bN"
+        ]
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def appName = "HardcodedSecretVulnApp"
+            def buildType = variant.buildType.name
+            def version = variant.versionName
+            outputFileName = "${appName}-${buildType}-v${version}.apk"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}

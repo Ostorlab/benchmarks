@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">HardcodedSecretVulnApp</string>
+    <string name="api_key">sk-proj-2mK9nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU</string>
+    <string name="database_password">Kp9mN7vRsL3pF6tY1uI</string>
+    <string name="secret_token">ghp_7R8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pL</string>
+    <string name="aws_access_key">AKIAIOSFODNN7EXAMPLE</string>
+    <string name="aws_secret_key">wJalrXUtnFEMI/K7MDENG+bPxRfiCYzK8vN9mQ2sL5pF8tY1uI4eW0zX3cV7bN</string>
+    <string name="encryption_key">7R8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM</string>
+    <string name="jwt_secret">9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM4nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN</string>
+    <string name="firebase_api_key">AIzaSyD9mQ2sL5pF8tY1uI4eW0zX3cV7bN6kL3pQ9rT8wE5yU2iO7pLkM4nQ7v</string>
+    <string name="stripe_secret_key">sk_live_51H2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM4nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA</string>
+    <string name="admin_password">2fG4hJ6kL3pQ9rT8wE5yU!</string>
+    <string name="oauth_client_secret">847392615-2mK9nQ7vR8sL3pF6tY1uI4eW0zX5cV.apps.googleusercontent.com</string>
+    <string name="twilio_auth_token">6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT</string>
+    <string name="database_url">jdbc:mysql://prod-server.example.com:3306/vulnerable_db?user=admin&amp;password=Kp9mN7vRsL3pF6tY1uI</string>
+    <string name="api_endpoint">https://api.vulnerable-app.com/v1/secrets?key=sk-proj-2mK9nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU</string>
+    <string name="private_key">-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7R8sL3pF6tY...</string>
+    <string name="vulnerable_login">Vulnerable Login</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="welcome_text">Welcome!</string>
+    <string name="role_text">Role: USER</string>
+    <string name="vulnerable_dashboard">🔓 Vulnerable Dashboard</string>
+    <string name="view_secrets_button">🔑 View Exposed Secrets</string>
+    <string name="security_vulnerabilities">⚠️ Security Vulnerabilities Demonstrated:</string>
+    <string name="vulnerability_list">• Hardcoded API keys and secrets\n• Sensitive data exposed in logs\n• Insecure credential storage\n• Plaintext password transmission\n• No encryption for sensitive data\n• Database passwords in source code\n• Third-party API keys hardcoded</string>
+    <string name="logout_button">🚪 Logout</string>
+</resources>
