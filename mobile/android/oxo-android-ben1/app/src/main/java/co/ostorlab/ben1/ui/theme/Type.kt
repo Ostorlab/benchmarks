@@ -1,4 +1,4 @@
-package co.ostorlab.os01.ui.theme
+package co.ostorlab.ben1.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

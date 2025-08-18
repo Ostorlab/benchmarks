@@ -1,4 +1,4 @@
-package co.ostorlab.os01
+package co.ostorlab.ben1
 
 import android.os.Bundle
 import android.webkit.JavascriptInterface
@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
-import co.ostorlab.os01.ui.theme.MyApplicationTheme
+import co.ostorlab.ben1.ui.theme.MyApplicationTheme
 import android.widget.Toast
 
 class MainActivity : ComponentActivity() {
