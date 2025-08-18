@@ -2,31 +2,39 @@ package com.insecure.ostorlab.sharedpreferences;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
-import androidx.preference.PreferenceManager;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Fake AWS token (sensitive data)
-    private static final String FAKE_AWS_ACCESS_KEY = "AKIAT3G7X2Q9L1P8W0RZ";
-    private static final String FAKE_AWS_SECRET_KEY = "wJalrXUtnFEMI/K7MDENG+bPxRfiCY7NQ3T9W5X4Z";
-
+    private EditText emailInput;
+    private EditText passwordInput;
+    private Button submitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        storeSensitiveDataInSharedPreferences();
+
+        emailInput = findViewById(R.id.email_input);
+        passwordInput = findViewById(R.id.password_input);
+        submitButton = findViewById(R.id.submit_button);
+
+        submitButton.setOnClickListener(v -> storeSensitiveDataInSharedPreferences());
     }
 
     private void storeSensitiveDataInSharedPreferences() {
+        String email = emailInput.getText().toString();
+        String password = passwordInput.getText().toString();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // Intentionally storing sensitive data in plaintext
-        editor.putString("aws_access_key_id", FAKE_AWS_ACCESS_KEY);
-        editor.putString("aws_secret_access_key", FAKE_AWS_SECRET_KEY);
-        editor.apply(); // or .commit()
+        editor.putString("email", email);
+        editor.putString("password", password);
+        editor.apply();
     }
 }
