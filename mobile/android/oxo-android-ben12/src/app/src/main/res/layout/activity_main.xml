@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:padding="24dp">
+
+    <Button
+        android:id="@+id/button_webview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Load HTTP in WebView" />
+
+    <Button
+        android:id="@+id/button_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Slackware Info" />
+</LinearLayout>
