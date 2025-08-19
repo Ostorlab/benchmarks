@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Your song"
+rootProject.name = "Medical Record"
 include ':app'

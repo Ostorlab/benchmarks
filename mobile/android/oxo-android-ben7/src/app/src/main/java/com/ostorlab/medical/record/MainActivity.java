@@ -1,4 +1,4 @@
-package com.ostorlab.your.song;
+package com.ostorlab.medical.record;
 
 import android.content.Intent;
 import android.database.Cursor;

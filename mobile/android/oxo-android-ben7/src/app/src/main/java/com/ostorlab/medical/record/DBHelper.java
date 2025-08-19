@@ -1,4 +1,4 @@
-package com.ostorlab.your.song;
+package com.ostorlab.medical.record;
 
 import android.content.ContentValues;
 import android.content.Context;

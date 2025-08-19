@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.ostorlab.your.song'
+    namespace 'com.ostorlab.medical.record'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.ostorlab.your.song"
+        applicationId "com.ostorlab.medical.record"
         minSdk 31
         targetSdk 35
         versionCode 1
