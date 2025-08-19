@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AtlanticBanking"
+        tools:targetApi="31">
+
+        <!-- SECURE ACTIVITY: Login screen - NOT exported, this is the proper entry point -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- VULNERABLE ACTIVITY 1: Money Transfer - EXPORTED without permission -->
+        <activity
+            android:name=".TransferActivity"
+            android:exported="true"
+            android:label="Transfer Money">
+            <!-- NO PERMISSION REQUIRED - ANY APP CAN LAUNCH THIS -->
+        </activity>
+
+        <!-- VULNERABLE ACTIVITY 2: Admin Panel - EXPORTED without permission -->
+        <activity
+            android:name=".AdminPanelActivity"
+            android:exported="true"
+            android:label="Admin Panel">
+            <!-- NO PERMISSION REQUIRED - ANY APP CAN ACCESS ADMIN FEATURES -->
+        </activity>
+
+        <!-- VULNERABLE ACTIVITY 3: Profile Editor - EXPORTED without permission -->
+        <activity
+            android:name=".ProfileEditActivity"
+            android:exported="true"
+            android:label="Edit Profile">
+            <!-- NO PERMISSION REQUIRED - ANY APP CAN MODIFY USER DATA -->
+        </activity>
+
+        <!-- VULNERABLE ACTIVITY 4: Payment Confirmation - EXPORTED without permission -->
+        <activity
+            android:name=".PaymentConfirmActivity"
+            android:exported="true"
+            android:label="Confirm Payment">
+            <!-- NO PERMISSION REQUIRED - ANY APP CAN BYPASS PAYMENT FLOW -->
+        </activity>
+
+        <!-- Dashboard - Legitimate authenticated screen -->
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false"
+            android:label="Dashboard">
+            <!-- NOT EXPORTED - This is secure, requires going through login -->
+        </activity>
+
+    </application>
+
+</manifest>
