@@ -12,7 +12,7 @@ The vulnerability highlight unsafe handling of storing data in SharedPreferences
 
 ### Vulnerability Type and Category
 - **Type:** Insecure Storage
-- **Category:** Cleartext Insecure Storage
+- **Category:** Cleartext Sensitive data storage in SharedPreferences
 
 ### Difficulty
 Easy
