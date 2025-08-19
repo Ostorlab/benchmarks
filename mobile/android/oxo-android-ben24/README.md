@@ -1,4 +1,4 @@
-# VulnerableLogger
+# oxo-android-ben24 Leak of sensitive info in logs - 
 
 ## Challenge Details
 
