@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.hardcodedsecretvulnapp'
+    namespace 'com.socialapp.mobile'
     compileSdk 36
     
     buildFeatures {
