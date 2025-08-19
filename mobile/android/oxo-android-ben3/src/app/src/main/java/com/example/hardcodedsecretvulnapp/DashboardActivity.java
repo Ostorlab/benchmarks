@@ -15,14 +15,14 @@ import java.util.Locale;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private static final String API_KEY = "sk-proj-2mK9nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU";
-    private static final String SECRET_TOKEN = "ghp_7R8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pL";
-    private static final String AWS_SECRET_KEY = "wJalrXUtnFEMI/K7MDENG+bPxRfiCYzK8vN9mQ2sL5pF8tY1uI4eW0zX3cV7bN";
-    private static final String DATABASE_PASSWORD = "Kp9mN7vRsL3pF6tY1uI";
-    private static final String ENCRYPTION_KEY = "7R8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM";
-    private static final String JWT_SECRET = "9sD2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM4nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN";
-    private static final String FIREBASE_API_KEY = "AIzaSyD9mQ2sL5pF8tY1uI4eW0zX3cV7bN6kL3pQ9rT8wE5yU2iO7pLkM4nQ7v";
-    private static final String STRIPE_SECRET_KEY = "sk_live_51H2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM4nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA";
+    private static final String API_KEY = "sk-proj-AbCdEf123456789GhIjKlMn0pQrStUvWxYzAbCdEf123456789GhIjKlMnOp";
+    private static final String SECRET_TOKEN = "ghp_1A2b3C4d5E6f7G8h9I0j1K2l3M4n5O6p7Q8r9S0t";
+    private static final String AWS_SECRET_KEY = "wJalrXUtnFEMI/K7MDENG+bPxRfiCYzKAbC123Def456Ghi789Jkl012Mno345";
+    private static final String DATABASE_PASSWORD = "h3R9mK2xL8pQ5nW7bC4vN";
+    private static final String ENCRYPTION_KEY = "5K8mN1qL4pR7tX3uI6eZ9wV2bC0nM4sK7pL1qR5tX8uI3eZ6wV9bC2nM5sK8p";
+    private static final String JWT_SECRET = "eyJhbGciOiJIUzI1NiJ9K8mN1qL4pR7tX3uI6eZ9wV2bC0nM4sK7pL1qR5tX8";
+    private static final String FIREBASE_API_KEY = "AIzaSyBvNjH6kM9qP3rT5xW8zA1bD4fG7jL0nQ2sV5yB8eH1kN4qT7wZ0cF";
+    private static final String STRIPE_SECRET_KEY = "sk_live_51AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYzAbCdEf";
 
     private TextView welcomeText;
     private TextView lastSyncText;
@@ -41,7 +41,7 @@ public class DashboardActivity extends AppCompatActivity {
         setupUserInfo();
         setupButtons();
         performDataSync();
-        logSecrets();
+        initializeServices();
     }
 
     private void initializeViews() {
@@ -80,17 +80,20 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void openTasks() {
-        Log.d("DashboardActivity", "Opening tasks with API key: " + API_KEY);
+        String authHeader = "Bearer " + API_KEY;
+        // Authenticate with tasks API using authHeader
         showFeatureNotImplemented("Tasks");
     }
 
     private void openCalendar() {
-        Log.d("DashboardActivity", "Opening calendar with sync token: " + SECRET_TOKEN);
+        String githubAuth = "token " + SECRET_TOKEN;
+        // Sync calendar data from GitHub using githubAuth
         showFeatureNotImplemented("Calendar");
     }
 
     private void openNotes() {
-        Log.d("DashboardActivity", "Opening notes with encryption key: " + ENCRYPTION_KEY);
+        byte[] encryptionKey = ENCRYPTION_KEY.getBytes();
+        // Decrypt notes using encryptionKey
         showFeatureNotImplemented("Notes");
     }
 
@@ -114,36 +117,47 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void performDataSync() {
-        Log.d("DashboardActivity", "Performing data sync");
-        Log.d("DashboardActivity", "AWS credentials: " + AWS_SECRET_KEY);
-        Log.d("DashboardActivity", "Database password: " + DATABASE_PASSWORD);
-        
+        // Database connection
         String connectionString = "mongodb://admin:" + DATABASE_PASSWORD + "@prod-cluster.mongodb.net/myapp_db";
-        Log.d("DashboardActivity", "MongoDB Connection: " + connectionString);
-
-        String s3Config = "aws s3 sync ./data s3://myapp-backup/ --aws-access-key-id=AKIAIOSFODNN7EXAMPLE --aws-secret-access-key=" + AWS_SECRET_KEY;
-        Log.d("DashboardActivity", "AWS S3 sync command: " + s3Config);
+        connectToDatabase(connectionString);
         
-        String firebaseConfig = "firebase.initializeApp({apiKey: '" + FIREBASE_API_KEY + "', projectId: 'myapp-prod'});";
-        Log.d("DashboardActivity", "Firebase config: " + firebaseConfig);
+        // AWS S3 backup
+        syncToS3("AKIAI44QH8DHBEXAMPLE", AWS_SECRET_KEY);
+        
+        // Firebase initialization
+        initializeFirebase(FIREBASE_API_KEY);
     }
 
-    private void logSecrets() {
-        Log.d("DashboardActivity", "=== DASHBOARD SERVICE INITIALIZATION ===");
-        Log.d("DashboardActivity", "Main API key: " + API_KEY);
-        Log.d("DashboardActivity", "GitHub token: " + SECRET_TOKEN);
-        Log.d("DashboardActivity", "AWS secret: " + AWS_SECRET_KEY);
-        Log.d("DashboardActivity", "DB password: " + DATABASE_PASSWORD);
-        Log.d("DashboardActivity", "Encryption key: " + ENCRYPTION_KEY);
-        Log.d("DashboardActivity", "JWT secret: " + JWT_SECRET);
-        Log.d("DashboardActivity", "Firebase API key: " + FIREBASE_API_KEY);
-        Log.d("DashboardActivity", "Stripe secret: " + STRIPE_SECRET_KEY);
-
+    private void initializeServices() {
+        // Initialize payment processing
+        initializeStripePayments(STRIPE_SECRET_KEY);
+        
+        // Generate JWT for session
         String jwtToken = generateJwtToken();
-        Log.d("DashboardActivity", "Generated JWT: " + jwtToken);
+        authenticateWithJWT(jwtToken);
     }
 
     private String generateJwtToken() {
         return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ." + JWT_SECRET.substring(0, 20);
+    }
+
+    private void connectToDatabase(String connectionString) {
+        // Database connection logic
+    }
+
+    private void syncToS3(String accessKey, String secretKey) {
+        // AWS S3 sync logic
+    }
+
+    private void initializeFirebase(String apiKey) {
+        // Firebase initialization logic
+    }
+
+    private void initializeStripePayments(String secretKey) {
+        // Stripe payment processing setup
+    }
+
+    private void authenticateWithJWT(String token) {
+        // JWT authentication logic
     }
 }
