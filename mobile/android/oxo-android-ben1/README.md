@@ -1,4 +1,4 @@
-# OSTORLAB-001-01 Execute JS Open URL redirect - 
+# oxo-android-ben1 Execute JS Open URL redirect - 
 
 ## Challenge Details
 
