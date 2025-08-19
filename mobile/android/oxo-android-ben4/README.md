@@ -6,13 +6,13 @@
 
 This Android app sample demonstrates a common Insecure Storage vulnerability:
 
-- Store sensitive data in cleartext in SharedPreferences
+- Store sensitive data in cleartext in internal storage
 
-The vulnerability highlight unsafe handling of storing data in SharedPreferences.
+The vulnerability highlight unsafe handling of storing data in internal storage.
 
 ### Vulnerability Type and Category
 - **Type:** Insecure Storage
-- **Category:** Cleartext Insecure Storage
+- **Category:** Cleartext Insecure Storage in internal storage
 
 ### Difficulty
 Easy
