@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.purpleapps.purplenotes.ReceiveExternalFilesActivity"
+            android:name="com.purpleapps.purplenotes.ExportNoteActivity"
             android:exported="true"
             android:label="ExportNote">
 

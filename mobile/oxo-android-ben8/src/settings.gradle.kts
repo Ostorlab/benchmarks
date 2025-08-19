@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "VulnReceiver"
+rootProject.name = "Purplenotes"
 include(":app")
