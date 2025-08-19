@@ -1,7 +1,6 @@
 package com.example.vulnerablelogger;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
