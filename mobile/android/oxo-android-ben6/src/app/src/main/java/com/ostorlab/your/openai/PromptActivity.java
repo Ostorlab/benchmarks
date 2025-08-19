@@ -1,4 +1,4 @@
-package com.ostorlab.your.song;
+package com.ostorlab.your.openai;
 
 import android.content.Intent;
 import android.os.Bundle;

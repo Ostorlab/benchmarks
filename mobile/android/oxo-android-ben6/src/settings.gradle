@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Your Song"
+rootProject.name = "Your openai"
 include ':app'
