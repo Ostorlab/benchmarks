@@ -39,6 +39,15 @@ android {
         ]
     }
 
+    signingConfigs {
+        release {
+            storeFile file('oxo-android-ben3.keystore')
+            storePassword 'oxo123456'
+            keyAlias 'oxo-android-ben3'
+            keyPassword 'oxo123456'
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
@@ -46,12 +55,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     
     applicationVariants.all { variant ->
         variant.outputs.all {
-            def appName = "HardcodedSecretVulnApp"
+            def appName = "oxo-android-ben3"
             def buildType = variant.buildType.name
             def version = variant.versionName
             outputFileName = "${appName}-${buildType}-v${version}.apk"
