@@ -12,7 +12,7 @@ The vulnerability highlight unsafe handling of storing data in internal storage.
 
 ### Vulnerability Type and Category
 - **Type:** Insecure Storage
-- **Category:** Cleartext Insecure Storage in internal storage
+- **Category:** Cleartext Sensitive data storage in internal storage
 
 ### Difficulty
 Easy
