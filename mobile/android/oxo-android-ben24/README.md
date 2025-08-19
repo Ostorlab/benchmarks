@@ -1,31 +1,56 @@
-# VulnerableLogger Benchmark
+# VulnerableLogger
 
-A benchmark Android app for the **"Leak of Sensitive Info in Logs"** vulnerability (CWE-532).
+## Challenge Details
 
-The app simulates a login screen. When the "Login" button is clicked, it prints the user-entered credentials to the system log (`logcat`).
+### Description
 
-### Vulnerability Details
+This Android app demonstrates multiple critical security vulnerabilities related to the insecure logging of sensitive information. The app simulates a realistic multi-screen user flow to test a tool's ability to detect data leaks in various contexts:
 
-*   **Vulnerable File:** `VulnerableLogger/app/src/main/java/com/example/vulnerablelogger/MainActivity.java`
-*   **Vulnerable Code:**
-    ```java
-    // This line leaks user-entered data to the public device log
-    Log.d("VulnerableApp", "Login attempt with username: " + username + " and password: " + password);
-    ```
+-   Leaking user credentials (`password`, `session token`) at multiple log levels (`DEBUG`, `INFO`, `ERROR`) when a login button is clicked.
+-   Leaking personally identifiable information (`email address`) during a "Forgot Password" workflow.
+-   Continuously leaking every character from the password field as the user types, simulating a keystroke logger.
+-   Leaking sensitive data (`device ID`, `username`) when different screens are loaded.
+-   Leaking user-configured settings (`analytics preference`) when a value is changed.
+
+This vulnerability highlights insufficient sanitization of runtime data before it is written to system logs.
+
+### Vulnerability Type and Category
+-   **Type:** Leak of Sensitive Information in Logs / Sensitive Data Exposure
+-   **Category:** Insecure Data Storage (OWASP Mobile) / Insertion of Sensitive Information into Log File (CWE-532)
+
+### Difficulty
+Easy
+
+## Build and Test Instructions
+
+### Build
+This project uses Android Studio with Java. To build the debug APK from the terminal:
+```bash
+# Navigate into the source code directory first
+cd VulnerableLogger/
+./gradlew assembleDebug
+```
+The APK will be located at app/build/outputs/apk/debug/app-debug.apk.
 
 ### How to Test
 
-1.  **Install:** Use the pre-compiled APK from the `apk/` folder or build from the `VulnerableLogger/` source.
-2.  **Monitor Logs:** Use the `adb logcat` tool to watch for the app's specific log tag.
+1. Install the application on an Android device or emulator.
+
+2. Monitor Logs from your terminal using the app's specific log tags:
     ```bash
-    adb logcat -s "VulnerableApp"
+    # This command will show all leaks from the app
+    adb logcat -s "VulnerableApp" "VulnerableApp-Keystroke" "VulnerableApp-Reset" "VulnerableApp-Session" "VulnerableApp-Settings"
     ```
-3.  **Trigger:** In the app, enter any username/password and click "Login".
 
-### Success Condition
+3. Trigger the vulnerabilities by navigating through the app and using all features (login, forgot password, changing settings, etc.).
 
-A pentesting tool is successful if it monitors the device's log output at runtime and identifies the entry containing the credentials.
+### Sucess Condition
 
+A successful test requires the tool to identify the various log entries containing sensitive data.
 
-A successful detection will find a log entry similar to this:
-"D/VulnerableApp: Login attempt with username: testuser and password: S3cr3tP@ssw0rd"
+**Example of Successful find**:
+```
+D/VulnerableApp: DEBUG: Login attempt with password: MySuperSecretPassword
+E/VulnerableApp-Reset: Password reset requested for email: user@example.com
+I/VulnerableApp-Keystroke: User is typing password: MyS
+```
