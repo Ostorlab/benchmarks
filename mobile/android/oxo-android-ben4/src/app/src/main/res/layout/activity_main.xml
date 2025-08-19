@@ -1,0 +1,13 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:padding="16dp">
+
+    <EditText android:id="@+id/name" android:hint="Name" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/cardNumber" android:hint="Card Number" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/expiry" android:hint="Expiry (MM/YY)" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/cvv" android:hint="CVV" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <EditText android:id="@+id/type" android:hint="Type (Visa/Mastercard)" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <Button android:id="@+id/saveBtn" android:text="Save" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/viewBtn" android:text="View" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</LinearLayout>
