@@ -4,7 +4,7 @@
 
 ### Description
 
-This Android app demonstrates a Cleartext Communication vulnerability by loading an HTTP website in a WebView, exposing network traffic to interception.
+This Android app demonstrates a Cleartext Communication vulnerability by loading an HTTP website in a WebView (http://www.slackware.com/), exposing network traffic to interception.
 Because cleartext traffic is allowed and HTTP is used, the app is vulnerable to Man-in-the-Middle attacks that can lead to data exposure or tampering.
 
 ### Vulnerability Type and Category
