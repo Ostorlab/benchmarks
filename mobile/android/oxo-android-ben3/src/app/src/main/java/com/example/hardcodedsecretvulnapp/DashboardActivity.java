@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class DashboardActivity extends AppCompatActivity {
 
     private static final String API_KEY = "sk-proj-2mK9nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA9sD2fG4hJ6kL3pQ9rT8wE5yU";
@@ -21,10 +25,12 @@ public class DashboardActivity extends AppCompatActivity {
     private static final String STRIPE_SECRET_KEY = "sk_live_51H2fG4hJ6kL3pQ9rT8wE5yU2iO7pLkM4nQ7vR8sL3pF6tY1uI4eW0zX5cV7bN8mA";
 
     private TextView welcomeText;
-    private TextView userRoleText;
-    private TextView secretsText;
-    private Button logoutButton;
-    private Button viewSecretsButton;
+    private TextView lastSyncText;
+    private Button tasksButton;
+    private Button calendarButton;
+    private Button notesButton;
+    private Button settingsButton;
+    private Button profileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +40,18 @@ public class DashboardActivity extends AppCompatActivity {
         initializeViews();
         setupUserInfo();
         setupButtons();
+        performDataSync();
         logSecrets();
     }
 
     private void initializeViews() {
         welcomeText = findViewById(R.id.welcomeText);
-        userRoleText = findViewById(R.id.userRoleText);
-        secretsText = findViewById(R.id.secretsText);
-        logoutButton = findViewById(R.id.logoutButton);
-        viewSecretsButton = findViewById(R.id.viewSecretsButton);
+        lastSyncText = findViewById(R.id.lastSyncText);
+        tasksButton = findViewById(R.id.tasksButton);
+        calendarButton = findViewById(R.id.calendarButton);
+        notesButton = findViewById(R.id.notesButton);
+        settingsButton = findViewById(R.id.settingsButton);
+        profileButton = findViewById(R.id.profileButton);
     }
 
     private void setupUserInfo() {
@@ -53,64 +62,88 @@ public class DashboardActivity extends AppCompatActivity {
         if (username == null) username = "Unknown User";
         if (role == null) role = "user";
 
-        welcomeText.setText("Welcome, " + username + "!");
-        userRoleText.setText("Role: " + role.toUpperCase());
+        welcomeText.setText("Good morning, " + username + "!");
+        
+        String lastSync = new SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault()).format(new Date());
+        lastSyncText.setText("Last sync: " + lastSync);
 
         Log.d("DashboardActivity", "User logged in: " + username + " with role: " + role);
         Log.d("DashboardActivity", "Session started at: " + System.currentTimeMillis());
     }
 
     private void setupButtons() {
-        logoutButton.setOnClickListener(v -> logout());
-        viewSecretsButton.setOnClickListener(v -> displaySecrets());
+        tasksButton.setOnClickListener(v -> openTasks());
+        calendarButton.setOnClickListener(v -> openCalendar());
+        notesButton.setOnClickListener(v -> openNotes());
+        settingsButton.setOnClickListener(v -> openSettings());
+        profileButton.setOnClickListener(v -> openProfile());
     }
 
-    private void displaySecrets() {
-        Intent intent = getIntent();
-        String role = intent.getStringExtra("role");
-        String username = intent.getStringExtra("username");
+    private void openTasks() {
+        Log.d("DashboardActivity", "Opening tasks with API key: " + API_KEY);
+        showFeatureNotImplemented("Tasks");
+    }
 
-        StringBuilder secrets = new StringBuilder();
-        secrets.append("=== EXPOSED SECRETS ===\n\n");
+    private void openCalendar() {
+        Log.d("DashboardActivity", "Opening calendar with sync token: " + SECRET_TOKEN);
+        showFeatureNotImplemented("Calendar");
+    }
+
+    private void openNotes() {
+        Log.d("DashboardActivity", "Opening notes with encryption key: " + ENCRYPTION_KEY);
+        showFeatureNotImplemented("Notes");
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openProfile() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("username", getIntent().getStringExtra("username"));
+        startActivity(intent);
+    }
+
+    private void showFeatureNotImplemented(String feature) {
+        TextView statusText = findViewById(R.id.statusText);
+        if (statusText != null) {
+            statusText.setText(feature + " feature coming soon!");
+            statusText.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void performDataSync() {
+        Log.d("DashboardActivity", "Performing data sync");
+        Log.d("DashboardActivity", "AWS credentials: " + AWS_SECRET_KEY);
+        Log.d("DashboardActivity", "Database password: " + DATABASE_PASSWORD);
         
-        secrets.append("⚠️ Limited access for user role\n\n");
-        secrets.append("🔑 Basic API Key: ").append(API_KEY.substring(0, 10)).append("...\n");
-        secrets.append("🔑 User Token: user_").append(username).append("_token_123\n");
-        secrets.append("\n📱 User Info:\n");
-        secrets.append("• Username: ").append(username).append("\n");
-        secrets.append("• Role: ").append(role).append("\n");
-        secrets.append("• Session: active\n");
+        String connectionString = "mongodb://admin:" + DATABASE_PASSWORD + "@prod-cluster.mongodb.net/myapp_db";
+        Log.d("DashboardActivity", "MongoDB Connection: " + connectionString);
 
-        secretsText.setText(secrets.toString());
-        secretsText.setVisibility(View.VISIBLE);
-
-        Log.d("DashboardActivity", "Secrets displayed for user: " + username + " with role: " + role);
-        Log.d("DashboardActivity", "Full secrets exposed in logs: " + secrets.toString());
+        String s3Config = "aws s3 sync ./data s3://myapp-backup/ --aws-access-key-id=AKIAIOSFODNN7EXAMPLE --aws-secret-access-key=" + AWS_SECRET_KEY;
+        Log.d("DashboardActivity", "AWS S3 sync command: " + s3Config);
+        
+        String firebaseConfig = "firebase.initializeApp({apiKey: '" + FIREBASE_API_KEY + "', projectId: 'myapp-prod'});";
+        Log.d("DashboardActivity", "Firebase config: " + firebaseConfig);
     }
 
     private void logSecrets() {
-        Log.d("DashboardActivity", "=== HARDCODED SECRETS IN DASHBOARD ===");
-        Log.d("DashboardActivity", "API_KEY: " + API_KEY);
-        Log.d("DashboardActivity", "SECRET_TOKEN: " + SECRET_TOKEN);
-        Log.d("DashboardActivity", "AWS_SECRET_KEY: " + AWS_SECRET_KEY);
-        Log.d("DashboardActivity", "DATABASE_PASSWORD: " + DATABASE_PASSWORD);
-        Log.d("DashboardActivity", "ENCRYPTION_KEY: " + ENCRYPTION_KEY);
-        Log.d("DashboardActivity", "JWT_SECRET: " + JWT_SECRET);
-        Log.d("DashboardActivity", "FIREBASE_API_KEY: " + FIREBASE_API_KEY);
-        Log.d("DashboardActivity", "STRIPE_SECRET_KEY: " + STRIPE_SECRET_KEY);
+        Log.d("DashboardActivity", "=== DASHBOARD SERVICE INITIALIZATION ===");
+        Log.d("DashboardActivity", "Main API key: " + API_KEY);
+        Log.d("DashboardActivity", "GitHub token: " + SECRET_TOKEN);
+        Log.d("DashboardActivity", "AWS secret: " + AWS_SECRET_KEY);
+        Log.d("DashboardActivity", "DB password: " + DATABASE_PASSWORD);
+        Log.d("DashboardActivity", "Encryption key: " + ENCRYPTION_KEY);
+        Log.d("DashboardActivity", "JWT secret: " + JWT_SECRET);
+        Log.d("DashboardActivity", "Firebase API key: " + FIREBASE_API_KEY);
+        Log.d("DashboardActivity", "Stripe secret: " + STRIPE_SECRET_KEY);
 
-        String connectionString = "mongodb://admin:" + DATABASE_PASSWORD + "@prod-cluster.mongodb.net/vulnerable_app";
-        Log.d("DashboardActivity", "MongoDB Connection: " + connectionString);
-
-        String s3Config = "aws s3 cp file.txt s3://vulnerable-bucket/ --aws-access-key-id=AKIAIOSFODNN7EXAMPLE --aws-secret-access-key=" + AWS_SECRET_KEY;
-        Log.d("DashboardActivity", "AWS S3 Command: " + s3Config);
+        String jwtToken = generateJwtToken();
+        Log.d("DashboardActivity", "Generated JWT: " + jwtToken);
     }
 
-    private void logout() {
-        Log.d("DashboardActivity", "User logging out");
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+    private String generateJwtToken() {
+        return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ." + JWT_SECRET.substring(0, 20);
     }
 }

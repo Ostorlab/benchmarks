@@ -95,7 +95,12 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void initializeSecrets() {
-        Log.d("MainActivity", "Valid users: admin/vR8sL3pF6tY1uI4eW, test/Q9rT8wE5yU2i, user/password, demo/8wE5yU2iO7pL");
+        Log.d("MainActivity", "Authentication service initialized");
+        Log.d("MainActivity", "Loading user credentials from secure storage");
+        Log.d("MainActivity", "Valid credentials found: admin/vR8sL3pF6tY1uI4eW, test/Q9rT8wE5yU2i, user/password, demo/8wE5yU2iO7pL");
+        
+        String dbConnectionString = "jdbc:mysql://auth-db.example.com:3306/users?user=auth_admin&password=vR8sL3pF6tY1uI4eW";
+        Log.d("MainActivity", "Database connection: " + dbConnectionString);
     }
     
 }
