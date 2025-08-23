@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">PurpleCloud</string>
+    <string name="permission_required_message">Storage permission is required to access files.</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="back">Back</string>
+    <string name="logout">Logout</string>
+    <string name="create_directory">Create Directory</string>
+    <string name="add_file">Add File</string>
+    <string name="directory">Directory</string>
+    <string name="file">File</string>
+    <string name="upload">Upload</string>
+    <string name="delete">Delete</string>
+    <string name="delete_item_title">Delete %1$s</string>
+    <string name="delete_item_message">Are you sure you want to delete \"%1$s\"? This action cannot be undone.</string>
+    <string name="cancel">Cancel</string>
+    <string name="create_new_directory">Create New Directory</string>
+    <string name="directory_name">Directory Name</string>
+    <string name="create">Create</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="invalid_credentials">Invalid email or password.</string>
+</resources>
