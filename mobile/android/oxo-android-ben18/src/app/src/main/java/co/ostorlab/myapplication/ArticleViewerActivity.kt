@@ -56,7 +56,7 @@ class ArticleViewerActivity : AppCompatActivity() {
                 </body>
                 </html>
             """.trimIndent()
-            webView.loadDataWithBaseURL("https://news.example.com", defaultContent, "text/html", "UTF-8", null)
+            webView.loadDataWithBaseURL("https://www.bbc.com", defaultContent, "text/html", "UTF-8", null)
         }
     }
     
