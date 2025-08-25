@@ -60,14 +60,27 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             
-            if (sessionManager.login(username, password)) {
-                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, DashboardActivity.class));
-                finish();
-            } else {
-                Toast.makeText(this, "Invalid credentials. Use admin/admin123", Toast.LENGTH_SHORT).show();
-                passwordInput.setText("");
-            }
+            loginButton.setEnabled(false);
+            
+            sessionManager.login(username, password, new SessionManager.LoginCallback() {
+                @Override
+                public void onSuccess(String user) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+                        finish();
+                    });
+                }
+                
+                @Override
+                public void onError(String error) {
+                    runOnUiThread(() -> {
+                        loginButton.setEnabled(true);
+                        Toast.makeText(MainActivity.this, "Login failed: " + error, Toast.LENGTH_SHORT).show();
+                        passwordInput.setText("");
+                    });
+                }
+            });
         });
     }
 }

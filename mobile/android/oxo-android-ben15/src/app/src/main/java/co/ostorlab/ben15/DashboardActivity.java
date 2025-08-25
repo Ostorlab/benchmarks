@@ -110,13 +110,27 @@ public class DashboardActivity extends AppCompatActivity {
                 return;
             }
             
-            if (sessionManager.changePassword(currentPassword, newPassword)) {
-                Toast.makeText(this, "Password changed successfully!", Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            } else {
-                Toast.makeText(this, "Current password is incorrect", Toast.LENGTH_SHORT).show();
-                currentPasswordInput.setText("");
-            }
+            changeButton.setEnabled(false);
+            
+            sessionManager.changePassword(currentPassword, newPassword, new SessionManager.PasswordChangeCallback() {
+                @Override
+                public void onSuccess() {
+                    runOnUiThread(() -> {
+                        dialog.dismiss();
+                        Toast.makeText(DashboardActivity.this, "Password changed successfully!", Toast.LENGTH_LONG).show();
+                        changeButton.setEnabled(true);
+                    });
+                }
+                
+                @Override
+                public void onError(String error) {
+                    runOnUiThread(() -> {
+                        changeButton.setEnabled(true);
+                        Toast.makeText(DashboardActivity.this, "Password change failed: " + error, Toast.LENGTH_SHORT).show();
+                        currentPasswordInput.setText("");
+                    });
+                }
+            });
         });
         
         dialog.show();
