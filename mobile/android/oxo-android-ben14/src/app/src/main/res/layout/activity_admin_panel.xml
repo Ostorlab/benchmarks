@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="32dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="🔧 Admin Panel"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#E91E63" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADMIN ACCESS"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:background="#E91E63"
+            android:padding="8dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- User Management Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Management"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/buttonViewUsers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="VIEW USERS"
+            android:textColor="@color/white"
+            android:backgroundTint="#2196F3"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/buttonDeleteUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="DELETE USER"
+            android:textColor="@color/white"
+            android:backgroundTint="#F44336"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <!-- System Settings Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="System Settings"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/buttonServerConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SERVER CONFIGURATION"
+        android:textColor="@color/white"
+        android:backgroundTint="#FF9800"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/buttonDatabaseAccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DATABASE ACCESS"
+        android:textColor="@color/white"
+        android:backgroundTint="#9C27B0"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/buttonSystemLogs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="VIEW SYSTEM LOGS"
+        android:textColor="@color/white"
+        android:backgroundTint="#607D8B"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Critical Actions Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Critical Actions"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/buttonEmergencyShutdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🚨 EMERGENCY SYSTEM SHUTDOWN"
+        android:textColor="@color/white"
+        android:backgroundTint="#D32F2F"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+
+</LinearLayout>
