@@ -25,7 +25,7 @@ class ExternalAuthLoginActivity : Activity() {
             // Launch the URL with the session cookie appended
             launchCustomTabs(redirectUrl)
         } else {
-            Log.e("VulnerableApp", "No redirectUrl provided")
+            Log.e("MyShopifyApp", "No redirectUrl provided")
         }
 
         // Close activity
@@ -36,7 +36,7 @@ class ExternalAuthLoginActivity : Activity() {
         val urlWithCookie = "$url?cookie=$sessionCookie"
 
         // Log for demonstration
-        Log.i("VulnerableApp", "Launching custom tab with URL: $urlWithCookie")
+        Log.i("MyShopifyApp", "Launching custom tab with URL: $urlWithCookie")
 
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(urlWithCookie)
