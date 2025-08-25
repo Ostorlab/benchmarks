@@ -14,16 +14,10 @@ import werkzeug.security
 
 app = flask.Flask(__name__)
 
-app.config['SECRET_KEY'] = os.environ.get(
-    'SECRET_KEY', 'your-secret-key-here'
-)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    'DATABASE_URL', 'sqlite:///auth.db'
-)
+app.config['SECRET_KEY'] = 'your-production-secret-key-here'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY'] = os.environ.get(
-    'JWT_SECRET_KEY', 'jwt-secret-string'
-)
+app.config['JWT_SECRET_KEY'] = 'your-production-jwt-secret-here'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
 
 db = flask_sqlalchemy.SQLAlchemy(app)
@@ -269,12 +263,10 @@ def create_default_user():
     """
     if User.query.count() == 0:
         default_user = User(
-            username=os.environ.get('DEFAULT_USERNAME', 'admin'),
-            email=os.environ.get('DEFAULT_EMAIL', 'admin@example.com')
+            username='admin',
+            email='admin@example.com'
         )
-        default_user.set_password(
-            os.environ.get('DEFAULT_PASSWORD', 'admin123')
-        )
+        default_user.set_password('admin123')
         
         db.session.add(default_user)
         db.session.commit()
