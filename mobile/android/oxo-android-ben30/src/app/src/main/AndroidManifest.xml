@@ -18,11 +18,9 @@
         android:theme="@style/Theme.SecureBank"
         tools:targetApi="31">
 
-        <!-- Main login activity - vulnerable to task hijacking -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:taskAffinity=""
             android:allowTaskReparenting="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +32,6 @@
         <activity
             android:name=".DashboardActivity"
             android:exported="false"
-            android:taskAffinity=""
             android:allowTaskReparenting="true"
             android:launchMode="singleTop" />
 
@@ -42,7 +39,6 @@
         <activity
             android:name=".TransferActivity"
             android:exported="false"
-            android:taskAffinity=""
             android:allowTaskReparenting="true"
             android:launchMode="singleTask" />
 
@@ -50,7 +46,6 @@
         <activity
             android:name=".PaymentActivity"
             android:exported="false"
-            android:taskAffinity=""
             android:allowTaskReparenting="true"
             android:launchMode="singleInstance" />
 
@@ -58,7 +53,6 @@
         <activity
             android:name=".SupportActivity"
             android:exported="false"
-            android:taskAffinity=""
             android:allowTaskReparenting="true" />
 
     </application>
