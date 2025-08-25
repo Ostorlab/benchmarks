@@ -27,20 +27,26 @@
             </intent-filter>
         </activity>
         
-        <!-- Article Viewer Activity - VULNERABLE -->
+        <!-- Deep Link Handler Activity - VULNERABLE -->
         <activity
-            android:name=".ArticleViewerActivity"
+            android:name=".DeepLinkHandlerActivity"
             android:exported="true"
-            android:label="Article Viewer"
+            android:label="Deep Link Handler"
             android:theme="@style/Theme.MyApplication">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" />
-                <data android:scheme="https" />
+                <data android:scheme="newsreader" />
             </intent-filter>
         </activity>
+        
+        <!-- Article Viewer Activity -->
+        <activity
+            android:name=".ArticleViewerActivity"
+            android:exported="false"
+            android:label="Article Viewer"
+            android:theme="@style/Theme.MyApplication" />
         
         <!-- User Profile Activity -->
         <activity

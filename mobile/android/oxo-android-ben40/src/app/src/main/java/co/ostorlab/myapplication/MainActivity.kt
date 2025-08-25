@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnViewArticle).setOnClickListener {
             val intent = Intent(this, ArticleViewerActivity::class.java)
             intent.putExtra("article_title", "Breaking News: Technology Updates")
-            intent.putExtra("article_url", "https://www.bbc.com/news/technology")
+            intent.putExtra("url", "https://www.bbc.com/news/technology")
             startActivity(intent)
         }
         
