@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "co.ostorlab.myapplication.app-mergeReleaseResources-52:/values-h720dp-v13/values-h720dp-v13.xml",
+            "map": [
+                {
+                    "source": "/home/amat/.gradle/caches/8.13/transforms/62204c041cb374a2cd885488a105847c/transformed/appcompat-1.6.1/res/values-h720dp-v13/values-h720dp-v13.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "66",
+                        "endOffsets": "117"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.11.1" type="partial_results">
+    <map id="UnsafeIntentLaunch">
+            <map id="unprotected">
+                <entry
+                    name="co.ostorlab.myapplication.ArticleViewerActivity"
+                    boolean="true"/>
+                <entry
+                    name="co.ostorlab.myapplication.DeepLinkHandlerActivity"
+                    boolean="true"/>
+                <entry
+                    name="co.ostorlab.myapplication.MainActivity"
+                    boolean="true"/>
+            </map>
+    </map>
+    <map id="UnusedResources">
+        <location id="R.color.purple_200"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="3"
+            column="12"
+            startOffset="62"
+            endLine="3"
+            endColumn="29"
+            endOffset="79"/>
+        <location id="R.string.loading"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/strings.xml"
+            line="9"
+            column="13"
+            startOffset="386"
+            endLine="9"
+            endColumn="27"
+            endOffset="400"/>
+        <entry
+            name="model"
+            string="attr[colorPrimaryVariant(R)],color[purple_200(D),purple_500(U),purple_700(U),teal_200(U),teal_700(U),black(U),white(U)],drawable[ic_launcher_background(U),ic_launcher_foreground(U),ic_launcher_foreground_1(R)],id[tvArticleTitle(U),webViewArticle(U),tvNewsHeader(U),btnViewArticle(U),btnUserProfile(U),btnSettings(U),btnPremiumContent(U),tvPremiumTitle(U),tvPremiumDescription(U),tvPremiumFeatures(U),tvSettingsTitle(U),switchNotifications(U),switchDarkMode(U),switchAutoRefresh(U),tvUsername(U),tvEmail(U),tvMemberSince(U),tvReadingStats(U)],layout[activity_article_viewer(U),activity_main(U),activity_premium_content(U),activity_settings(U),activity_user_profile(U)],mipmap[ic_launcher(U),ic_launcher_round(U)],string[app_name(U),article_title(U),news_header(U),view_article(U),user_profile(U),settings(U),premium_content(U),loading(D)],style[Theme_MyApplication(U),Theme_Material3_DayNight(R)],xml[data_extraction_rules(U),backup_rules(U)];9^a,1d^25,1e^26^27^28^29^2a,22^8^9,23^8^9,2c^2d^2^3^7^4^5^6^0;;;"/>
+    </map>
+
+</incidents>

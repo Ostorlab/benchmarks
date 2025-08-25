@@ -1,0 +1,86 @@
+[
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/layout_activity_premium_content.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/layout/activity_premium_content.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/xml_backup_rules.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/layout_activity_user_profile.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/layout/activity_user_profile.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/layout_activity_main.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/layout/activity_main.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/xml_data_extraction_rules.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/drawable_ic_launcher_background.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/layout_activity_settings.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "co.ostorlab.myapplication.app-debug-58:/layout_activity_article_viewer.xml.flat",
+        "source": "co.ostorlab.myapplication.app-main-60:/layout/activity_article_viewer.xml"
+    }
+]

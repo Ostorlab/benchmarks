@@ -1,0 +1,354 @@
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:13: Warning: Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details. [OldTargetApi]
+        targetSdk = 34
+        ~~~~~~~~~~~~~~
+
+   Explanation for issues of type "OldTargetApi":
+   When your application or sdk runs on a version of Android that is more
+   recent than your targetSdkVersion specifies that it has been tested with,
+   various compatibility modes kick in. This ensures that your application
+   continues to work, but it may look out of place. For example, if the
+   targetSdkVersion is less than 14, your app may get an option button in the
+   UI.
+
+   To fix this issue, set the targetSdkVersion to the highest available value.
+   Then test your app to make sure everything works correctly. You may want to
+   consult the compatibility notes to see what changes apply to each version
+   you are adding support for:
+   https://developer.android.com/reference/android/os/Build.VERSION_CODES.html
+   as well as follow this guide:
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.
+   html
+
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.html
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/AndroidManifest.xml:22: Warning: Redundant label can be removed [RedundantLabel]
+            android:label="@string/app_name"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RedundantLabel":
+   When an activity does not have a label attribute, it will use the one from
+   the application tag. Since the application has already specified the same
+   label, the label on this activity can be omitted.
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/SettingsActivity.kt:20: Warning: Use SwitchCompat from AppCompat or SwitchMaterial from Material library [UseSwitchCompatOrMaterialCode from androidx.appcompat]
+        val notificationSwitch = findViewById<Switch>(R.id.switchNotifications)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/SettingsActivity.kt:21: Warning: Use SwitchCompat from AppCompat or SwitchMaterial from Material library [UseSwitchCompatOrMaterialCode from androidx.appcompat]
+        val darkModeSwitch = findViewById<Switch>(R.id.switchDarkMode)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/SettingsActivity.kt:22: Warning: Use SwitchCompat from AppCompat or SwitchMaterial from Material library [UseSwitchCompatOrMaterialCode from androidx.appcompat]
+        val autoRefreshSwitch = findViewById<Switch>(R.id.switchAutoRefresh)
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UseSwitchCompatOrMaterialCode":
+   Use SwitchCompat from AppCompat or SwitchMaterial from Material library
+
+   Vendor: Android Open Source Project
+   Identifier: androidx.appcompat
+   Feedback: https://issuetracker.google.com/issues/new?component=460343
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_settings.xml:17: Warning: Use SwitchCompat from AppCompat or SwitchMaterial from Material library [UseSwitchCompatOrMaterialXml from androidx.appcompat]
+    <Switch
+    ^
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_settings.xml:24: Warning: Use SwitchCompat from AppCompat or SwitchMaterial from Material library [UseSwitchCompatOrMaterialXml from androidx.appcompat]
+    <Switch
+    ^
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_settings.xml:31: Warning: Use SwitchCompat from AppCompat or SwitchMaterial from Material library [UseSwitchCompatOrMaterialXml from androidx.appcompat]
+    <Switch
+    ^
+
+   Explanation for issues of type "UseSwitchCompatOrMaterialXml":
+   Use SwitchCompat from AppCompat or SwitchMaterial from Material library
+
+   Vendor: Android Open Source Project
+   Identifier: androidx.appcompat
+   Feedback: https://issuetracker.google.com/issues/new?component=460343
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/gradle/wrapper/gradle-wrapper.properties:3: Warning: A newer version of Gradle than 8.13 is available: 8.14.3 [AndroidGradlePluginVersion]
+distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "AndroidGradlePluginVersion":
+   This detector looks for usage of the Android Gradle Plugin where the
+   version you are using is not the current stable release. Using older
+   versions is fine, and there are cases where you deliberately want to stick
+   with an older version. However, you may simply not be aware that a more
+   recent version is available, and that is what this lint check helps find.
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:8: Warning: A newer version of compileSdkVersion than 34 is available: 36 [GradleDependency]
+    compileSdk = 34
+    ~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:54: Warning: A newer version of androidx.core:core-ktx than 1.12.0 is available: 1.17.0 [GradleDependency]
+    implementation("androidx.core:core-ktx:1.12.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:55: Warning: A newer version of androidx.lifecycle:lifecycle-runtime-ktx than 2.7.0 is available: 2.9.2 [GradleDependency]
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:56: Warning: A newer version of androidx.activity:activity-compose than 1.8.2 is available: 1.10.1 [GradleDependency]
+    implementation("androidx.activity:activity-compose:1.8.2")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:57: Warning: A newer version of androidx.compose:compose-bom than 2023.08.00 is available: 2025.08.00 [GradleDependency]
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:62: Warning: A newer version of androidx.appcompat:appcompat than 1.6.1 is available: 1.7.1 [GradleDependency]
+    implementation("androidx.appcompat:appcompat:1.6.1")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:63: Warning: A newer version of com.google.android.material:material than 1.11.0 is available: 1.12.0 [GradleDependency]
+    implementation("com.google.android.material:material:1.11.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:64: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1 [GradleDependency]
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:66: Warning: A newer version of androidx.test.ext:junit than 1.1.5 is available: 1.3.0 [GradleDependency]
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:67: Warning: A newer version of androidx.test.espresso:espresso-core than 3.5.1 is available: 3.7.0 [GradleDependency]
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/build.gradle.kts:68: Warning: A newer version of androidx.compose:compose-bom than 2023.08.00 is available: 2025.08.00 [GradleDependency]
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/ArticleViewerActivity.kt:35: Warning: Using setJavaScriptEnabled can introduce XSS vulnerabilities into your application, review carefully [SetJavaScriptEnabled]
+        webView.settings.javaScriptEnabled = true
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SetJavaScriptEnabled":
+   Your code should not invoke setJavaScriptEnabled if you are not sure that
+   your app really requires JavaScript support.
+
+   https://goo.gle/SetJavaScriptEnabled
+   https://developer.android.com/training/articles/security-tips
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/values/colors.xml:3: Warning: The resource R.color.purple_200 appears to be unused [UnusedResources]
+    <color name="purple_200">#FFBB86FC</color>
+           ~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/values/strings.xml:9: Warning: The resource R.string.loading appears to be unused [UnusedResources]
+    <string name="loading">Loading...</string>
+            ~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UnusedResources":
+   Unused resources make applications larger and slow down builds.
+
+
+   The unused resource check can ignore tests. If you want to include
+   resources that are only referenced from tests, consider packaging them in a
+   test source set instead.
+
+   You can include test sources in the unused resource check by setting the
+   system property lint.unused-resources.include-tests =true, and to exclude
+   them (usually for performance reasons), use
+   lint.unused-resources.exclude-tests =true.
+   ,
+
+   Available options:
+
+   **skip-libraries** (default is true):
+   Whether the unused resource check should skip reporting unused resources in libraries.
+
+   Many libraries will declare resources that are part of the library surface; other modules depending on the library will also reference the resources. To avoid reporting all these resources as unused (in the context of a library), the unused resource check normally skips reporting unused resources in libraries. Instead, run the unused resource check on the consuming app module (along with `checkDependencies=true`).
+
+   However, there are cases where you want to check that all the resources declared in a library are used; in that case, you can disable the skip option.
+
+   To configure this option, use a `lint.xml` file with an <option> like this:
+
+   ```xml
+   <lint>
+       <issue id="UnusedResources">
+           <option name="skip-libraries" value="true" />
+       </issue>
+   </lint>
+   ```
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/values/strings.xml:9: Warning: Replace "..." with ellipsis character (…, &#8230;) ? [TypographyEllipsis]
+    <string name="loading">Loading...</string>
+                           ~~~~~~~~~~
+
+   Explanation for issues of type "TypographyEllipsis":
+   You can replace the string "..." with a dedicated ellipsis character,
+   ellipsis character (u2026, &#8230;). This can help make the text more
+   readable.
+
+   https://en.wikipedia.org/wiki/Ellipsis
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/ArticleViewerActivity.kt:99: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+            prefs.edit().putString(articleId, content).apply()
+            ~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/MainActivity.kt:27: Warning: Use the KTX extension function SharedPreferences.edit instead? [UseKtx]
+            prefs.edit()
+            ~~~~~~~~~~~~
+
+   Explanation for issues of type "UseKtx":
+   The Android KTX libraries decorates the Android platform SDK as well as
+   various libraries with more convenient extension functions available from
+   Kotlin, allowing you to use default parameters, named parameters, and
+   more.
+
+   Available options:
+
+   **remove-defaults** (default is true):
+   Whether to skip arguments that match the defaults provided by the extension.
+
+   Extensions often provide default values for some of the parameters. For example:
+   ```kotlin
+   fun Path.readLines(charset: Charset = Charsets.UTF_8): List<String> { return Files.readAllLines(this, charset) }
+   ```
+   This lint check will by default automatically omit parameters that match the default, so if your code was calling
+
+   ```kotlin
+   Files.readAllLines(file, Charset.UTF_8)
+   ```
+   lint would replace this with
+   ```kotlin
+   file.readLines()
+   ```
+   rather than
+
+   ```kotlin
+   file.readLines(Charset.UTF_8
+   ```
+   You can turn this behavior off using this option.
+
+   To configure this option, use a `lint.xml` file with an <option> like this:
+
+   ```xml
+   <lint>
+       <issue id="UseKtx">
+           <option name="remove-defaults" value="true" />
+       </issue>
+   </lint>
+   ```
+
+   **require-present** (default is true):
+   Whether to only offer extensions already available.
+
+   This option lets you only have lint suggest extension replacements if those extensions are already available on the class path (in other words, you're already depending on the library containing the extension method.)
+
+   To configure this option, use a `lint.xml` file with an <option> like this:
+
+   ```xml
+   <lint>
+       <issue id="UseKtx">
+           <option name="require-present" value="true" />
+       </issue>
+   </lint>
+   ```
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/MainActivity.kt:40: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        headerTitle.text = "Daily News Feed"
+                            ~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/PremiumContentActivity.kt:17: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        findViewById<TextView>(R.id.tvPremiumTitle).text = "Premium Articles"
+                                                            ~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/PremiumContentActivity.kt:18: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        findViewById<TextView>(R.id.tvPremiumDescription).text = "Access exclusive content and in-depth analysis with your premium subscription."
+                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/PremiumContentActivity.kt:19: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+        findViewById<TextView>(R.id.tvPremiumFeatures).text = """
+                                                              ^
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/PremiumContentActivity.kt:20: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            Premium Features:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/PremiumContentActivity.kt:21: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            • Ad-free reading experience
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/PremiumContentActivity.kt:22: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            • Exclusive investigative reports
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/PremiumContentActivity.kt:23: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            • Early access to breaking news
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/PremiumContentActivity.kt:24: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            • Offline reading capability
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/PremiumContentActivity.kt:25: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            • Premium newsletters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/SettingsActivity.kt:18: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        findViewById<TextView>(R.id.tvSettingsTitle).text = "App Settings"
+                                                             ~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/UserProfileActivity.kt:17: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        findViewById<TextView>(R.id.tvUsername).text = "John Doe"
+                                                        ~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/UserProfileActivity.kt:18: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        findViewById<TextView>(R.id.tvEmail).text = "john.doe@example.com"
+                                                     ~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/UserProfileActivity.kt:19: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        findViewById<TextView>(R.id.tvMemberSince).text = "Member since: January 2023"
+                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/java/co/ostorlab/myapplication/UserProfileActivity.kt:20: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+        findViewById<TextView>(R.id.tvReadingStats).text = "Articles read this month: 45"
+                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "SetTextI18n":
+   When calling TextView#setText
+   * Never call Number#toString() to format numbers; it will not handle
+   fraction separators and locale-specific digits properly. Consider using
+   String#format with proper format specifications (%d or %f) instead.
+   * Do not pass a string literal (e.g. "Hello") to display text. Hardcoded
+   text can not be properly translated to other languages. Consider using
+   Android resource strings instead.
+   * Do not build messages by concatenating text chunks. Such messages can not
+   be properly translated.
+
+   https://developer.android.com/guide/topics/resources/localization.html
+
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_premium_content.xml:12: Warning: Hardcoded string "Premium Content", should use @string resource [HardcodedText]
+        android:text="Premium Content"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_premium_content.xml:21: Warning: Hardcoded string "Description", should use @string resource [HardcodedText]
+        android:text="Description"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_premium_content.xml:29: Warning: Hardcoded string "Features", should use @string resource [HardcodedText]
+        android:text="Features"
+        ~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_settings.xml:12: Warning: Hardcoded string "Settings", should use @string resource [HardcodedText]
+        android:text="Settings"
+        ~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_settings.xml:21: Warning: Hardcoded string "Push Notifications", should use @string resource [HardcodedText]
+        android:text="Push Notifications"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_settings.xml:28: Warning: Hardcoded string "Dark Mode", should use @string resource [HardcodedText]
+        android:text="Dark Mode"
+        ~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_settings.xml:35: Warning: Hardcoded string "Auto Refresh", should use @string resource [HardcodedText]
+        android:text="Auto Refresh"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_user_profile.xml:11: Warning: Hardcoded string "User Profile", should use @string resource [HardcodedText]
+        android:text="User Profile"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_user_profile.xml:20: Warning: Hardcoded string "Username", should use @string resource [HardcodedText]
+        android:text="Username"
+        ~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_user_profile.xml:28: Warning: Hardcoded string "Email", should use @string resource [HardcodedText]
+        android:text="Email"
+        ~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_user_profile.xml:36: Warning: Hardcoded string "Member Since", should use @string resource [HardcodedText]
+        android:text="Member Since"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben41/src/app/src/main/res/layout/activity_user_profile.xml:44: Warning: Hardcoded string "Reading Stats", should use @string resource [HardcodedText]
+        android:text="Reading Stats"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "HardcodedText":
+   Hardcoding text attributes directly in layout files is bad for several
+   reasons:
+
+   * When creating configuration variations (for example for landscape or
+   portrait) you have to repeat the actual text (and keep it up to date when
+   making changes)
+
+   * The application cannot be translated to other languages by just adding
+   new translations for existing string resources.
+
+   There are quickfixes to automatically extract this hardcoded string into a
+   resource lookup.
+
+0 errors, 53 warnings

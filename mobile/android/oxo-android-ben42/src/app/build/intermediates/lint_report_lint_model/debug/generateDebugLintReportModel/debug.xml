@@ -1,0 +1,33 @@
+<variant
+    name="debug"
+    useSupportLibraryVectorDrawables="true"
+    package="co.ostorlab.myapplication"
+    minSdkVersion="24"
+    targetSdkVersion="34"
+    debuggable="true"
+    mergedManifest="build/intermediates/merged_manifest/debug/processDebugMainManifest/AndroidManifest.xml"
+    manifestMergeReport="build/outputs/logs/manifest-merger-debug-report.txt"
+    proguardFiles="build/intermediates/default_proguard_files/global/proguard-android.txt-8.11.1"
+    partialResultsDir="build/intermediates/lint_partial_results/debug/lintAnalyzeDebug/out">
+  <buildFeatures
+      namespacing="REQUIRED"/>
+  <sourceProviders>
+    <sourceProvider
+        manifests="src/main/AndroidManifest.xml"
+        javaDirectories="src/main/java:src/debug/java:src/main/kotlin:src/debug/kotlin"
+        resDirectories="src/main/res:src/debug/res"
+        assetsDirectories="src/main/assets:src/debug/assets"/>
+  </sourceProviders>
+  <testSourceProviders>
+  </testSourceProviders>
+  <testFixturesSourceProviders>
+  </testFixturesSourceProviders>
+  <artifact
+      classOutputs="build/intermediates/javac/debug/compileDebugJavaWithJavac/classes:build/tmp/kotlin-classes/debug:build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/processDebugResources/R.jar"
+      type="MAIN"
+      applicationId="co.ostorlab.myapplication"
+      generatedSourceFolders="build/generated/ap_generated_sources/debug/out"
+      generatedResourceFolders="build/generated/res/resValues/debug"
+      desugaredMethodsFiles="/home/amat/.gradle/caches/8.13/transforms/9a286ca4f350761555eb57086aa616da/transformed/D8BackportedDesugaredMethods.txt">
+  </artifact>
+</variant>

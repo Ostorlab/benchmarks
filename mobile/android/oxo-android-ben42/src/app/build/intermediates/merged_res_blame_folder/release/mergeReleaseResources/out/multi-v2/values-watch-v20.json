@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "co.ostorlab.myapplication.app-mergeReleaseResources-52:/values-watch-v20/values-watch-v20.xml",
+            "map": [
+                {
+                    "source": "/home/amat/.gradle/caches/8.13/transforms/62204c041cb374a2cd885488a105847c/transformed/appcompat-1.6.1/res/values-watch-v20/values-watch-v20.xml",
+                    "from": {
+                        "startLines": "2,5,8",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,214,385",
+                        "endLines": "4,7,10",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "209,380,553"
+                    }
+                }
+            ]
+        }
+    ]
+}

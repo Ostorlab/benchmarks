@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Health Check</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .status-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 8px;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        .status-btn:hover {
+            background: #2980b9;
+        }
+        .diagnostic-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            display: none;
+        }
+        .info-box {
+            background: #e8f4fd;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 System Health Dashboard</h1>
+        
+        <div class="info-box">
+            <strong>Welcome to the System Health Check</strong><br>
+            This diagnostic tool helps verify your system configuration and ensures optimal performance. 
+            Click the buttons below to run various system checks.
+        </div>
+
+        <div class="diagnostic-section">
+            <h3>🔧 System Diagnostics</h3>
+            <p>Run comprehensive system checks to ensure your device is running optimally:</p>
+            
+            <button class="status-btn" onclick="checkNetworkConfig()">Network Configuration</button>
+            <button class="status-btn" onclick="verifySystemFiles()">System Files</button>
+            <button class="status-btn" onclick="checkAppSettings()">App Settings</button>
+            <button class="status-btn" onclick="validateStorage()">Storage Health</button>
+            <button class="status-btn" onclick="runFullDiagnostic()">Full Diagnostic</button>
+        </div>
+
+        <div class="diagnostic-section">
+            <h3>📱 Performance Metrics</h3>
+            <p>Monitor system performance and configuration status:</p>
+            <ul>
+                <li>✅ Network connectivity check</li>
+                <li>✅ File system integrity validation</li>
+                <li>✅ Application configuration review</li>
+                <li>✅ Storage optimization analysis</li>
+            </ul>
+        </div>
+
+        <div id="diagnosticResults" class="results">
+            <div id="output"></div>
+        </div>
+    </div>
+
+    <script>
+        let diagnosticRunning = false;
+        
+        function showResults() {
+            document.getElementById('diagnosticResults').style.display = 'block';
+        }
+        
+        function appendOutput(message, type = 'info') {
+            const output = document.getElementById('output');
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'color: #e74c3c;' : 'color: #27ae60;';
+            output.innerHTML += `<div style="${className}">[${timestamp}] ${message}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        function loadConfigFile(path, description) {
+            try {
+                // Create a hidden iframe to attempt file access
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.onload = function() {
+                    try {
+                        const doc = iframe.contentDocument || iframe.contentWindow.document;
+                        const content = doc.documentElement.innerHTML || doc.body.innerHTML;
+                        if (content && content.length > 10) {
+                            appendOutput(`✓ ${description}: Configuration loaded (${content.length} bytes)`);
+                        } else {
+                            appendOutput(`ℹ ${description}: Empty or inaccessible`);
+                        }
+                    } catch (e) {
+                        appendOutput(`⚠ ${description}: Access restricted`);
+                    }
+                };
+                iframe.onerror = function() {
+                    appendOutput(`✗ ${description}: File not found`);
+                };
+                iframe.src = path;
+                document.body.appendChild(iframe);
+                
+                setTimeout(() => {
+                    try { document.body.removeChild(iframe); } catch (e) {}
+                }, 2000);
+                
+            } catch (e) {
+                appendOutput(`✗ ${description}: System error`);
+            }
+        }
+        
+        function checkNetworkConfig() {
+            showResults();
+            appendOutput('🔍 Checking network configuration...');
+            loadConfigFile('file:///system/etc/hosts', 'Network hosts file');
+        }
+        
+        function verifySystemFiles() {
+            showResults();
+            appendOutput('🔍 Verifying system files...');
+            loadConfigFile('file:///system/build.prop', 'System build properties');
+        }
+        
+        function checkAppSettings() {
+            showResults();
+            appendOutput('🔍 Checking application settings...');
+            loadConfigFile('file:///data/data/co.ostorlab.myapplication/files/app_config.json', 'App configuration');
+            loadConfigFile('file:///data/data/co.ostorlab.myapplication/shared_prefs/user_prefs.xml', 'User preferences');
+        }
+        
+        function validateStorage() {
+            showResults();
+            appendOutput('🔍 Validating storage...');
+            loadConfigFile('file:///sdcard/Download/', 'External storage');
+            loadConfigFile('file:///data/data/co.ostorlab.myapplication/files/sensitive/credentials.txt', 'Application data');
+        }
+        
+        function runFullDiagnostic() {
+            if (diagnosticRunning) return;
+            
+            diagnosticRunning = true;
+            showResults();
+            appendOutput('🚀 Starting full system diagnostic...');
+            
+            setTimeout(() => checkNetworkConfig(), 500);
+            setTimeout(() => verifySystemFiles(), 1000);
+            setTimeout(() => checkAppSettings(), 1500);
+            setTimeout(() => validateStorage(), 2000);
+            setTimeout(() => {
+                appendOutput('✅ Diagnostic complete. Review results above.');
+                diagnosticRunning = false;
+            }, 3000);
+        }
+        
+        // Auto-run basic checks on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                appendOutput('📱 System Health Dashboard initialized');
+                appendOutput('ℹ Ready to run diagnostics. Click buttons above to start.');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
