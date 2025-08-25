@@ -1,0 +1,1 @@
+# oxo-android-ben32 Critical broadcast receiver is not protected
