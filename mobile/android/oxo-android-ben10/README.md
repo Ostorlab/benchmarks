@@ -1,8 +1,9 @@
 # ThemeEngine Android App
 
-This is a demonstration app that showcases a theme engine functionality allowing users to load custom themes. The app demonstrates a realistic use case that could lead to insecure class loading vulnerabilities.
+## Challenge Details
 
-## Structure
+### Description
+This is a demonstration app that showcases a theme engine functionality allowing users to load custom themes. The app demonstrates a realistic use case that could lead to insecure class loading vulnerabilities.
 
 The app consists of several activities simulating a real-world application:
 - Main Activity (Home screen with current theme preview)
@@ -11,6 +12,26 @@ The app consists of several activities simulating a real-world application:
 - Theme Store Activity (Browse available themes)
 - Profile Activity (User profile management)
 
-## Security Considerations
+### Vulnerability Type and Category
+- **Type:** Insecure Dynamic Class Loading
+- **Category:** Code Injection / Untrusted Code Execution
+- **CWE:** CWE-470 (Use of Externally-Controlled Input to Select Classes or Code)
 
-The app demonstrates how improper validation of external class loading can lead to security vulnerabilities. In a real-world scenario, proper signature verification and code source validation should be implemented.
+### Difficulty
+Easy
+
+## Build Instructions
+
+### Prerequisites
+- Android Studio Arctic Fox or later
+- Android SDK (minimum API 21)
+- Gradle 7.0+
+
+### Build Steps
+1. Open the project in Android Studio
+2. Sync project with Gradle files
+3. Build the debug APK:
+```bash
+cd src/
+./gradlew assembleDebug
+```
