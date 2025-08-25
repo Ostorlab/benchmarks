@@ -1,37 +1,34 @@
-# Business Backup & Reports Manager
+# oxo-android-ben30 Typos in custom permissions - 
 
-A comprehensive Android application for small businesses to manage customer data, generate reports, and perform data backup operations.
+## Challenge Details
 
-## Features
+### Description
 
-- **Dashboard**: Overview of business metrics and quick actions
-- **Customer Management**: Add, view, and manage customer information
-- **Report Center**: Generate various business reports
-- **Backup & Restore**: Secure data backup and restoration functionality
-- **Settings**: Application configuration and preferences
+This Android app sample demonstrates a critical security vulnerability related to custom permissions:
 
-## Technical Details
+- Typos in custom permission names causing permission bypasses
+- Mismatched permission declarations and usage in manifest
+- Incorrect permission checks in code leading to access control failures
 
-- **Minimum SDK**: 21 (Android 5.0)
-- **Target SDK**: 34 (Android 14)
-- **Language**: Java
-- **Architecture**: AndroidX with modern Android components
+The vulnerability highlights unsafe handling of custom permissions in Android applications, where simple typos can completely bypass intended security restrictions.
 
-## Custom Permissions
+### Vulnerability Type and Category
+- **Type:** Permission Bypass due to Typos
+- **Category:** Broken Access Control / Configuration Error
 
-The app implements custom permissions to secure data access between different modules:
+### Difficulty
+Easy
 
-- `com.ostorlab.businessbackup.permission.READ_CUSTOMER_DATA` - Access to customer information
-- `com.ostorlab.businessbackup.permission.WRITE_CUSTOMER_DATA` - Modify customer information
-- `com.ostorlab.businessbackup.permission.GENERATE_REPORTS` - Generate business reports
-- `com.ostorlab.businessbackup.permission.BACKUP_ACCESS` - Access backup functionality
+## Build instructions
+This project uses Android Studio with Java.
 
-## Installation
+Open the project in Android Studio.
 
-1. Build the project using Gradle
-2. Install the APK on your Android device
-3. Grant necessary permissions when prompted
+Update your SDK versions as required (compileSdkVersion >= 34 recommended).
 
-## Usage
+Build and deploy the app to an emulator or Android device.
 
-Launch the app and navigate through the different sections using the main dashboard. The app provides intuitive interfaces for managing business data and generating reports.
+To build APK:
+```bash
+./gradlew assembleDebug
+```
