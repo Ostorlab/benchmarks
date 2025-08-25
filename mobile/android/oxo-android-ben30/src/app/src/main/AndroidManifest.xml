@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Standard Android permissions -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    
+    <!-- Custom permissions declarations - properly defined -->
+    <permission
+        android:name="com.ostorlab.businessbackup.permission.READ_CUSTOMER_DATA"
+        android:description="@string/permission_read_customer_desc"
+        android:label="@string/permission_read_customer_label"
+        android:protectionLevel="signature" />
+        
+    <permission
+        android:name="com.ostorlab.businessbackup.permission.WRITE_CUSTOMER_DATA"
+        android:description="@string/permission_write_customer_desc"
+        android:label="@string/permission_write_customer_label"
+        android:protectionLevel="signature" />
+        
+    <permission
+        android:name="com.ostorlab.businessbackup.permission.GENERATE_REPORTS"
+        android:description="@string/permission_generate_reports_desc"
+        android:label="@string/permission_generate_reports_label"
+        android:protectionLevel="normal" />
+        
+    <permission
+        android:name="com.ostorlab.businessbackup.permission.BACKUP_ACCESS"
+        android:description="@string/permission_backup_access_desc"
+        android:label="@string/permission_backup_access_label"
+        android:protectionLevel="signature" />
+
+    <!-- VULNERABILITY: Typos in custom permission usage -->
+    <!-- These permissions have typos compared to the declarations above -->
+    <uses-permission android:name="com.ostorlab.businessbackup.permission.READ_CUSTOMER_DATA" />
+    <uses-permission android:name="com.ostorlab.businessbackup.permission.WRIT_CUSTOMER_DATA" />  <!-- Typo: missing 'E' -->
+    <uses-permission android:name="com.ostorlab.businessbackup.permission.GENERAT_REPORTS" />     <!-- Typo: missing 'E' -->
+    <uses-permission android:name="com.ostorlab.businessbackup.permission.BACKUP_ACCES" />        <!-- Typo: missing 'S' -->
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BusinessBackup"
+        tools:targetApi="31">
+        
+        <!-- Main Dashboard Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.BusinessBackup">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- Customer Management Activity -->
+        <activity
+            android:name=".CustomerActivity"
+            android:label="@string/customer_management"
+            android:permission="com.ostorlab.businessbackup.permission.READ_CUSTOMER_DATA"
+            android:exported="false" />
+            
+        <!-- Report Center Activity -->
+        <activity
+            android:name=".ReportActivity"
+            android:label="@string/report_center"
+            android:permission="com.ostorlab.businessbackup.permission.GENERAT_REPORTS"
+            android:exported="false" />
+            
+        <!-- Backup Management Activity -->
+        <activity
+            android:name=".BackupActivity"
+            android:label="@string/backup_restore"
+            android:permission="com.ostorlab.businessbackup.permission.BACKUP_ACCES"
+            android:exported="false" />
+            
+        <!-- Settings Activity -->
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings"
+            android:exported="false" />
+
+        <!-- Data Provider Service -->
+        <service
+            android:name=".DataProviderService"
+            android:permission="com.ostorlab.businessbackup.permission.WRIT_CUSTOMER_DATA"
+            android:exported="false" />
+            
+        <!-- Report Generator Service -->
+        <service
+            android:name=".ReportGeneratorService"
+            android:permission="com.ostorlab.businessbackup.permission.GENERATE_REPORTS"
+            android:exported="false" />
+
+        <!-- Backup Broadcast Receiver -->
+        <receiver
+            android:name=".BackupReceiver"
+            android:permission="com.ostorlab.businessbackup.permission.BACKUP_ACCESS"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.ostorlab.businessbackup.action.BACKUP_COMPLETE" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

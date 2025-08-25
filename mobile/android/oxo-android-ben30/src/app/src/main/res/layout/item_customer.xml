@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvCustomerName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="John Smith"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvCustomerCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ABC Corporation"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/blue_600"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tvCustomerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="john.smith@abc.com"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvCustomerPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+1 (555) 123-4567"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

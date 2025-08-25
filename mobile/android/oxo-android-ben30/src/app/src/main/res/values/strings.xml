@@ -1,0 +1,91 @@
+<resources>
+    <string name="app_name">Business Backup Manager</string>
+    
+    <!-- Activity titles -->
+    <string name="customer_management">Customer Management</string>
+    <string name="report_center">Report Center</string>
+    <string name="backup_restore">Backup &amp; Restore</string>
+    <string name="settings">Settings</string>
+    
+    <!-- Permission descriptions -->
+    <string name="permission_read_customer_label">Read Customer Data</string>
+    <string name="permission_read_customer_desc">Allows access to customer information</string>
+    <string name="permission_write_customer_label">Write Customer Data</string>
+    <string name="permission_write_customer_desc">Allows modification of customer information</string>
+    <string name="permission_generate_reports_label">Generate Reports</string>
+    <string name="permission_generate_reports_desc">Allows generation of business reports</string>
+    <string name="permission_backup_access_label">Backup Access</string>
+    <string name="permission_backup_access_desc">Allows access to backup functionality</string>
+    
+    <!-- Dashboard -->
+    <string name="dashboard_title">Business Dashboard</string>
+    <string name="total_customers">Total Customers</string>
+    <string name="reports_generated">Reports Generated</string>
+    <string name="last_backup">Last Backup</string>
+    <string name="quick_actions">Quick Actions</string>
+    
+    <!-- Buttons -->
+    <string name="btn_customers">Manage Customers</string>
+    <string name="btn_reports">View Reports</string>
+    <string name="btn_backup">Backup Data</string>
+    <string name="btn_settings">Settings</string>
+    <string name="btn_add_customer">Add Customer</string>
+    <string name="btn_generate_report">Generate Report</string>
+    <string name="btn_backup_now">Backup Now</string>
+    <string name="btn_restore">Restore</string>
+    
+    <!-- Customer Management -->
+    <string name="customer_name">Customer Name</string>
+    <string name="customer_email">Email</string>
+    <string name="customer_phone">Phone</string>
+    <string name="customer_company">Company</string>
+    <string name="customer_list">Customer List</string>
+    <string name="add_customer">Add New Customer</string>
+    <string name="edit_customer">Edit Customer</string>
+    
+    <!-- Reports -->
+    <string name="report_type">Report Type</string>
+    <string name="monthly_report">Monthly Report</string>
+    <string name="quarterly_report">Quarterly Report</string>
+    <string name="annual_report">Annual Report</string>
+    <string name="customer_report">Customer Report</string>
+    <string name="sales_report">Sales Report</string>
+    
+    <!-- Backup -->
+    <string name="backup_status">Backup Status</string>
+    <string name="backup_progress">Backup in progress...</string>
+    <string name="backup_complete">Backup completed successfully</string>
+    <string name="backup_failed">Backup failed</string>
+    <string name="restore_data">Restore Data</string>
+    <string name="backup_location">Backup Location</string>
+    
+    <!-- Settings -->
+    <string name="general_settings">General Settings</string>
+    <string name="backup_settings">Backup Settings</string>
+    <string name="auto_backup">Auto Backup</string>
+    <string name="backup_frequency">Backup Frequency</string>
+    <string name="data_retention">Data Retention</string>
+    <string name="export_data">Export Data</string>
+    <string name="import_data">Import Data</string>
+    
+    <!-- Messages -->
+    <string name="loading">Loading...</string>
+    <string name="no_data">No data available</string>
+    <string name="error_occurred">An error occurred</string>
+    <string name="operation_successful">Operation completed successfully</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="access_restricted">Access to this feature is restricted</string>
+    
+    <!-- Menu items -->
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_sort">Sort</string>
+    <string name="menu_export">Export</string>
+    
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_customers">Customers</string>
+    <string name="nav_reports">Reports</string>
+    <string name="nav_backup">Backup</string>
+    <string name="nav_settings">Settings</string>
+</resources>
