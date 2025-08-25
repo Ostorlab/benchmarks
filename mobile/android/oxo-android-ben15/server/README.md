@@ -4,35 +4,36 @@ A Flask-based authentication server with JWT token support, user registration, l
 
 ## Prerequisites
 
-- Python 3.7+
-- pip (Python package manager)
-
-## Installation
-
-1. Clone or navigate to the project directory
-2. Create a virtual environment:
-   ```bash
-   python3 -m venv venv
-   ```
-
-3. Activate the virtual environment:
-   ```bash
-   source venv/bin/activate
-   ```
-
-4. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+- Docker and Docker Compose
 
 ## Running the Server
 
-Start the server with:
+### Using Docker Compose (Recommended)
+
+1. Make sure Docker and Docker Compose are installed on your system
+2. Run the server using docker-compose:
+   ```bash
+   docker-compose up -d
+   ```
+
+The server will be available at `http://localhost:5000`.
+
+To stop the server:
 ```bash
-python3 app.py
+docker-compose down
 ```
 
-The server will run on `http://localhost:5000` by default.
+### Using Docker directly
+
+1. Build the Docker image:
+   ```bash
+   docker build -t auth-server .
+   ```
+
+2. Run the container:
+   ```bash
+   docker run -p 5000:5000 auth-server
+   ```
 
 ## Default User
 
