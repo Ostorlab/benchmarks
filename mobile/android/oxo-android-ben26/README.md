@@ -35,17 +35,3 @@ cd src/
 ```
 
 The APK will be generated in `app/build/outputs/apk/debug/app-debug.apk`
-
-## App Features
-
-The SecureVault password manager includes:
-- User registration and login
-- Password storage and management
-- Secure notes functionality
-- Backup and export features
-- Settings and preferences
-- Biometric authentication support
-
-## Testing Notes
-
-Security tools should detect the use of weak random number generators in cryptographic operations, particularly in key generation, IV creation, and salt generation functions.
