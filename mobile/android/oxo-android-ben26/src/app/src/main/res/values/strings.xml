@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SecureVault</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="my_passwords">My Passwords</string>
+    <string name="secure_notes">Secure Notes</string>
+    <string name="settings">Settings</string>
+    <string name="backup">Backup</string>
+    <string name="add_password">Add Password</string>
+    <string name="site_name">Site Name</string>
+    <string name="site_username">Site Username</string>
+    <string name="site_password">Site Password</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="welcome_to_securevault">Welcome to SecureVault</string>
+    <string name="your_passwords_are_safe">Your passwords are safe with us</string>
+    <string name="enable_biometric">Enable Biometric Authentication</string>
+    <string name="auto_backup">Auto Backup</string>
+    <string name="export_data">Export Data</string>
+    <string name="import_data">Import Data</string>
+    <string name="note_title">Note Title</string>
+    <string name="note_content">Note Content</string>
+    <string name="add_note">Add Note</string>
+    <string name="logout">Logout</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="generate_backup">Generate Backup</string>
+    <string name="restore_backup">Restore Backup</string>
+    <string name="back">Back</string>
+</resources>
+
