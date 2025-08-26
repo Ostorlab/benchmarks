@@ -15,30 +15,34 @@
         android:layout_marginBottom="32dp" />
 
     <TextView
+        android:id="@+id/tvTotalWorkouts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total Workouts: 25"
+        android:text="Total Workouts: 0"
         android:textSize="18sp"
         android:layout_marginBottom="16dp" />
 
     <TextView
+        android:id="@+id/tvTotalDistance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total Distance: 150.5 km"
+        android:text="Total Distance: 0.0 km"
         android:textSize="18sp"
         android:layout_marginBottom="16dp" />
 
     <TextView
+        android:id="@+id/tvTotalCalories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total Calories: 12,500"
+        android:text="Total Calories: 0"
         android:textSize="18sp"
         android:layout_marginBottom="16dp" />
 
     <TextView
+        android:id="@+id/tvWeeklyGoal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Weekly Goal: 80% Complete"
+        android:text="Weekly Goal: 0% Complete"
         android:textSize="18sp"
         android:layout_marginBottom="32dp" />
 

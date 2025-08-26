@@ -16,11 +16,14 @@ public class WorkoutActivity extends AppCompatActivity {
     private int seconds = 0;
     private Handler handler = new Handler();
     private Runnable timerRunnable;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
+
+        dbHelper = new DatabaseHelper(this);
 
         tvCalories = findViewById(R.id.tvCalories);
         tvDistance = findViewById(R.id.tvDistance);
@@ -79,39 +82,64 @@ public class WorkoutActivity extends AppCompatActivity {
     }
 
     private void saveWorkoutData() {
+        String currentUserId = SessionManager.getInstance().getCurrentUserId();
+        if (currentUserId == null) return;
+
+        long workoutId = dbHelper.insertWorkout(currentUserId, "running", calories, distance,
+                seconds, "145 bpm", "Central Park, NYC", "40.7829,-73.9654");
+
+        Intent databaseIntent = new Intent("com.fittracker.DATABASE_WRITE");
+        databaseIntent.putExtra("operation", "insert_workout");
+        databaseIntent.putExtra("table", "workouts");
+        databaseIntent.putExtra("workout_id", workoutId);
+        databaseIntent.putExtra("user_id", currentUserId);
+        databaseIntent.putExtra("sensitive_data", "workout_session_complete");
+        databaseIntent.putExtra("database_path", getDatabasePath("fittracker.db").getAbsolutePath());
+        sendBroadcast(databaseIntent);
+
         Intent broadcastIntent = new Intent("com.fittracker.WORKOUT_SAVED");
-        broadcastIntent.putExtra("user_id", "user_12345");
+        broadcastIntent.putExtra("user_id", currentUserId);
+        broadcastIntent.putExtra("workout_id", workoutId);
         broadcastIntent.putExtra("workout_type", "running");
         broadcastIntent.putExtra("calories", calories);
         broadcastIntent.putExtra("distance", distance);
         broadcastIntent.putExtra("duration", seconds);
         broadcastIntent.putExtra("heart_rate", "145 bpm");
         broadcastIntent.putExtra("location", "Central Park, NYC");
-        broadcastIntent.putExtra("user_email", "john.doe@email.com");
+        broadcastIntent.putExtra("user_email", SessionManager.getInstance().getCurrentUser().getEmail());
         broadcastIntent.putExtra("session_token", "auth_token_xyz789");
+        broadcastIntent.putExtra("database_record_id", workoutId);
         sendBroadcast(broadcastIntent);
     }
 
     private void shareWorkoutProgress() {
+        String currentUserId = SessionManager.getInstance().getCurrentUserId();
+        if (currentUserId == null) return;
+
+        WorkoutStats stats = dbHelper.getWorkoutStats(currentUserId);
+
         Intent progressIntent = new Intent("com.fittracker.PROGRESS_SHARED");
-        progressIntent.putExtra("user_id", "user_12345");
+        progressIntent.putExtra("user_id", currentUserId);
         progressIntent.putExtra("achievement", "Personal Best: " + String.format("%.2f km", distance));
         progressIntent.putExtra("calories_burned", calories);
         progressIntent.putExtra("workout_duration", seconds);
-        progressIntent.putExtra("user_profile", "john.doe@email.com");
+        progressIntent.putExtra("user_profile", SessionManager.getInstance().getCurrentUser().getEmail());
         progressIntent.putExtra("privacy_level", "public");
         progressIntent.putExtra("gps_coordinates", "40.7829,-73.9654");
         progressIntent.putExtra("device_id", "device_android_567890");
+        progressIntent.putExtra("total_workouts", stats.getTotalWorkouts());
+        progressIntent.putExtra("lifetime_calories", stats.getTotalCalories());
         sendBroadcast(progressIntent);
 
         Intent goalIntent = new Intent("com.fittracker.GOAL_UPDATE");
-        goalIntent.putExtra("user_id", "user_12345");
+        goalIntent.putExtra("user_id", currentUserId);
         goalIntent.putExtra("weekly_progress", 75);
         goalIntent.putExtra("monthly_target", "100km");
         goalIntent.putExtra("current_streak", 12);
-        goalIntent.putExtra("user_weight", "75kg");
-        goalIntent.putExtra("user_age", 28);
+        goalIntent.putExtra("user_weight", SessionManager.getInstance().getCurrentUser().getWeight() + "kg");
+        goalIntent.putExtra("user_age", SessionManager.getInstance().getCurrentUser().getAge());
         goalIntent.putExtra("health_data", "BP: 120/80, HR: 65");
+        goalIntent.putExtra("database_stats", stats.getTotalWorkouts() + " workouts completed");
         sendBroadcast(goalIntent);
     }
 

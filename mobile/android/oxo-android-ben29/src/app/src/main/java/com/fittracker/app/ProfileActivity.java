@@ -4,14 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    private DatabaseHelper dbHelper;
+    private TextView tvName, tvEmail, tvAge, tvWeight, tvHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        dbHelper = new DatabaseHelper(this);
+
+        tvName = findViewById(R.id.tvName);
+        tvEmail = findViewById(R.id.tvEmail);
+        tvAge = findViewById(R.id.tvAge);
+        tvWeight = findViewById(R.id.tvWeight);
+        tvHeight = findViewById(R.id.tvHeight);
 
         Button btnBack = findViewById(R.id.btnBack);
 
@@ -26,31 +38,57 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserProfile() {
-        Intent profileIntent = new Intent("com.fittracker.PROFILE_LOADED");
-        profileIntent.putExtra("user_id", "user_12345");
-        profileIntent.putExtra("full_name", "John Doe");
-        profileIntent.putExtra("email", "john.doe@email.com");
-        profileIntent.putExtra("phone", "+1-555-0123");
-        profileIntent.putExtra("date_of_birth", "1995-03-15");
-        profileIntent.putExtra("gender", "male");
-        profileIntent.putExtra("weight", 75);
-        profileIntent.putExtra("height", 180);
-        profileIntent.putExtra("medical_conditions", "none");
-        profileIntent.putExtra("emergency_contact", "Jane Doe +1-555-0124");
-        profileIntent.putExtra("insurance_number", "INS123456789");
-        profileIntent.putExtra("billing_address", "123 Main St, NYC, NY 10001");
-        profileIntent.putExtra("payment_method", "****1234");
-        sendBroadcast(profileIntent);
+        String currentUserId = SessionManager.getInstance().getCurrentUserId();
+        if (currentUserId == null) return;
+
+        User user = dbHelper.getUserById(currentUserId);
+
+        if (user != null) {
+            if (tvName != null) tvName.setText("Name: " + user.getName());
+            if (tvEmail != null) tvEmail.setText("Email: " + user.getEmail());
+            if (tvAge != null) tvAge.setText("Age: " + user.getAge());
+            if (tvWeight != null) tvWeight.setText("Weight: " + user.getWeight() + " kg");
+            if (tvHeight != null) tvHeight.setText("Height: " + user.getHeight() + " cm");
+        }
+
+        Intent databaseIntent = new Intent("com.fittracker.DATABASE_READ");
+        databaseIntent.putExtra("operation", "get_user_profile");
+        databaseIntent.putExtra("table", "users");
+        databaseIntent.putExtra("user_id", currentUserId);
+        databaseIntent.putExtra("database_path", getDatabasePath("fittracker.db").getAbsolutePath());
+        databaseIntent.putExtra("sensitive_query", "SELECT * FROM users WHERE user_id='" + currentUserId + "'");
+        databaseIntent.putExtra("pii_accessed", "name,email,phone,insurance,billing");
+        sendBroadcast(databaseIntent);
+
+        if (user != null) {
+            Intent profileIntent = new Intent("com.fittracker.PROFILE_LOADED");
+            profileIntent.putExtra("user_id", user.getUserId());
+            profileIntent.putExtra("full_name", user.getName());
+            profileIntent.putExtra("email", user.getEmail());
+            profileIntent.putExtra("phone", user.getPhone());
+            profileIntent.putExtra("age", user.getAge());
+            profileIntent.putExtra("weight", user.getWeight());
+            profileIntent.putExtra("height", user.getHeight());
+            profileIntent.putExtra("account_type", user.getAccountType());
+            profileIntent.putExtra("last_login", user.getLastLogin());
+            profileIntent.putExtra("created_at", user.getCreatedAt());
+            profileIntent.putExtra("database_record_retrieved", true);
+            sendBroadcast(profileIntent);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        String currentUserId = SessionManager.getInstance().getCurrentUserId();
+        if (currentUserId == null) return;
+
         Intent sessionIntent = new Intent("com.fittracker.PROFILE_SESSION");
-        sessionIntent.putExtra("user_id", "user_12345");
+        sessionIntent.putExtra("user_id", currentUserId);
         sessionIntent.putExtra("session_end", System.currentTimeMillis());
         sessionIntent.putExtra("profile_changes", "none");
         sessionIntent.putExtra("time_spent", 120);
+        sessionIntent.putExtra("database_access_count", 1);
         sendBroadcast(sessionIntent);
     }
 }
