@@ -17,13 +17,32 @@ public class SystemUpdateReceiver extends BroadcastReceiver {
             String accountNumber = intent.getStringExtra("account");
 
             if (newBalance != null && accountNumber != null) {
-                SharedPreferences prefs = context.getSharedPreferences("bank_data", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("current_balance", newBalance);
-                editor.putString("account_number", accountNumber);
-                editor.apply();
+                try {
+                    double balanceAmount = Double.parseDouble(newBalance);
 
-                Log.d("BankUpdate", "Balance updated to: " + newBalance + " for account: " + accountNumber);
+                    DatabaseHelper dbHelper = new DatabaseHelper(context);
+                    User user = dbHelper.getUserByAccountNumber(accountNumber);
+
+                    if (user != null) {
+                        boolean updated = dbHelper.updateBalance(user.getUsername(), balanceAmount);
+
+                        if (updated) {
+                            SharedPreferences prefs = context.getSharedPreferences("bank_data", Context.MODE_PRIVATE);
+                            String loggedInUser = prefs.getString("logged_in_user", "");
+
+                            if (user.getUsername().equals(loggedInUser)) {
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putString("current_balance", String.format("%.2f", balanceAmount));
+                                editor.apply();
+                            }
+
+                        }
+                    } else {
+                        Log.w("BankUpdate", "Account not found: " + accountNumber);
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e("BankUpdate", "Invalid balance format: " + newBalance);
+                }
             }
         }
 
@@ -31,16 +50,19 @@ public class SystemUpdateReceiver extends BroadcastReceiver {
             String userData = intent.getStringExtra("user_data");
             String sessionToken = intent.getStringExtra("session_token");
 
-            if (userData != null) {
+            if (userData != null || sessionToken != null) {
                 SharedPreferences prefs = context.getSharedPreferences("bank_data", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("user_profile", userData);
+
+                if (userData != null) {
+                    editor.putString("user_profile", userData);
+                }
+
                 if (sessionToken != null) {
                     editor.putString("session_token", sessionToken);
                 }
-                editor.apply();
 
-                Log.d("BankSync", "User data synchronized: " + userData);
+                editor.apply();
             }
         }
 
@@ -48,8 +70,7 @@ public class SystemUpdateReceiver extends BroadcastReceiver {
             SharedPreferences prefs = context.getSharedPreferences("bank_data", Context.MODE_PRIVATE);
             String currentBalance = prefs.getString("current_balance", "0.00");
             String accountNum = prefs.getString("account_number", "");
-
-            Log.d("ConnectivityChange", "Network changed, current balance: " + currentBalance + " for account: " + accountNum);
+            String loggedInUser = prefs.getString("logged_in_user", "");
         }
     }
 }
