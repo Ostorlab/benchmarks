@@ -44,7 +44,7 @@ class CategoryBrowseActivity : ComponentActivity() {
                 text = category
                 setPadding(16, 16, 16, 16)
                 setOnClickListener {
-                    // Could navigate to category-specific articles
+                    // Could navigate to category-specific workouts
                     // For now, just finish activity
                     finish()
                 }

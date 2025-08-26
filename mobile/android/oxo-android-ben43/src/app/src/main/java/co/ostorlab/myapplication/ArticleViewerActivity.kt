@@ -30,7 +30,7 @@ class ArticleViewerActivity : ComponentActivity() {
         }
         mainLayout.addView(titleView)
         
-        // WebView for article content
+        // WebView for workout content
         webView = WebView(this).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -54,8 +54,8 @@ class ArticleViewerActivity : ComponentActivity() {
         
         setContentView(mainLayout)
         
-        // Load article content
-        loadArticleContent()
+        // Load workout content
+        loadWorkoutContent()
     }
     
     private fun setupWebView() {
@@ -69,7 +69,7 @@ class ArticleViewerActivity : ComponentActivity() {
         settings.displayZoomControls = false
     }
     
-    private fun loadArticleContent() {
+    private fun loadWorkoutContent() {
         // Get workout information from intent
         val workoutTitle = intent.getStringExtra("headline") ?: "Fitness Activity"
         val workoutContent = intent.getStringExtra("content")
@@ -80,27 +80,30 @@ class ArticleViewerActivity : ComponentActivity() {
         // Load content into WebView
         if (workoutContent != null && workoutContent.isNotEmpty()) {
             // Load HTML content directly from intent parameter
-            webView.loadData(workoutContent, "text/html", "utf-8")
+            webView.loadDataWithBaseURL(null, workoutContent, "text/html", "UTF-8", null)
         } else {
             // Default content if none provided
             val defaultContent = """
                 <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+                        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+                        h2 { color: #333; margin-top: 0; }
+                    </style>
+                </head>
                 <body>
-                <h2>Welcome to FitTracker Pro</h2>
-                <p>This workout data could not be loaded. Please try again later.</p>
-                <p>Return to the main screen to browse other activities.</p>
+                    <div class="card">
+                        <h2>💪 Welcome to FitTracker Pro</h2>
+                        <p>This workout data could not be loaded. Please try again later.</p>
+                        <p>Return to the main screen to browse other activities.</p>
+                    </div>
                 </body>
                 </html>
-            """.trimIndent()
-            webView.loadData(defaultContent, "text/html", "utf-8")
-        }
-    }
-    
-    override fun onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack()
-        } else {
-            super.onBackPressed()
+            """
+            webView.loadDataWithBaseURL(null, defaultContent, "text/html", "UTF-8", null)
         }
     }
 }

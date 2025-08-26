@@ -90,8 +90,8 @@ class SearchActivity : ComponentActivity() {
         
         // Mock search results
         val mockResults = listOf(
-            "Article about $query - Latest developments",
-            "Understanding $query in today's world",
+            "Workout about $query - Latest techniques",
+            "Understanding $query in fitness training",
             "Expert opinions on $query trends"
         )
         

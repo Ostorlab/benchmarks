@@ -5,50 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94ab3210-f5f3-4182-8218-23d1cd38ec91" name="Changes" comment="remove html asset as it hints the ai and build tha app + test">
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/apks/oxo-android-ben43.apk" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/proguard-rules.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/java/co/ostorlab/myapplication/ArticleViewerActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/java/co/ostorlab/myapplication/BookmarksActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/java/co/ostorlab/myapplication/CategoryBrowseActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/java/co/ostorlab/myapplication/MainActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/java/co/ostorlab/myapplication/SearchActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/java/co/ostorlab/myapplication/SettingsActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/java/co/ostorlab/myapplication/ui/theme/Color.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/java/co/ostorlab/myapplication/ui/theme/Theme.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/java/co/ostorlab/myapplication/ui/theme/Type.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/drawable/ic_launcher_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/drawable/ic_launcher_foreground.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-hdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-mdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/xml/backup_rules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/app/src/main/res/xml/data_extraction_rules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/gradle/libs.versions.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/settings.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/android/oxo-android-ben43/src/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +65,7 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/oxo-android-ben43&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#38 on feature/oxo-android-ben43&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/amat/projects/pentest/benchmarks/mobile/android/oxo-android-ben43&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -249,7 +208,7 @@
       <updated>1755539293282</updated>
       <workItem from="1755539294330" duration="3655000" />
       <workItem from="1756119200481" duration="10368000" />
-      <workItem from="1756193289543" duration="7555000" />
+      <workItem from="1756193289543" duration="11823000" />
     </task>
     <task id="LOCAL-00001" summary="clean existing app">
       <option name="closed" value="true" />
