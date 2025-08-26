@@ -55,6 +55,20 @@
         android:layout_height="56dp"
         android:text="Login"
         android:textSize="16sp"
-        android:backgroundTint="#2196F3" />
+        android:backgroundTint="#2196F3"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/registerLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Don't have an account? Register here"
+        android:textColor="#2196F3"
+        android:textSize="16sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp" />
 
 </LinearLayout>

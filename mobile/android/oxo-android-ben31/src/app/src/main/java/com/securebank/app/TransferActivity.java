@@ -16,11 +16,14 @@ public class TransferActivity extends AppCompatActivity {
     private EditText amountField;
     private Button transferButton;
     private Button backButton;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
+
+        databaseHelper = new DatabaseHelper(this);
 
         currentBalanceText = findViewById(R.id.currentBalanceText);
         recipientField = findViewById(R.id.recipientField);
@@ -33,18 +36,23 @@ public class TransferActivity extends AppCompatActivity {
         transferButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String recipient = recipientField.getText().toString();
-                String amountStr = amountField.getText().toString();
+                String recipient = recipientField.getText().toString().trim();
+                String amountStr = amountField.getText().toString().trim();
 
-                if (!recipient.isEmpty() && !amountStr.isEmpty()) {
-                    try {
-                        double amount = Double.parseDouble(amountStr);
-                        processTransfer(recipient, amount);
-                    } catch (NumberFormatException e) {
-                        Toast.makeText(TransferActivity.this, "Invalid amount", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
+                if (recipient.isEmpty() || amountStr.isEmpty()) {
                     Toast.makeText(TransferActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                try {
+                    double amount = Double.parseDouble(amountStr);
+                    if (amount <= 0) {
+                        Toast.makeText(TransferActivity.this, "Please enter a valid amount", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    processTransfer(recipient, amount);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(TransferActivity.this, "Invalid amount format", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -59,31 +67,52 @@ public class TransferActivity extends AppCompatActivity {
 
     private void loadBalance() {
         SharedPreferences prefs = getSharedPreferences("bank_data", MODE_PRIVATE);
-        String balance = prefs.getString("current_balance", "0.00");
-        currentBalanceText.setText("Current Balance: $" + balance);
+        String username = prefs.getString("logged_in_user", "");
+
+        if (!username.isEmpty()) {
+            User user = databaseHelper.getUserByUsername(username);
+            if (user != null) {
+                String balance = String.format("%.2f", user.getBalance());
+                currentBalanceText.setText("Current Balance: $" + balance);
+
+                prefs.edit().putString("current_balance", balance).apply();
+            }
+        }
     }
 
     private void processTransfer(String recipient, double amount) {
         SharedPreferences prefs = getSharedPreferences("bank_data", MODE_PRIVATE);
-        String currentBalanceStr = prefs.getString("current_balance", "0.00").replace(",", "");
+        String username = prefs.getString("logged_in_user", "");
 
-        try {
-            double currentBalance = Double.parseDouble(currentBalanceStr);
+        if (username.isEmpty()) {
+            Toast.makeText(this, "Session expired. Please login again.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        User user = databaseHelper.getUserByUsername(username);
+        if (user != null) {
+            double currentBalance = user.getBalance();
+
             if (amount <= currentBalance) {
                 double newBalance = currentBalance - amount;
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("current_balance", String.format("%.2f", newBalance));
-                editor.apply();
 
-                Toast.makeText(this, "Transfer successful! $" + amount + " sent to " + recipient, Toast.LENGTH_LONG).show();
-                loadBalance();
-                recipientField.setText("");
-                amountField.setText("");
+                if (databaseHelper.updateBalance(username, newBalance)) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("current_balance", String.format("%.2f", newBalance));
+                    editor.apply();
+
+                    Toast.makeText(this, "Transfer successful! $" + String.format("%.2f", amount) + " sent to " + recipient, Toast.LENGTH_LONG).show();
+                    loadBalance();
+                    recipientField.setText("");
+                    amountField.setText("");
+                } else {
+                    Toast.makeText(this, "Transfer failed. Please try again.", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 Toast.makeText(this, "Insufficient funds", Toast.LENGTH_SHORT).show();
             }
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Error processing transfer", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error loading account information", Toast.LENGTH_SHORT).show();
         }
     }
 }

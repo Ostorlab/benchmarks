@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,43 +15,61 @@ public class MainActivity extends AppCompatActivity {
     private EditText usernameField;
     private EditText passwordField;
     private Button loginButton;
+    private TextView registerLink;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        databaseHelper = new DatabaseHelper(this);
+
         usernameField = findViewById(R.id.username);
         passwordField = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginButton);
+        registerLink = findViewById(R.id.registerLink);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = usernameField.getText().toString();
-                String password = passwordField.getText().toString();
+                String username = usernameField.getText().toString().trim();
+                String password = passwordField.getText().toString().trim();
 
-                if (validateLogin(username, password)) {
-                    SharedPreferences prefs = getSharedPreferences("bank_data", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("logged_in_user", username);
-                    editor.putString("current_balance", "15,432.50");
-                    editor.putString("account_number", "4532-1234-5678-9012");
-                    editor.apply();
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                    Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
-                    startActivity(intent);
-                    finish();
+                if (databaseHelper.validateUser(username, password)) {
+                    User user = databaseHelper.getUserByUsername(username);
+                    if (user != null) {
+                        SharedPreferences prefs = getSharedPreferences("bank_data", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("logged_in_user", user.getUsername());
+                        editor.putString("current_balance", String.format("%.2f", user.getBalance()));
+                        editor.putString("account_number", user.getAccountNumber());
+                        editor.putString("user_email", user.getEmail());
+                        editor.putString("user_phone", user.getPhone());
+                        editor.putString("user_address", user.getAddress());
+                        editor.apply();
+
+                        Intent intent = new Intent(MainActivity.this, DashboardActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 } else {
-                    Toast.makeText(MainActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-    }
 
-    private boolean validateLogin(String username, String password) {
-        return (username.equals("demo") && password.equals("password")) ||
-               (username.equals("admin") && password.equals("admin123")) ||
-               (username.equals("user") && password.equals("user123"));
+        registerLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

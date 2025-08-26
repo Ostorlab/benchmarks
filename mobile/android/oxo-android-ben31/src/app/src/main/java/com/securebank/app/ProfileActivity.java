@@ -17,11 +17,14 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText addressField;
     private Button updateButton;
     private Button backButton;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        databaseHelper = new DatabaseHelper(this);
 
         usernameText = findViewById(R.id.usernameText);
         emailField = findViewById(R.id.emailField);
@@ -49,26 +52,58 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void loadProfileData() {
         SharedPreferences prefs = getSharedPreferences("bank_data", MODE_PRIVATE);
-        String username = prefs.getString("logged_in_user", "User");
-        String email = prefs.getString("user_email", "user@example.com");
-        String phone = prefs.getString("user_phone", "+1 (555) 123-4567");
-        String address = prefs.getString("user_address", "123 Main St, Anytown, USA");
+        String username = prefs.getString("logged_in_user", "");
 
-        usernameText.setText("Username: " + username);
-        emailField.setText(email);
-        phoneField.setText(phone);
-        addressField.setText(address);
+        if (!username.isEmpty()) {
+            User user = databaseHelper.getUserByUsername(username);
+            if (user != null) {
+                usernameText.setText("Username: " + user.getUsername());
+                emailField.setText(user.getEmail());
+                phoneField.setText(user.getPhone());
+                addressField.setText(user.getAddress());
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("user_email", user.getEmail());
+                editor.putString("user_phone", user.getPhone());
+                editor.putString("user_address", user.getAddress());
+                editor.apply();
+            }
+        } else {
+            usernameText.setText("Username: User");
+            emailField.setText("user@example.com");
+            phoneField.setText("+1 (555) 123-4567");
+            addressField.setText("123 Main St, Anytown, USA");
+        }
     }
 
     private void saveProfileData() {
         SharedPreferences prefs = getSharedPreferences("bank_data", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
+        String username = prefs.getString("logged_in_user", "");
 
-        editor.putString("user_email", emailField.getText().toString());
-        editor.putString("user_phone", phoneField.getText().toString());
-        editor.putString("user_address", addressField.getText().toString());
-        editor.apply();
+        if (username.isEmpty()) {
+            Toast.makeText(this, "Session expired. Please login again.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+        String email = emailField.getText().toString().trim();
+        String phone = phoneField.getText().toString().trim();
+        String address = addressField.getText().toString().trim();
+
+        if (email.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (databaseHelper.updateUserProfile(username, email, phone, address)) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("user_email", email);
+            editor.putString("user_phone", phone);
+            editor.putString("user_address", address);
+            editor.apply();
+
+            Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Failed to update profile. Please try again.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
