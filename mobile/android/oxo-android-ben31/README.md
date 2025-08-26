@@ -1,4 +1,4 @@
-# SecureBank Mobile Application - Ben31
+# oxo-android-ben31 SecureBank Mobile Application
 
 ## Overview
 
