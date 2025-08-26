@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SecureBank</string>
+    <string name="login_title">Welcome to SecureBank</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Sign In</string>
+    <string name="biometric_button">Use Biometric</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="transfer_title">Transfer Money</string>
+    <string name="payment_title">Bill Payment</string>
+    <string name="support_title">Customer Support</string>
+    <string name="logout_button">Logout</string>
+    <string name="back_button">Back</string>
+</resources>
