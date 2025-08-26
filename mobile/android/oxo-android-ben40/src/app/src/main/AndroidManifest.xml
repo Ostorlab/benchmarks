@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication"
+        tools:targetApi="31">
+        
+        <!-- Main Activity - News Feed -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MyApplication">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- Deep Link Handler Activity - VULNERABLE -->
+        <activity
+            android:name=".DeepLinkHandlerActivity"
+            android:exported="true"
+            android:label="Deep Link Handler"
+            android:theme="@style/Theme.MyApplication">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="newsreader" />
+            </intent-filter>
+        </activity>
+        
+        <!-- Article Viewer Activity -->
+        <activity
+            android:name=".ArticleViewerActivity"
+            android:exported="false"
+            android:label="Article Viewer"
+            android:theme="@style/Theme.MyApplication" />
+        
+        <!-- User Profile Activity -->
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false"
+            android:label="Profile"
+            android:theme="@style/Theme.MyApplication" />
+            
+        <!-- Settings Activity -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="Settings"
+            android:theme="@style/Theme.MyApplication" />
+            
+        <!-- Premium Content Activity -->
+        <activity
+            android:name=".PremiumContentActivity"
+            android:exported="false"
+            android:label="Premium Content"
+            android:theme="@style/Theme.MyApplication" />
+    </application>
+
+</manifest>
