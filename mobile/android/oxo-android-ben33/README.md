@@ -1,4 +1,4 @@
-# oxo-android-ben32 Critical broadcast receiver is not protected
+# oxo-android-ben33 Critical broadcast receiver is not protected
 
 ### Description
 
