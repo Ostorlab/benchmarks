@@ -1,4 +1,4 @@
-package com.example.vulnerablereceiverapp
+package com.example.receiverapp
 
 import android.content.BroadcastReceiver
 import android.content.Context

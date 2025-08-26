@@ -7,5 +7,5 @@
         android:id="@+id/btnSelfTrigger"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Trigger Vulnerable Receiver (from this app)"/>
+        android:text="Trigger Receiver (from this app)"/>
 </LinearLayout>

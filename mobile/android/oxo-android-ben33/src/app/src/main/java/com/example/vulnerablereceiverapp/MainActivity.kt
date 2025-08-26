@@ -1,4 +1,4 @@
-package com.example.vulnerablereceiverapp
+package com.example.receiverapp
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         val btnSelfTrigger: Button = findViewById(R.id.btnSelfTrigger)
         btnSelfTrigger.setOnClickListener {
-            val i = Intent("com.example.vulnerablereceiverapp.TRIGGER").apply {
+            val i = Intent("com.example.receiverapp.TRIGGER").apply {
                 setPackage(packageName)  // <-- Make it explicit to your app
                 putExtra("message", "Hello from inside the app")
                 putExtra("amount", 9999)

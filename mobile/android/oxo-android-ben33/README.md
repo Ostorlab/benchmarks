@@ -13,7 +13,7 @@ The vulnerability lies in the `Receiver.kt` file and the AndroidManifest.xml.
     android:name=".Receiver"
     android:exported="true">
     <intent-filter>
-        <action android:name="com.example.vulnerablereceiverapp.TRIGGER"/>
+        <action android:name="com.example.receiverapp.TRIGGER"/>
     </intent-filter>
 </receiver>
 ```
@@ -63,8 +63,8 @@ The APK will be located at app/build/outputs/apk/release/app-release-unsigned.ap
 2. Run the provider from adb:
     ```bash
     adb shell am broadcast \
-        -a com.example.vulnerablereceiverapp.TRIGGER \
-        -n com.example.vulnerablereceiverapp/.Receiver \
+        -a com.example.receiverapp.TRIGGER \
+        -n com.example.receiverapp/.Receiver \
         --es message "Pwned from ADB" \
         --ei amount 1337
    ```

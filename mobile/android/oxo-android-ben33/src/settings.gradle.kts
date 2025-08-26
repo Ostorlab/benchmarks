@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "vulnerableReceiverApp"
+rootProject.name = "ReceiverApp"
 include(":app")
  

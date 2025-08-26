@@ -19,7 +19,7 @@
             android:name=".Receiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.example.vulnerablereceiverapp.TRIGGER"/>
+                <action android:name="com.example.receiverapp.TRIGGER"/>
             </intent-filter>
         </receiver>
     </application>
