@@ -23,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         Button btnRegister = findViewById(R.id.btnRegister);
+        Button btnBack = findViewById(R.id.btnBack);
 
         btnRegister.setOnClickListener(v -> {
             String username = etUsername.getText().toString().trim();
@@ -57,6 +58,10 @@ public class RegisterActivity extends AppCompatActivity {
 
             Intent intent = new Intent(RegisterActivity.this, PasswordListActivity.class);
             startActivity(intent);
+            finish();
+        });
+
+        btnBack.setOnClickListener(v -> {
             finish();
         });
     }

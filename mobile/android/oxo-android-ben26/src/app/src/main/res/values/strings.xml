@@ -30,5 +30,6 @@
     <string name="edit">Edit</string>
     <string name="generate_backup">Generate Backup</string>
     <string name="restore_backup">Restore Backup</string>
+    <string name="back">Back</string>
 </resources>
 

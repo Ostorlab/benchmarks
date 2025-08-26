@@ -21,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
+        Button btnBack = findViewById(R.id.btnBack);
 
         btnLogin.setOnClickListener(v -> {
             String username = etUsername.getText().toString().trim();
@@ -38,6 +39,10 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        btnBack.setOnClickListener(v -> {
+            finish();
         });
     }
 }
