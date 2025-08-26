@@ -1,20 +1,29 @@
 package com.securebank.app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import java.util.List;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Locale;
 
 public class TransactionHistoryActivity extends AppCompatActivity {
 
     private TextView historyText;
     private Button backButton;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_history);
+
+        databaseHelper = new DatabaseHelper(this);
 
         historyText = findViewById(R.id.historyText);
         backButton = findViewById(R.id.backButton);
@@ -30,17 +39,66 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     }
 
     private void loadTransactionHistory() {
+        SharedPreferences prefs = getSharedPreferences("bank_data", MODE_PRIVATE);
+        String username = prefs.getString("logged_in_user", "");
+
+        if (username.isEmpty()) {
+            historyText.setText("No transaction history available. Please login.");
+            return;
+        }
+
+        List<Transaction> transactions = databaseHelper.getTransactionHistory(username);
+
+        if (transactions.isEmpty()) {
+            historyText.setText("No transactions found for your account.");
+            return;
+        }
+
         StringBuilder history = new StringBuilder();
         history.append("Recent Transactions:\n\n");
-        history.append("08/25/2025 - Transfer to John Smith - $250.00\n");
-        history.append("08/24/2025 - ATM Withdrawal - $100.00\n");
-        history.append("08/23/2025 - Online Purchase - $45.99\n");
-        history.append("08/22/2025 - Deposit - $1,200.00\n");
-        history.append("08/21/2025 - Transfer to Sarah Johnson - $75.00\n");
-        history.append("08/20/2025 - Bill Payment - $89.50\n");
-        history.append("08/19/2025 - ATM Withdrawal - $60.00\n");
-        history.append("08/18/2025 - Direct Deposit - $2,500.00\n");
+
+        for (Transaction transaction : transactions) {
+            String formattedDate = formatDate(transaction.getTransactionDate());
+            String formattedAmount = String.format("%.2f", transaction.getAmount());
+
+            history.append(formattedDate);
+            history.append(" - ");
+            history.append(transaction.getTransactionType());
+
+            if ("TRANSFER".equals(transaction.getTransactionType())) {
+                User recipient = databaseHelper.getUserByAccountNumber(transaction.getToAccount());
+                if (recipient != null) {
+                    history.append(" to ").append(recipient.getUsername());
+                } else {
+                    history.append(" to ").append(transaction.getToAccount());
+                }
+            } else if ("WITHDRAWAL".equals(transaction.getTransactionType())) {
+                history.append(" from ").append(transaction.getToAccount());
+            } else if ("PURCHASE".equals(transaction.getTransactionType())) {
+                history.append(" at ").append(transaction.getToAccount());
+            }
+
+            history.append(" - $").append(formattedAmount);
+
+            if (transaction.getDescription() != null && !transaction.getDescription().isEmpty()) {
+                history.append("\n   ").append(transaction.getDescription());
+            }
+
+            history.append("\n   Status: ").append(transaction.getStatus());
+            history.append("\n\n");
+        }
 
         historyText.setText(history.toString());
+    }
+
+    private String formatDate(String dateString) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+            Date date = inputFormat.parse(dateString);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            return dateString;
+        }
     }
 }

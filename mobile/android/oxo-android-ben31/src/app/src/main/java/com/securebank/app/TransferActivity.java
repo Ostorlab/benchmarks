@@ -94,19 +94,25 @@ public class TransferActivity extends AppCompatActivity {
             double currentBalance = user.getBalance();
 
             if (amount <= currentBalance) {
-                double newBalance = currentBalance - amount;
+                String description = "Transfer to " + recipient;
 
-                if (databaseHelper.updateBalance(username, newBalance)) {
+                if (databaseHelper.transferMoney(username, recipient, amount, description)) {
+                    User updatedUser = databaseHelper.getUserByUsername(username);
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString("current_balance", String.format("%.2f", newBalance));
+                    editor.putString("current_balance", String.format("%.2f", updatedUser.getBalance()));
                     editor.apply();
 
-                    Toast.makeText(this, "Transfer successful! $" + String.format("%.2f", amount) + " sent to " + recipient, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Transfer successful! $" + String.format("%.2f", amount) + " sent to account " + recipient, Toast.LENGTH_LONG).show();
                     loadBalance();
                     recipientField.setText("");
                     amountField.setText("");
                 } else {
-                    Toast.makeText(this, "Transfer failed. Please try again.", Toast.LENGTH_SHORT).show();
+                    User recipientUser = databaseHelper.getUserByAccountNumber(recipient);
+                    if (recipientUser == null) {
+                        Toast.makeText(this, "Recipient account not found. Please check the account number.", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Transfer failed. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             } else {
                 Toast.makeText(this, "Insufficient funds", Toast.LENGTH_SHORT).show();
