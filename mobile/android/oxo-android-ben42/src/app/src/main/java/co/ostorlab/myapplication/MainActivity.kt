@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         
-        // Initialize sample user data (vulnerable to JavaScript interface exploitation)
+        // Initialize sample user data
         initializeSampleUserData()
         
         // Initialize news feed UI

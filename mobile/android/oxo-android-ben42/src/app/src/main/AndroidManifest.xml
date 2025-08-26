@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         
-        <!-- Deep Link Handler Activity - VULNERABLE -->
+        <!-- Deep Link Handler Activity -->
         <activity
             android:name=".DeepLinkHandlerActivity"
             android:exported="true"
@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         
-        <!-- Article Viewer Activity - VULNERABLE to JavaScript Interface exploitation -->
+        <!-- Article Viewer Activity -->
         <activity
             android:name=".ArticleViewerActivity"
             android:exported="true"

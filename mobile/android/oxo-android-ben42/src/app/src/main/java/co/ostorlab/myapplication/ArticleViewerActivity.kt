@@ -35,13 +35,13 @@ class ArticleViewerActivity : AppCompatActivity() {
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         
-        // VULNERABILITY: File Access Settings - Allow unrestricted file access
+        // File Access Settings - Allow file access
         webView.settings.allowFileAccess = true
         webView.settings.allowContentAccess = true
         webView.settings.allowFileAccessFromFileURLs = true
         webView.settings.allowUniversalAccessFromFileURLs = true
         
-        // Additional dangerous settings for file access
+        // Additional settings for file access
         webView.settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
     }
     
@@ -116,7 +116,7 @@ class ArticleViewerActivity : AppCompatActivity() {
         
         // Load the article URL in WebView
         if (articleUrl != null && articleUrl.isNotEmpty()) {
-            // VULNERABILITY: No validation of URLs - allows file:// scheme access
+            // No validation of URLs - allows file:// scheme access
             webView.loadUrl(articleUrl)
         } else {
             // Load default content if no URL provided

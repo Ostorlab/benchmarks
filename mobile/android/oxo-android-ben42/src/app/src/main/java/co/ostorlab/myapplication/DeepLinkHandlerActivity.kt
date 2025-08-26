@@ -61,7 +61,7 @@ class DeepLinkHandlerActivity : AppCompatActivity() {
                 val redirectUrl = uri.getQueryParameter("to")
                 
                 if (redirectUrl != null) {
-                    // Direct redirect to any URL - VERY DANGEROUS!
+                    // Direct redirect to any URL
                     val intent = Intent(this, ArticleViewerActivity::class.java)
                     intent.putExtra("url", redirectUrl)
                     intent.putExtra("article_title", "Redirecting...")
