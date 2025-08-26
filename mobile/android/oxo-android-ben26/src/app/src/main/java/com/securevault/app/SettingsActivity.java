@@ -21,11 +21,9 @@ public class SettingsActivity extends AppCompatActivity {
         Button btnLogout = findViewById(R.id.btnLogout);
 
         switchBiometric.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // In a real app, this would configure biometric authentication
         });
 
         switchAutoBackup.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // In a real app, this would configure auto backup
         });
 
         btnLogout.setOnClickListener(v -> {

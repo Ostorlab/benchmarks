@@ -18,7 +18,6 @@ public class PasswordEntry {
         this.dateModified = System.currentTimeMillis();
     }
 
-    // Getters and setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

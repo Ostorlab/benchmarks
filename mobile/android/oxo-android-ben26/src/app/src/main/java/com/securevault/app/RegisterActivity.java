@@ -44,11 +44,9 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // Generate master key using insecure PRNG
             String masterKey = CryptoManager.generateMasterKey();
             storageManager.saveMasterKey(masterKey);
 
-            // Generate salt and hash password
             byte[] salt = CryptoManager.generateSalt();
             String passwordHash = CryptoManager.hashPassword(password, salt);
             String saltString = Base64.encodeToString(salt, Base64.DEFAULT);

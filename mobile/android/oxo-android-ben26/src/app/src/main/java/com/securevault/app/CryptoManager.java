@@ -15,24 +15,23 @@ public class CryptoManager {
     private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
     private static final int KEY_LENGTH = 256;
 
-    // Using insecure Random instead of SecureRandom
     private static final Random random = new Random();
 
     public static String generateMasterKey() {
-        byte[] keyBytes = new byte[32]; // 256 bits
-        random.nextBytes(keyBytes); // This is the vulnerability - using weak PRNG
+        byte[] keyBytes = new byte[32];
+        random.nextBytes(keyBytes);
         return Base64.encodeToString(keyBytes, Base64.DEFAULT);
     }
 
     public static byte[] generateSalt() {
         byte[] salt = new byte[16];
-        random.nextBytes(salt); // Weak salt generation
+        random.nextBytes(salt);
         return salt;
     }
 
     public static byte[] generateIV() {
         byte[] iv = new byte[16];
-        random.nextBytes(iv); // Weak IV generation
+        random.nextBytes(iv);
         return iv;
     }
 
@@ -49,7 +48,6 @@ public class CryptoManager {
 
             byte[] encrypted = cipher.doFinal(plaintext.getBytes());
 
-            // Combine IV and encrypted data
             byte[] combined = new byte[iv.length + encrypted.length];
             System.arraycopy(iv, 0, combined, 0, iv.length);
             System.arraycopy(encrypted, 0, combined, iv.length, encrypted.length);
@@ -68,7 +66,6 @@ public class CryptoManager {
 
             byte[] combined = Base64.decode(encryptedData, Base64.DEFAULT);
 
-            // Extract IV and encrypted data
             byte[] iv = new byte[16];
             byte[] encrypted = new byte[combined.length - 16];
             System.arraycopy(combined, 0, iv, 0, 16);
@@ -101,7 +98,7 @@ public class CryptoManager {
 
     public static String generateBackupKey() {
         byte[] keyBytes = new byte[32];
-        random.nextBytes(keyBytes); // Another instance of weak PRNG usage
+        random.nextBytes(keyBytes);
         return Base64.encodeToString(keyBytes, Base64.DEFAULT);
     }
 }

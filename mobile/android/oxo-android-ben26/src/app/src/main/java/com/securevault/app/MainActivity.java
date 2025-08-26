@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
         storageManager = new StorageManager(this);
 
-        // Check if user is already registered
         if (storageManager.isUserRegistered()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
