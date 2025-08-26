@@ -1,4 +1,4 @@
-# MyApplication1 - Unsafe Object Deserialization Vulnerability
+# oxo-android-ben25 Unsafe Object Deserialization Vulnerability
 
 ## Challenge Details
 
