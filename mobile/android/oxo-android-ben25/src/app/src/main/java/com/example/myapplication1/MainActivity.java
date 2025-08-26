@@ -1,117 +1,142 @@
 package com.example.myapplication1;
 
-import android.content.Intent;
+import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTaskInteractionListener {
+
+    private RecyclerView recyclerView;
+    private TaskAdapter taskAdapter;
+    private List<Task> taskList;
+    private TextView taskCountText;
+    private int nextTaskId = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        initViews();
+        setupRecyclerView();
+        createMockTasks();
+        updateTaskCount();
+    }
+
+    private void initViews() {
+        recyclerView = findViewById(R.id.recyclerView);
+        taskCountText = findViewById(R.id.taskCountText);
+        FloatingActionButton fabAddTask = findViewById(R.id.fabAddTask);
+        
+        fabAddTask.setOnClickListener(v -> showAddTaskDialog());
+    }
+
+    private void setupRecyclerView() {
+        taskList = new ArrayList<>();
+        taskAdapter = new TaskAdapter(taskList, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(taskAdapter);
+    }
+
+    private void createMockTasks() {
+        taskList.add(new Task(nextTaskId++, "Complete project proposal", "Write and submit the quarterly project proposal document", "HIGH"));
+        taskList.add(new Task(nextTaskId++, "Review code changes", "Review pull requests from team members and provide feedback", "MEDIUM"));
+        taskList.add(new Task(nextTaskId++, "Update documentation", "Update API documentation with recent changes", "LOW"));
+        taskList.add(new Task(nextTaskId++, "Team meeting preparation", "Prepare slides and agenda for next week's team meeting", "MEDIUM"));
+        taskList.add(new Task(nextTaskId++, "Bug fixes", "Fix the login authentication issue reported by QA", "HIGH"));
+        taskList.add(new Task(nextTaskId++, "Database optimization", "Optimize slow database queries in the analytics module", "MEDIUM"));
+        taskList.add(new Task(nextTaskId++, "Unit tests", "Write unit tests for the new payment processing feature", "LOW"));
+        taskList.add(new Task(nextTaskId++, "Security audit", "Conduct security review of the user authentication system", "HIGH"));
+        
+        taskAdapter.updateTasks(taskList);
+    }
+
+    private void showAddTaskDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Add New Task");
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(50, 20, 50, 20);
+
+        EditText titleInput = new EditText(this);
+        titleInput.setHint("Task title");
+        layout.addView(titleInput);
+
+        EditText descriptionInput = new EditText(this);
+        descriptionInput.setHint("Task description");
+        layout.addView(descriptionInput);
+
+        Spinner prioritySpinner = new Spinner(this);
+        ArrayAdapter<String> priorityAdapter = new ArrayAdapter<>(this, 
+            android.R.layout.simple_spinner_item, new String[]{"LOW", "MEDIUM", "HIGH"});
+        priorityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        prioritySpinner.setAdapter(priorityAdapter);
+        layout.addView(prioritySpinner);
+
+        builder.setView(layout);
+
+        builder.setPositiveButton("Add", (dialog, which) -> {
+            String title = titleInput.getText().toString().trim();
+            String description = descriptionInput.getText().toString().trim();
+            String priority = prioritySpinner.getSelectedItem().toString();
+
+            if (!title.isEmpty()) {
+                Task newTask = new Task(nextTaskId++, title, description, priority);
+                taskList.add(0, newTask);
+                taskAdapter.updateTasks(taskList);
+                updateTaskCount();
+                Toast.makeText(this, "Task added successfully!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Please enter a task title", Toast.LENGTH_SHORT).show();
+            }
         });
-        
-        setupMockApp();
+
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
     }
-    
-    private void setupMockApp() {
-        androidx.constraintlayout.widget.ConstraintLayout constraintLayout = 
-            (androidx.constraintlayout.widget.ConstraintLayout) findViewById(R.id.main);
-        
-        TextView welcomeText = new TextView(this);
-        welcomeText.setText("Welcome to MyApp");
-        welcomeText.setTextSize(20);
-        welcomeText.setGravity(android.view.Gravity.CENTER);
-        
-        Button profileButton = new Button(this);
-        profileButton.setText("View Profile");
-        profileButton.setOnClickListener(v -> showProfile());
-        
-        Button settingsButton = new Button(this);
-        settingsButton.setText("Settings");
-        settingsButton.setOnClickListener(v -> showSettings());
-        
-        Button aboutButton = new Button(this);
-        aboutButton.setText("About");
-        aboutButton.setOnClickListener(v -> showAbout());
-        
-        androidx.constraintlayout.widget.ConstraintLayout.LayoutParams welcomeParams = 
-            new androidx.constraintlayout.widget.ConstraintLayout.LayoutParams(
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        welcomeParams.topToTop = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
-        welcomeParams.leftToLeft = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
-        welcomeParams.rightToRight = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
-        welcomeParams.topMargin = 100;
-        
-        androidx.constraintlayout.widget.ConstraintLayout.LayoutParams profileParams = 
-            new androidx.constraintlayout.widget.ConstraintLayout.LayoutParams(
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.MATCH_PARENT,
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        profileParams.topToBottom = welcomeText.getId();
-        profileParams.leftToLeft = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
-        profileParams.rightToRight = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
-        profileParams.topMargin = 50;
-        profileParams.leftMargin = 50;
-        profileParams.rightMargin = 50;
-        
-        androidx.constraintlayout.widget.ConstraintLayout.LayoutParams settingsParams = 
-            new androidx.constraintlayout.widget.ConstraintLayout.LayoutParams(
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.MATCH_PARENT,
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        settingsParams.topToBottom = profileButton.getId();
-        settingsParams.leftToLeft = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
-        settingsParams.rightToRight = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
-        settingsParams.topMargin = 20;
-        settingsParams.leftMargin = 50;
-        settingsParams.rightMargin = 50;
-        
-        androidx.constraintlayout.widget.ConstraintLayout.LayoutParams aboutParams = 
-            new androidx.constraintlayout.widget.ConstraintLayout.LayoutParams(
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.MATCH_PARENT,
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        aboutParams.topToBottom = settingsButton.getId();
-        aboutParams.leftToLeft = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
-        aboutParams.rightToRight = androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID;
-        aboutParams.topMargin = 20;
-        aboutParams.leftMargin = 50;
-        aboutParams.rightMargin = 50;
-        
-        welcomeText.setLayoutParams(welcomeParams);
-        profileButton.setLayoutParams(profileParams);
-        settingsButton.setLayoutParams(settingsParams);
-        aboutButton.setLayoutParams(aboutParams);
-        
-        constraintLayout.addView(welcomeText);
-        constraintLayout.addView(profileButton);
-        constraintLayout.addView(settingsButton);
-        constraintLayout.addView(aboutButton);
+
+    @Override
+    public void onTaskCompleted(Task task, boolean isCompleted) {
+        updateTaskCount();
+        String message = isCompleted ? "Task marked as completed!" : "Task marked as pending!";
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-    
-    private void showProfile() {
-        Toast.makeText(this, "Profile: Admin User\nEmail: admin@example.com\nStatus: Active", Toast.LENGTH_LONG).show();
+
+    @Override
+    public void onTaskDeleted(Task task) {
+        taskList.remove(task);
+        taskAdapter.updateTasks(taskList);
+        updateTaskCount();
+        Toast.makeText(this, "Task deleted!", Toast.LENGTH_SHORT).show();
     }
-    
-    private void showSettings() {
-        Toast.makeText(this, "Settings: Theme, Language, Notifications", Toast.LENGTH_SHORT).show();
-    }
-    
-    private void showAbout() {
-        Toast.makeText(this, "MyApp v1.0\nA simple demo application", Toast.LENGTH_SHORT).show();
+
+    private void updateTaskCount() {
+        int pendingTasks = 0;
+        for (Task task : taskList) {
+            if (!task.isCompleted()) {
+                pendingTasks++;
+            }
+        }
+        String countText = pendingTasks == 1 ? 
+            "You have 1 task pending" : 
+            "You have " + pendingTasks + " tasks pending";
+        taskCountText.setText(countText);
     }
 }
