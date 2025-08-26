@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 
-class ArticleViewerActivity : ComponentActivity() {
+class HtmlViewerActivity : ComponentActivity() {
     private lateinit var webView: WebView
     private lateinit var titleView: TextView
     
@@ -39,7 +39,7 @@ class ArticleViewerActivity : ComponentActivity() {
             webViewClient = WebViewClient()
             webChromeClient = object : WebChromeClient() {
                 override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
-                    AlertDialog.Builder(this@ArticleViewerActivity)
+                    AlertDialog.Builder(this@HtmlViewerActivity)
                         .setMessage(message)
                         .setPositiveButton("OK") { _, _ -> result?.confirm() }
                         .show()
@@ -72,14 +72,14 @@ class ArticleViewerActivity : ComponentActivity() {
     private fun loadWorkoutContent() {
         // Get workout information from intent - VULNERABLE to Event Handler Injection
         val workoutTitle = intent.getStringExtra("title") ?: "Fitness Activity"
-        val workoutContent = intent.getStringExtra("content") ?: ""
+        val articleContent = intent.getStringExtra("content") ?: ""
         
         // Set the workout title
         titleView.text = workoutTitle
         
         // Load content into WebView - THIS IS THE VULNERABILITY!
         // Attack Vector 2: Event Handler Injection with Social Engineering
-        if (workoutContent.isNotEmpty()) {
+        if (articleContent.isNotEmpty()) {
             // VULNERABLE: Directly inject user content into HTML template
             // This allows event handler injection attacks (onclick, onmouseover, onerror, etc.)
             val htmlContent = """
@@ -101,7 +101,7 @@ class ArticleViewerActivity : ComponentActivity() {
                         <p>Your personalized fitness content below:</p>
                     </div>
                     <div class="workout-content">
-                        $workoutContent
+                        $articleContent
                     </div>
                 </body>
                 </html>
