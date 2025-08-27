@@ -1,4 +1,4 @@
-# oxo-android-ben51 Shell Command Injection - SystemTools
+# oxo-android-ben51 Shell Command Injection
 
 ## Challenge Details
 
@@ -29,17 +29,6 @@ Update your SDK versions as required (compileSdkVersion >= 34 recommended).
 
 Build and deploy the app to an emulator or Android device.
 
-### Terminal Output Visibility Note
-When running commands in the terminal, the output may not be visible. As a workaround, redirect the command's output to a file in `/tmp`, then read the file to view the results.
-
-Example: `./gradlew assembleDebug > /tmp/build.log 2>&1 && tail -n 200 /tmp/build.log`
-
-### Build Commands
 ```bash
 ./gradlew assembleDebug
 ```
-
-## Package Information
-- **Package Name**: com.systemtools.ben51
-- **Main Launcher Activity**: com.systemtools.ben51.MainActivity
-- **App Name**: SystemTools
