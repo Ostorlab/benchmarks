@@ -49,6 +49,15 @@ adb shell am start -n com.securityplus.vault/.VaultActivity
 
 **Difficulty**: Easy
 
+## Vulnerability Selection Rationale
+
+These vulnerability patterns are based on documented real-world security issues:
+
+- **Intent Parameter Bypass**: Common in enterprise apps with debug builds left in production (similar to banking and enterprise app findings)
+- **Activity Lifecycle Issues**: Based on Nextcloud Talk #631206 - rapid app switching confused authentication state
+- **Back Button Manipulation**: Mirrors accessibility bypass patterns found in banking apps where user-friendly features create security gaps
+- **Static Variable Persistence**: Classic Android anti-pattern found in apps prioritizing performance over security
+
 ## Impact Assessment
 
 - **Confidentiality**: High - Access to passwords and personal data
