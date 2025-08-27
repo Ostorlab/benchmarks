@@ -1,4 +1,4 @@
-# oxo-android-ben48 Unsafe Deserialization Vulnerability - 
+# oxo-android-ben48 Unsafe Deserialization Vulnerability
 
 ## Challenge Details
 
@@ -8,16 +8,16 @@ This Android app demonstrates a critical security vulnerability related to unsaf
 
 The vulnerability manifests in the following way:
 
--   The `DataParcelable` class accepts arbitrary class names and JSON data through Android's Parcel mechanism
--   During deserialization, it uses `Class.forName()` to dynamically load classes based on untrusted input
--   Gson then deserializes the JSON data into instances of these dynamically loaded classes
--   This allows attackers to instantiate arbitrary classes and potentially execute malicious code
+- The `DataParcelable` class accepts arbitrary class names and JSON data through Android's Parcel mechanism
+- During deserialization, it uses `Class.forName()` to dynamically load classes based on untrusted input
+- Gson then deserializes the JSON data into instances of these dynamically loaded classes
+- This allows attackers to instantiate arbitrary classes and potentially execute malicious code
 
 This vulnerability highlights the dangers of deserializing untrusted data without proper validation and class whitelisting.
 
 ### Vulnerability Type and Category
--   **Type:** Unsafe Deserialization / Remote Code Execution
--   **Category:** Insecure Deserialization (OWASP) / Deserialization of Untrusted Data (CWE-502)
+- **Type:** Unsafe Deserialization / Remote Code Execution
+- **Category:** Insecure Deserialization (OWASP) / Deserialization of Untrusted Data (CWE-502)
 
 ### Difficulty
 Medium
@@ -37,7 +37,7 @@ The APK will be located at app/build/outputs/apk/debug/app-debug.apk.
 
 1. Install the application on an Android device or emulator.
 
-2. The vulnerability exists in the `DataParcelable` class at `src/app/src/main/java/com/example/myapplication3/DataParcelable.java:32-33`
+2. The vulnerability exists in the `DataParcelable` class at `app/src/main/java/com/example/myapplication3/DataParcelable.java:32-33`
 
 3. To trigger the vulnerability, an attacker would need to:
    - Create a malicious Parcel containing a dangerous class name and corresponding JSON data

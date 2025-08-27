@@ -1,5 +1,6 @@
 package com.example.myapplication3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
@@ -27,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        
+
         tasksDisplay = findViewById(R.id.tasksDisplay);
         Button addTaskButton = findViewById(R.id.addTaskButton);
         Button toggleFirstTaskButton = findViewById(R.id.toggleFirstTaskButton);
-        
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -41,10 +42,56 @@ public class MainActivity extends AppCompatActivity {
         initializeTasks();
         addTaskButton.setOnClickListener(v -> addNewTask());
         toggleFirstTaskButton.setOnClickListener(v -> toggleFirstTask());
-        
+
+        // Process Intent extras
+        processIntentExtras();
+
         displayTasks();
     }
-    
+
+    // Process external data from Intent
+    private void processIntentExtras() {
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("data_class") && intent.hasExtra("data_json")) {
+            String className = intent.getStringExtra("data_class");
+            String jsonData = intent.getStringExtra("data_json");
+
+            Log.d(TAG, "Received Intent extras - Class: " + className + ", JSON: " + jsonData);
+            Toast.makeText(this, "Processing external data...", Toast.LENGTH_SHORT).show();
+
+            try {
+                // Create DataParcelable from intent data
+                Parcel parcel = Parcel.obtain();
+                parcel.writeString(className);
+                parcel.writeString(jsonData);
+                parcel.setDataPosition(0);
+
+                // Deserialize data
+                DataParcelable data = DataParcelable.CREATOR.createFromParcel(parcel);
+                parcel.recycle();
+
+                Log.d(TAG, "Successfully deserialized: " + data.data.getClass().getName());
+                Toast.makeText(this, "Data processed: " + data.data.getClass().getSimpleName(), Toast.LENGTH_LONG).show();
+
+                // If it's NativeDataHandler, clean up resources
+                if (data.data instanceof NativeDataHandler) {
+                    NativeDataHandler handler = (NativeDataHandler) data.data;
+                    Log.d(TAG, "Calling native cleanup method");
+
+                    // Clean up native resources
+                    handler.invokeNativeFree();
+
+                    Toast.makeText(this, "Native operation completed!", Toast.LENGTH_LONG).show();
+                }
+
+            } catch (Exception e) {
+                String error = "Failed to process external data: " + e.getMessage();
+                Log.e(TAG, error, e);
+                Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     private void initializeTasks() {
         tasks = new ArrayList<>();
         tasks.add(new Task(nextTaskId++, "Learn Android Development", "Complete the Android basics course"));
@@ -53,24 +100,24 @@ public class MainActivity extends AppCompatActivity {
         tasks.add(new Task(nextTaskId++, "Test Application", "Ensure all features work correctly"));
         tasks.add(new Task(nextTaskId++, "Code Review", "Review code for security and best practices"));
     }
-    
+
     private void addNewTask() {
         String[] titles = {
-            "Write Unit Tests", "Update Documentation", "Optimize Performance", 
-            "Fix Bugs", "Add New Features", "Security Audit"
+                "Write Unit Tests", "Update Documentation", "Optimize Performance",
+                "Fix Bugs", "Add New Features", "Security Audit"
         };
         String[] descriptions = {
-            "Add comprehensive unit tests", "Update project documentation", "Improve app performance",
-            "Fix reported issues", "Implement requested features", "Review code for security issues"
+                "Add comprehensive unit tests", "Update project documentation", "Improve app performance",
+                "Fix reported issues", "Implement requested features", "Review code for security issues"
         };
-        
+
         int randomIndex = (int) (Math.random() * titles.length);
         Task newTask = new Task(nextTaskId++, titles[randomIndex], descriptions[randomIndex]);
         tasks.add(newTask);
         displayTasks();
         Toast.makeText(this, "Added: " + newTask.getTitle(), Toast.LENGTH_SHORT).show();
     }
-    
+
     private void toggleFirstTask() {
         if (!tasks.isEmpty()) {
             Task firstTask = tasks.get(0);
@@ -123,17 +170,17 @@ public class MainActivity extends AppCompatActivity {
     private void displayTasks() {
         StringBuilder display = new StringBuilder();
         display.append("📋 TODO LIST (").append(tasks.size()).append(" tasks)\n\n");
-        
+
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
             String status = task.isCompleted() ? "✅" : "⭕";
-            display.append(String.format("%d. %s %s\n   %s\n\n", 
-                i + 1, status, task.getTitle(), task.getDescription()));
+            display.append(String.format("%d. %s %s\n   %s\n\n",
+                    i + 1, status, task.getTitle(), task.getDescription()));
         }
-        
+
         long completedCount = tasks.stream().mapToLong(task -> task.isCompleted() ? 1 : 0).sum();
         display.append(String.format("Progress: %d/%d completed", completedCount, tasks.size()));
-        
+
         tasksDisplay.setText(display.toString());
     }
 }
