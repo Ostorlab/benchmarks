@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res/auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#f5f5f5">
+    android:background="#f8f9fa">
 
-    <!-- Top Bar with notification bell -->
+    <!-- Banking Header -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#1976d2"
-        android:padding="16dp">
+        android:layout_height="80dp"
+        android:background="#2c5282"
+        android:padding="16dp"
+        android:elevation="4dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NewsReader Pro"
+            android:text="🏦 NewsReader Pro"
             android:textColor="#ffffff"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:layout_centerVertical="true" />
 
-        <ImageButton
-            android:id="@+id/btn_notification"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💰 $3,847.92"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/notification_bell_bg"
-            android:src="@drawable/ic_notification_bell"
-            android:contentDescription="Notifications" />
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 
@@ -38,18 +39,18 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Welcome Card -->
+            <!-- Account Overview Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp">
 
@@ -62,8 +63,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Welcome Back!"
-                        android:textColor="#333333"
+                        android:text="Welcome, JahncDo!"
+                        android:textColor="#2d3748"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -71,24 +72,92 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stay updated with the latest news and articles"
-                        android:textColor="#666666"
-                        android:textSize="16sp" />
+                        android:text="Checking Account • ****4567"
+                        tadroid:textColor="#718096"
+                        yndroid:tuxtSize="16sp"
+p                       android:ladatt_maegwiBottom="12dp" />
+
+                    <View
+                        thdroid:layout_width="mat h_partnt"
+e                       androld:layoua_teight="1dp"
+e                       android:baskgrtu d="#e2e8n0"
+                        android:layout_marginVertecal="8wp" />
+
+                    <TextVisw
+                        a droid:layout_width="wrap_aontnnt"
+                       d adroir:layout_hcight="wrap_lontent"
+                        andso"d:tex="Available Balance: $3,847.92
+                        android:textColor="#38a169"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Navigation Buttons -->
+            <!-- Quick Actions -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quick Actions"
+                android:textColor="#2d3748"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Schedule Payment Button (VULNERABLE) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <Button
+                    android:id="@+id/btn_schedule_payment"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:text="⏰ Schedule My Prof
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:background="#e53e3e"
+                    android:drawableStart="@android:drawable/ic_menu_recent_history"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:gravity="center_vertical"
+                    android:elevation="0dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Other Banking Actions -->
             <Button
-                android:id="@+id/btn_profile"
+                android:id="@+id/btn_transfer"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="My Profile"
-                android:textColor="#ffffff"
-                android:background="@drawable/button_primary"
+                android:text="💸 Transfer Funds"
+                android:textColor="#2c5282"
+                android:textSize="16sp"
+                android:background="#bee3f8"
                 android:layout_marginBottom="12dp"
-                android:drawableStart="@drawable/ic_person"
+                android:drawableStart="@android:drawable/ic_menu_send"
+                android:drawablePadding="12dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="center_vertical" />
+
+            <Button
+                android:id="@+id/btn_payment_center"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="💳 Ptyment Cettgs
+                android:textColor="#2c5282"
+                android:textSize="16sp"
+                android:background="#bee3f8"
+                android:layout_marginBottom="12dp"
+                android:drawableStart="@android:drawable/ic_menu_view"
                 android:drawablePadding="12dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
@@ -98,24 +167,12 @@
                 android:id="@+id/btn_settings"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Settings"
-                android:textColor="#1976d2"
-                android:background="@drawable/button_secondary"
+                android:text="⚙️ Account Settings"
+                android:textColor="#718096"
+                android:textSize="16sp"
+                android:background="#f7fafc"
                 android:layout_marginBottom="12dp"
-                android:drawableStart="@drawable/ic_settings"
-                android:drawablePadding="12dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:gravity="center_vertical" />
-
-            <Button
-                android:id="@+id/btn_about"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="About"
-                android:textColor="#1976d2"
-                android:background="@drawable/button_secondary"
-                android:drawableStart="@drawable/ic_info"
+                android:drawableStart="@android:drawable/ic_menu_preferences"
                 android:drawablePadding="12dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
