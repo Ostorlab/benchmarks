@@ -1,33 +1,30 @@
-# oxo-android-ben54: Implicit Broadcast with Sensitive Information
+# oxo-android-ben54: Implicit Broadcast with Sensitive Bluetooth Information
 
 ## Vulnerability Overview
 
-Implicit Broadcast with Sensitive Information occurs when Android applications send broadcast intents containing sensitive data without restricting which applications can receive them. This vulnerability allows any app with a matching BroadcastReceiver to intercept and access confidential information that should remain within the originating app or trusted components.
+Implicit Broadcast with Sensitive Bluetooth Information occurs when Android applications send broadcast intents containing sensitive **Bluetooth device data** without restricting which applications can receive them. This vulnerability allows any app with a matching BroadcastReceiver to intercept and access **Bluetooth MAC addresses**, device names, and connection information.
 
-## Attack Vector: Fitness and Device Data Exposure
+## Attack Vector: Bluetooth Device Information Exposure
 
-**Brief Explanation**: A fitness tracking app that broadcasts workout data, device information, and user profile data through implicit intents that can be intercepted by any app with matching receivers.
+**Brief Explanation**: A fitness tracking app that broadcasts **Bluetooth device information** (MAC addresses, device names, battery levels, pairing status) through implicit intents that can be intercepted by any app with matching receivers, enabling device tracking and profiling attacks.
 
 **Key Characteristics:**
-- Broadcasts workout data (heart rate, calories, location, user profiles)
-- Includes Bluetooth device information (MAC addresses, device names, battery levels)
-- Sends user account information (email, account type, user ID)
-- No permission requirements for receivers
+- Broadcasts **Bluetooth device MAC addresses** and pairing information
+- Exposes connected fitness device names and battery levels
+- Leaks Bluetooth connection status and sync data  
+- No permission requirements for malicious receivers to intercept Bluetooth data
 
 **Vulnerable Code Pattern:**
 ```kotlin
-// Broadcasting workout data without restrictions
-val workoutIntent = Intent("com.fittracker.WORKOUT_UPDATE")
-workoutIntent.putExtra("user_id", "user_12345") 
-workoutIntent.putExtra("heart_rate", currentHeartRate)
-workoutIntent.putExtra("calories_burned", caloriesBurned)
-workoutIntent.putExtra("location_lat", 40.7128)
-workoutIntent.putExtra("location_lon", -74.0060)
-sendBroadcast(workoutIntent)  // VULNERABLE - Implicit broadcast!
-
-// Broadcasting device information
+// VULNERABLE: Broadcasting Bluetooth device information without restrictions
 val deviceIntent = Intent("com.fittracker.DEVICE_CONNECTED")
-deviceIntent.putExtra("device_address", bluetoothDevice.address)
+deviceIntent.putExtra("device_address", "A4:B5:C6:D7:E8:F9")  // Bluetooth MAC
+deviceIntent.putExtra("device_name", "FitBand Pro")
+deviceIntent.putExtra("battery_level", 85)
+deviceIntent.putExtra("connection_status", "Connected")
+sendBroadcast(deviceIntent)  // VULNERABLE - Any app can receive Bluetooth data!
+
+// Broadcasting Bluetooth sync data
 deviceIntent.putExtra("device_name", bluetoothDevice.name)
 deviceIntent.putExtra("user_profile", "John Doe, Premium Member")
 sendBroadcast(deviceIntent)  // VULNERABLE - No permission required!

@@ -208,8 +208,7 @@ class DeviceManagerActivity : ComponentActivity() {
         if (!connectedDevices.any { it.address == newDevice.address }) {
             connectedDevices.add(newDevice)
             updateDeviceList()
-            
-            // VULNERABILITY: Broadcasting discovered device information
+
             broadcastDeviceDiscovered(newDevice)
         }
     }
@@ -222,8 +221,7 @@ class DeviceManagerActivity : ComponentActivity() {
         if (index != -1) {
             connectedDevices[index] = device.copy(isConnected = true)
             updateDeviceList()
-            
-            // VULNERABILITY: Broadcasting connection details
+
             broadcastDeviceConnected(device)
         }
     }
@@ -253,12 +251,10 @@ class DeviceManagerActivity : ComponentActivity() {
             }
         }
         updateDeviceList()
-        
-        // VULNERABILITY: Broadcasting sync data with sensitive information
+
         broadcastSyncComplete()
     }
-    
-    // VULNERABILITY METHODS: Broadcasting sensitive device information without restrictions
+
     
     private fun broadcastDeviceInventory() {
         val inventoryIntent = Intent("com.fittracker.DEVICE_INVENTORY")

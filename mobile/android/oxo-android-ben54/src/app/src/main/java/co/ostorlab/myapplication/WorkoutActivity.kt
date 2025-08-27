@@ -229,8 +229,7 @@ class WorkoutActivity : ComponentActivity() {
         distance = (elapsedTime / 1000.0 * 0.002).toFloat()
         distanceText.text = "📍 Distance: ${String.format("%.2f", distance)} km"
     }
-    
-    // VULNERABILITY: Broadcasting sensitive workout data without restrictions
+
     private fun broadcastWorkoutData() {
         val workoutIntent = Intent("com.fittracker.WORKOUT_UPDATE")
         workoutIntent.putExtra("user_id", "user_12345") 
