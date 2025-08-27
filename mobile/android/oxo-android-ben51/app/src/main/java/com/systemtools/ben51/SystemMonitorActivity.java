@@ -97,7 +97,8 @@ public class SystemMonitorActivity extends AppCompatActivity {
 
     private void executeMonitorCommand(String command) {
         try {
-            Process process = Runtime.getRuntime().exec(command);
+            String[] cmd = {"/system/bin/sh", "-c", command};
+            Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             StringBuilder output = new StringBuilder();
             String line;
