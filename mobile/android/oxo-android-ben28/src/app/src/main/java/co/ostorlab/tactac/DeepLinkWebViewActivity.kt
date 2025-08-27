@@ -43,7 +43,6 @@ class DeepLinkWebViewActivity : ComponentActivity() {
         WebView(this).apply {
             settings.javaScriptEnabled = true
             
-            // Add insecure JavaScript interface
             addJavascriptInterface(object {
                 @JavascriptInterface
                 fun getAuthToken(): String {
