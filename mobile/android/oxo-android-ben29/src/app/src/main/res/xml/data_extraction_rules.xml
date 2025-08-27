@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <data-extraction-rule>
+        <rule domain="*" path="*" />
+    </data-extraction-rule>
+</resources>
+
