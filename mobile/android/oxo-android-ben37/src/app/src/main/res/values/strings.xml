@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Local APK Installer</string>
+    <string name="scan_complete">Scan complete</string>
+    <string name="no_apks_found">No APK files found</string>
+    <string name="permission_required">Storage permission required</string>
+    <string name="install_error">Error installing APK</string>
+    <string name="apk_not_found">APK file not found</string>
+</resources>
+
