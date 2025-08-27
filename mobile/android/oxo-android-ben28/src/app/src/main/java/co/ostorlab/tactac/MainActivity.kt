@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Greeting("Android") {
-                        // Launch DeepLinkWebViewActivity with untrusted URL
                         val intent = Intent(this, DeepLinkWebViewActivity::class.java).apply {
                             putExtra("url", "https://tactac.com/profile")
                         }
