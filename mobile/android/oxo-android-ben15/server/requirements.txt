@@ -1,4 +1,4 @@
 Flask==2.3.3
 Flask-SQLAlchemy==3.0.5
 Flask-JWT-Extended==4.5.3
-Werkzeug==2.3.7
+Werkzeug==3.0.6
