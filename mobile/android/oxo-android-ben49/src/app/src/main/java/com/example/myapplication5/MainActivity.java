@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnIte
     private void setupRecyclerView() {
         foodList = createMockFoodData();
         adapter = new FoodAdapter(foodList, this);
-        
+
         foodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         foodRecyclerView.setAdapter(adapter);
     }
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnIte
     private void setupClickListeners() {
         checkoutButton.setOnClickListener(v -> {
             if (totalAmount > 0) {
-                Toast.makeText(this, "Order placed! Total: $" + 
-                    new DecimalFormat("#0.00").format(totalAmount), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Order placed! Total: $" +
+                        new DecimalFormat("#0.00").format(totalAmount), Toast.LENGTH_LONG).show();
                 totalAmount = 0.0;
                 updateTotalText();
             } else {

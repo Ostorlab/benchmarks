@@ -15,11 +15,11 @@ The application's `DeepLinkRouter.java` contains a dangerous information disclos
 - When `section=admin` and `custom_url` is provided, it directly loads the URL into `AdminWebViewActivity`
 - This bypasses normal authentication and access controls
 
-**Information Disclosure Impact (`AdminWebViewActivity.java:31-38`)**:
+**Information Disclosure Impact (`AdminWebViewActivity.java:28-29`)**:
 - The WebView exposes a JavaScript interface with `getUserData()` and `getSystemInfo()` methods
-- These methods return sensitive information including:
+- These methods connect to a Flask backend server that returns sensitive information including:
   - User tokens: `"secret_token_123"`
-  - API keys: `"sk_live_12345"`
+  - API keys: `"sk_live_12345"`  
   - User email addresses and admin privileges
   - System debug information
 
@@ -31,17 +31,28 @@ The application's `DeepLinkRouter.java` contains a dangerous information disclos
 ### Difficulty
 High
 
-## Application Features
+## Application Architecture
 
+### Android Application (`src/`)
 This food delivery app includes:
-- Food menu browsing with RecyclerView
-- Shopping cart functionality
-- Deep link routing for various app sections
-- Admin WebView interface with JavaScript bridge
-- Support for promotional and support deep links
+- **MainActivity.java**: Main food menu interface with RecyclerView for browsing items and shopping cart functionality
+- **DeepLinkRouter.java**: Handles deep link routing for various app sections (webview, promotion, support)
+- **AdminWebViewActivity.java**: Privileged WebView with JavaScript bridge that exposes sensitive API calls
+- **Food.java & FoodAdapter.java**: Data models and RecyclerView adapter for food items
+- **AndroidManifest.xml**: Defines deep link schemes (`foodapp://` and `fooddelivery://`)
+
+### Backend Server (`server/`)
+Flask-based API server that provides sensitive data endpoints:
+- **app.py**: Main Flask application with vulnerable endpoints:
+  - `/api/user-data`: Returns user credentials and tokens
+  - `/api/system-info`: Returns system information and API keys
+- **Dockerfile**: Container configuration for the Flask server
+- **docker-compose.yml**: Service orchestration configuration
+- **requirements.txt**: Python dependencies (Flask 2.3.3, Flask-CORS 4.0.0)
 
 ## Build Instructions
 
+### Android Application
 This project uses Android Studio with Java.
 
 1. Open the project in Android Studio
@@ -49,11 +60,18 @@ This project uses Android Studio with Java.
 3. Ensure minimum SDK version 31 is available
 4. Build and deploy the app to an emulator or Android device
 
-### Dependencies
+#### Dependencies
 - AndroidX AppCompat
 - Material Design Components
 - ConstraintLayout
 - RecyclerView
+- OkHttp3 (for API calls)
+
+### Backend Server
+1. Navigate to the `server/` directory
+2. Run with Docker: `docker-compose up -d`
+3. Or run locally: `pip install -r requirements.txt && python app.py`
+4. Server runs on port 5000 and exposes the vulnerable API endpoints
 
 ## Technical Analysis
 
