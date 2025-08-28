@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FitTracker Pro</string>
-    <!-- VULNERABLE: Hardcoded Firebase URL exposed in app resources -->
-    <string name="firebase_database_url">https://fittracker-sync-backend-default-rtdb.firebaseio.com</string>
-    <string name="firebase_project_id">fittracker-sync-backend</string>
+    <!-- Legitimate fitness app settings -->
+    <string name="cloud_sync_endpoint">https://api.fittracker-pro.com/sync</string>
+    <string name="analytics_key">FT_ANALYTICS_KEY_2024</string>
+    <string name="support_email">support@fittracker-pro.com</string>
 </resources>

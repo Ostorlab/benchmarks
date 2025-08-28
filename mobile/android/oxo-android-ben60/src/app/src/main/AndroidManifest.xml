@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -29,6 +30,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".WorkoutActivity"
+            android:exported="false"
+            android:label="Start Workout"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".ProgressActivity"
+            android:exported="false"
+            android:label="Progress"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:label="Profile"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:label="Settings"
+            android:parentActivityName=".MainActivity" />
+
+        <!-- VULNERABLE: Internal receiver for location sync - appears legitimate -->
+        <receiver
+            android:name=".LocationSyncReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.fittracker.LOCATION_UPDATE" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
