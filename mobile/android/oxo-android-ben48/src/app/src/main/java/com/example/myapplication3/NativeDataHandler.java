@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class NativeDataHandler implements Serializable {
     static {
-        System.loadLibrary("ovaa");
+        System.loadLibrary("nativelib");
     }
 
     private static final long serialVersionUID = 0L;
