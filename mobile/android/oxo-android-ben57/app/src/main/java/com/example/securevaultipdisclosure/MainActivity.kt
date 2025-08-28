@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             SecureVaultIPDisclosureTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // The main UI content, now with a button.
                     MainScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -42,7 +41,6 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
-    // A Column to center the UI elements on the screen.
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -50,13 +48,10 @@ fun MainScreen(modifier: Modifier = Modifier) {
     ) {
         Greeting(name = "Android")
 
-        // Add a button below the greeting.
         Button(
             onClick = {
-                // Log the action to confirm the button was clicked.
                 Log.d("MainActivity", "Button clicked! Attempting to start IPLeakActivity.")
 
-                // Create an explicit Intent to start the IPLeakActivity.
                 val intent = Intent(context, IPLeakActivity::class.java)
                 context.startActivity(intent)
             },
