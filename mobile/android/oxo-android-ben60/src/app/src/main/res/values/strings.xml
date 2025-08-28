@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">FitTracker Pro</string>
-    <!-- Legitimate fitness app settings -->
-    <string name="cloud_sync_endpoint">https://api.fittracker-pro.com/sync</string>
-    <string name="analytics_key">FT_ANALYTICS_KEY_2024</string>
-    <string name="support_email">support@fittracker-pro.com</string>
-</resources>
