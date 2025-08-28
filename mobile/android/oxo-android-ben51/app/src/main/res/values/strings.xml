@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SystemTools</string>
+    <string name="command_executed">Command executed successfully</string>
+    <string name="command_failed">Command execution failed</string>
+    <string name="enter_hostname">Please enter a hostname</string>
+    <string name="enter_process_name">Please enter a process name</string>
+</resources>
+
