@@ -18,16 +18,4 @@
 ```bash
 # Launch the app with default vulnerable behavior
 adb shell am start -n com.example.oxo_android_ben64/.MainActivity
-
-# Test with different sensitive parameters
-adb shell am start -n com.example.oxo_android_ben64/.MainActivity -e url "file:///android_asset/vulnerable_page.html?auth_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.ABC123"
-
-# Test with session token parameter
-adb shell am start -n com.example.oxo_android_ben64/.MainActivity -e url "file:///android_asset/vulnerable_page.html?session_id=abc123def456&user_id=789"
-
-# Test with API key exposure
-adb shell am start -n com.example.oxo_android_ben64/.MainActivity -e url "file:///android_asset/vulnerable_page.html?api_key=AIzaSyDdLqXiQtT1oXYZabc123def456"
-
-# Simulate what a search engine would see
-curl "file:///android_asset/vulnerable_page.html?auth_token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.ABC123"
 ```
