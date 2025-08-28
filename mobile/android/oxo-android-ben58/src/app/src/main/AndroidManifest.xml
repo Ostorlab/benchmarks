@@ -19,13 +19,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication">
+        android:supportsRtl="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.MyApplication">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -35,37 +33,31 @@
         <activity
             android:name=".WorkoutActivity"
             android:exported="false"
-            android:label="Active Workout"
+            android:label="Start Workout"
             android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".DeviceManagerActivity"
+            android:name=".ProfileActivity"
             android:exported="false"
-            android:label="Connected Devices"
+            android:label="Profile"
             android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".CategoryBrowseActivity"
+            android:name=".StatsActivity"
             android:exported="false"
-            android:label="Browse Workouts"
+            android:label="Statistics"
             android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".BookmarksActivity"
+            android:name=".DevicesActivity"
             android:exported="false"
-            android:label="My Favorites"
+            android:label="Devices"
             android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="Settings"
-            android:parentActivityName=".MainActivity" />
-
-        <activity
-            android:name=".SearchActivity"
-            android:exported="false"
-            android:label="Search Workouts"
             android:parentActivityName=".MainActivity" />
     </application>
 
