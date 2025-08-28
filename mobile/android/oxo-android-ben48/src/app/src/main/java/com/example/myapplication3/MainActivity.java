@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         tasksDisplay = findViewById(R.id.tasksDisplay);
         Button addTaskButton = findViewById(R.id.addTaskButton);
         Button toggleFirstTaskButton = findViewById(R.id.toggleFirstTaskButton);
+        Button profileButton = findViewById(R.id.profileButton);
+        Button settingsButton = findViewById(R.id.settingsButton);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         initializeTasks();
         addTaskButton.setOnClickListener(v -> addNewTask());
         toggleFirstTaskButton.setOnClickListener(v -> toggleFirstTask());
+        profileButton.setOnClickListener(v -> openProfile());
+        settingsButton.setOnClickListener(v -> openSettings());
 
         // Process Intent extras
         processIntentExtras();
@@ -126,6 +130,16 @@ public class MainActivity extends AppCompatActivity {
             String status = firstTask.isCompleted() ? "completed" : "pending";
             Toast.makeText(this, "Task marked as " + status, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void openProfile() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     private void testTaskParcelable() {

@@ -45,6 +45,21 @@
             android:text="✅ Toggle First Task"
             android:backgroundTint="#2196F3" />
 
+        <Button
+            android:id="@+id/profileButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="👤 Profile"
+            android:backgroundTint="#FF9800" />
+
+        <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="⚙️ Settings"
+            android:backgroundTint="#9C27B0" />
 
     </LinearLayout>
 
