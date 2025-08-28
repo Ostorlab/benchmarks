@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val myWebView: WebView = findViewById(R.id.webview)
-        myWebView.settings.javaScriptEnabled = true // JavaScript is often needed
+        myWebView.settings.javaScriptEnabled = true
 
         myWebView.loadUrl("file:///android_asset/page.html?auth_token=abc123xyz&user_id=456")
     }
