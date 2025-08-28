@@ -42,8 +42,6 @@ Medium
 
 ### Exploitation
 
-#### 1. Mapping ports for host access
-
 When testing from the **relay**:
 
 1. Forward a host port (e.g., `9090`) to the device/emulator port (`8080`):
