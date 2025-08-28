@@ -35,12 +35,11 @@ public class ArticleActivity extends AppCompatActivity {
         articleWebView = findViewById(R.id.articleWebView);
         
         WebSettings webSettings = articleWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(false);
         webSettings.setDomStorageEnabled(true);
         webSettings.setAllowContentAccess(true);
         
         articleWebView.setWebViewClient(new WebViewClient());
-        articleWebView.setWebChromeClient(new WebChromeClient());
     }
 
     private void displaySearchResults() {
