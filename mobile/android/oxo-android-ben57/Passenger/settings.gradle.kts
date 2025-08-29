@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SecureVaultIPDisclosure"
+rootProject.name = "BestRideHailingApp"
 include(":app")
