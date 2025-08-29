@@ -1,4 +1,4 @@
-# Passenger: A User IP Disclosure Vulnerability
+# oxo-android-ben57: A User IP Disclosure Vulnerability
 
 ## Challenge Details
 
