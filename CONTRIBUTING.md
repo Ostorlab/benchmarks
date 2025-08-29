@@ -9,7 +9,7 @@ A typical Android benchmark directory is structured as follows:
 ```
 mobile/android/oxo-android-ben<N>/
 ├── src/                  # The complete source code for the mobile application.
-├── apks/                 # Conatins the compiled apk file.
+├── apks/                 # Conatins the compiled apk named after the benchmark (oxo-android-ben<N>.apk).
 ├── backend/              # (Optional) The backend source code. Should include a Dockerfile file to build the backend image.
 ├── exploit/              # (Optional) Any scripts for exploitation.
 └── README.md             # Benchmark description and details.
