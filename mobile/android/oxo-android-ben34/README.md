@@ -18,7 +18,7 @@ The vulnerability lies in the `Receiver.kt` file and the AndroidManifest.xml.
 </receiver>
 ```
 
-- Receiver.kt: The onReceive() method processes incoming intents without any checks on the sender's origin or permissions. It directly uses data from the intent's extras ("message" and "amount") to perform a sensitive action:
+- Receiver.kt: The onReceive() method processes incoming intents without any checks on the sender's origin or permissions. It directly uses data from the intent's extras ("message") to perform a sensitive action:
 
 - It writes the data to the app's SharedPreferences, simulating the storage of attacker-controlled data.
 
@@ -28,12 +28,10 @@ The vulnerability lies in the `Receiver.kt` file and the AndroidManifest.xml.
 ```
 // No origin checks, no permission checks, trusts all extras blindly
 val msg = intent.getStringExtra("message") ?: "(no message)"
-val amount = intent.getIntExtra("amount", 0)
 // Simulate a sensitive action
 val prefs = context.getSharedPreferences("secrets", Context.MODE_PRIVATE)
 prefs.edit()
     .putString("last_incoming_message", msg)
-    .putInt("last_amount", amount)
     .apply()
 ```
 
@@ -64,6 +62,5 @@ The APK will be located at app/build/outputs/apk/release/app-release-unsigned.ap
     adb shell am broadcast \
         -a com.example.receiverapp.TRIGGER \
         -n com.example.receiverapp/.Receiver \
-        --es message "Pwned from ADB" \
-        --ei amount 1337
+        --es message "Pwned from ADB"
    ```
