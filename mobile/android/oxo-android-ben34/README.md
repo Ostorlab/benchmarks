@@ -2,7 +2,7 @@
 
 ### Description
 
-This Android application benchmark, oxo-android-ben33, demonstrates a common security vulnerability where a broadcast receiver is exported without proper protection. This allows any other application on the device to send a broadcast intent to it, potentially leading to unauthorized data manipulation or a denial-of-service.
+This Android application benchmark, oxo-android-ben34, demonstrates a common security vulnerability where a broadcast receiver is exported without proper protection. This allows any other application on the device to send a broadcast intent to it, potentially leading to unauthorized data manipulation or a denial-of-service.
 
 The vulnerability lies in the `Receiver.kt` file and the AndroidManifest.xml.
 
