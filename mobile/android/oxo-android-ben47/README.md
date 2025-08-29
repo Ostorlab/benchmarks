@@ -31,18 +31,19 @@ webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
 
 **Search Form Injection:**
 1. Open GlobalTech Support app
-2. Enter in search field: `<script>alert('XSS via Search')</script>`
-3. Click "Search Articles" - Alert should popup multiple times
+2. Enter in search field: `<h1 style="color:red">HTML INJECTION WORKS</h1>`
+3. Click "Search Articles" - Should display red heading text
 
 **Contact Form Injection:**
 1. Click "Contact Support"
-2. Fill form with message: `<script>alert('Contact XSS')</script>`
-3. Click "Preview Message" - Alert should popup in preview
+2. Fill form with message: `<style>body{background-color:green;}</style><h2>INJECTED</h2>`
+3. Click "Preview Message" - Should show green background and injected heading
 
-**Visual Confirmation Payloads:**
+**Additional HTML Payloads:**
 ```html
 <h1 style="color:red">HTML INJECTION WORKS</h1>
 <style>body{background-color:green;}</style>
+<img src="x" onerror="this.style.display='none'"><b style="color:blue">MARKUP INJECTION</b>
 ```
 
 **Difficulty**: Easy
@@ -71,12 +72,12 @@ The APK will be located at `app/build/outputs/apk/debug/app-debug.apk`.
 
 A successful test requires the tool to identify:
 - HTML injection through normal UI interaction (search/contact forms)
-- JavaScript execution in WebView context
-- Intent parameter flow from MainActivity to display activities
+- HTML markup rendering in WebView context (JavaScript disabled)
+- Intent parameter flow from MainActivity to display activities  
 - Lack of input sanitization before WebView rendering
 
 **Example successful findings:**
-- Script tags executing when entered in search or contact forms  
-- HTML markup rendering instead of plain text display
-- CSS injection affecting page styling
-- Multiple alert popups from single payload (multiple injection points)
+- HTML tags rendering when entered in search or contact forms
+- CSS injection affecting page styling and layout
+- Image tags with onerror attributes (non-JavaScript)
+- Visual modification of WebView content through markup injection

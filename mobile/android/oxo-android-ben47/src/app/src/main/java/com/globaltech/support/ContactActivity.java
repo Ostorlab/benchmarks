@@ -56,12 +56,11 @@ public class ContactActivity extends AppCompatActivity {
 
     private void setupWebView() {
         WebSettings webSettings = previewWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(false);
         webSettings.setDomStorageEnabled(true);
         webSettings.setAllowContentAccess(true);
         
         previewWebView.setWebViewClient(new WebViewClient());
-        previewWebView.setWebChromeClient(new WebChromeClient());
     }
 
     private void setupClickListeners() {
