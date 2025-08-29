@@ -104,36 +104,18 @@ object DirectoryManager {
 
     /**
      * Adds a file to the directory representation with a specific file name.
-     *
-     * VULNERABILITY: This function performs a physical file copy. When combined with the
-     * path traversal vulnerability in `createPathAndGetParentDir`, this allows an attacker
-     * to overwrite arbitrary files within the app's data directory.
-     *
      * @param context The application context.
      * @param parentDirFile The directory where the file entry should be added.
      * @param fileUri The URI of the file to add.
      * @param fileName The name to be used for the file.
      */
     fun addFile(context: Context, parentDirFile: File, fileUri: Uri, fileName: String) {
-        val destinationFile = File(parentDirFile, fileName)
-
-        try {
-            // Copy the content from the source URI to the destination file.
-            context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
-                destinationFile.outputStream().use { outputStream ->
-                    inputStream.copyTo(outputStream)
-                }
-            }
-
-            // After copying, update the .items file to reference the new local copy.
-            val itemsFile = File(parentDirFile, ITEMS_FILENAME)
-            val newLine = "$FILE_PREFIX$fileName:${destinationFile.toUri()}"
-            if (!itemsFile.exists() || !itemsFile.readLines().any { it.startsWith("$FILE_PREFIX$fileName:") }) {
-                itemsFile.appendText("$newLine\n")
-            }
-        } catch (e: Exception) {
-            // Silently fail on error
+        val itemsFile = File(parentDirFile, ITEMS_FILENAME)
+        // Avoid duplicates
+        if (itemsFile.exists() && itemsFile.readLines().any { it.startsWith("$FILE_PREFIX$fileName:") }) {
+            return
         }
+        itemsFile.appendText("$FILE_PREFIX$fileName:$fileUri\n")
     }
 
     /**
@@ -158,26 +140,35 @@ object DirectoryManager {
     /**
      * Ensures a given logical path exists by creating any missing directories, and returns the parent directory file.
      * For a path "a/b/c.txt", it ensures "a" and "a/b" exist and returns the File object for "a/b".
-     *
-     * VULNERABILITY: This implementation is vulnerable to path traversal. It directly uses the
-     * `logicalPath` to construct a file path without sanitizing it. An attacker can provide a
-     * path with `../` sequences to write files outside of the intended directory.
-     *
      * @param context The application context.
      * @param logicalPath The full logical path of a file or directory.
-     * @return The [File] object for the parent directory of the given logical path.
+     * @return The [File] object for the parent directory of the given logical path, or null if the path is invalid or a file conflicts with a needed directory.
      */
     fun createPathAndGetParentDir(context: Context, logicalPath: String): File? {
-        val rootDir = getRoot(context)
-        // Insecurely join the root path with the user-provided logical path.
-        // This allows for path traversal attacks (e.g., using "../").
-        val fullPath = File(rootDir, logicalPath)
-
-        val parentDir = fullPath.parentFile
-        if (parentDir != null && !parentDir.exists()) {
-            parentDir.mkdirs()
+        val pathSegments = logicalPath.replace('\\', '/').split('/').filter { it.isNotEmpty() }
+        if (pathSegments.isEmpty()) {
+            return null
         }
-        return parentDir
+
+        val directoryPathSegments = pathSegments.dropLast(1)
+
+        var currentDirFile = getRoot(context)
+        var currentLogicalPath = ""
+
+        for (dirName in directoryPathSegments) {
+            val loadedCurrentDir = loadDirectory(currentDirFile, currentLogicalPath)
+            val nextDirInItems = loadedCurrentDir.items.find { it.name == dirName }
+
+            if (nextDirInItems == null) {
+                createDirectory(currentDirFile, dirName)
+            } else if (nextDirInItems !is LogicalDirectory) {
+                // A file with the same name exists. Cannot create directory.
+                return null
+            }
+            currentDirFile = File(currentDirFile, dirName)
+            currentLogicalPath = if (currentLogicalPath.isEmpty()) dirName else "$currentLogicalPath/$dirName"
+        }
+        return currentDirFile
     }
 
     /**
