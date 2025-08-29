@@ -12,7 +12,6 @@ class MainActivity : AppCompatActivity() {
 
         val btnSelfTrigger: Button = findViewById(R.id.btnSelfTrigger)
         btnSelfTrigger.setOnClickListener {
-            System.out.println("ggggggggg")
             val i = Intent("com.example.receiverapp.TRIGGER").apply {
                 setPackage(packageName)
                 putExtra("message", "Hello from inside the app")
