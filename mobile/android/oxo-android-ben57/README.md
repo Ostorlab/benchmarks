@@ -1,4 +1,4 @@
-# oxo-android-ben57: A User IP Disclosure Vulnerability
+# oxo-android-ben57: User IP and location Disclosure Vulnerability
 
 ## Challenge Details
 
@@ -26,12 +26,12 @@ Save the Python code as server.py.
 
 Install Flask: 
 ```
-pip install Flask.
+pip install Flask
 ```
 
 Run the server: 
 ```
-python server.py.
+python server.py
 ```
 
 The server will be available at http://localhost:5000.
