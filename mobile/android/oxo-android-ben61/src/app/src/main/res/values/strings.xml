@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Camera Pro</string>
+    <!-- Professional camera app settings -->
+    <string name="cloud_sync_endpoint">https://api.camera-pro.com/upload</string>
+    <string name="analytics_key">CAMERA_ANALYTICS_KEY_2024</string>
+    <string name="support_email">support@camera-pro.com</string>
+</resources>
