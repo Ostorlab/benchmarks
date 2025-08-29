@@ -61,8 +61,6 @@ data class Client(
 fun ClientMapScreen() {
     var clients by remember { mutableStateOf<List<Client>?>(null) }
     val context = LocalContext.current
-
-    // Set up osmdroid configuration
     LaunchedEffect(Unit) {
         val osmdroidConfig = Configuration.getInstance()
         osmdroidConfig.userAgentValue = context.packageName
@@ -78,7 +76,6 @@ fun ClientMapScreen() {
         clients = fetchedClients
     }
 
-    // Check if clients data has been fetched
     if (clients == null) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -116,7 +113,6 @@ fun ClientMapScreen() {
     }
 }
 
-// Function to simulate IP-to-Geo lookup (real-world APIs would be used)
 private fun getGeoFromIP(ip: String): Pair<Double, Double> {
     return when (ip) {
         "192.168.1.42" -> Pair(48.8566, 2.3522) // Paris
@@ -149,14 +145,10 @@ private fun fetchClientData(): List<Client> {
                     val name = jsonObject.getString("name")
                     val location = jsonObject.getString("location")
                     val ip = jsonObject.getString("ip")
-
-                    // Simulate IP-to-Geo lookup
                     val (lat, lon) = getGeoFromIP(ip)
 
                     clientsList.add(Client(name, location, ip, lat, lon))
 
-                    // Leaking the IP addresses in the log for the vulnerability
-                    Log.i("VulnerableApp-Session", "Leaking IP and location for: $name - Location: $location, IP: $ip")
                 }
             } else {
                 Log.e("DriverActivity", "HTTP request failed with response code: $responseCode")
