@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            // Here we wrap the entire UI with BestRideHailingAppTheme
             BestRideHailingAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     MainScreen(
@@ -62,7 +63,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Best ride-hailing service! Welcome, driver Sam!",
+        text = "Best ride-hailing service! Welcome, driver!",
         modifier = modifier
     )
 }
