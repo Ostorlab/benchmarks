@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#f5f5f5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Application Preferences"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- General Settings -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="General Settings"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#1976d2"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Refresh Interval (seconds):"
+                    android:textColor="#666"/>
+
+                <EditText
+                    android:id="@+id/et_refresh_interval"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:hint="30"
+                    android:textSize="14sp"
+                    android:background="#f0f0f0"
+                    android:padding="8dp"
+                    android:inputType="number"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Log Retention (days):"
+                    android:textColor="#666"/>
+
+                <EditText
+                    android:id="@+id/et_log_retention"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:hint="7"
+                    android:textSize="14sp"
+                    android:background="#f0f0f0"
+                    android:padding="8dp"
+                    android:inputType="number"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Backup Frequency (hours):"
+                    android:textColor="#666"/>
+
+                <EditText
+                    android:id="@+id/et_backup_frequency"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:hint="24"
+                    android:textSize="14sp"
+                    android:background="#f0f0f0"
+                    android:padding="8dp"
+                    android:inputType="number"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Feature Settings -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Feature Settings"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#1976d2"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Auto Updates"
+                    android:textColor="#666"/>
+
+                <Switch
+                    android:id="@+id/switch_auto_updates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Push Notifications"
+                    android:textColor="#666"/>
+
+                <Switch
+                    android:id="@+id/switch_notifications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Debug Mode"
+                    android:textColor="#666"/>
+
+                <Switch
+                    android:id="@+id/switch_debug_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Analytics"
+                    android:textColor="#666"/>
+
+                <Switch
+                    android:id="@+id/switch_analytics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Crash Reporting"
+                    android:textColor="#666"/>
+
+                <Switch
+                    android:id="@+id/switch_crash_reporting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btn_save_preferences"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Save"
+                android:layout_marginEnd="8dp"
+                android:background="#4CAF50"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btn_reset_preferences"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Reset"
+                android:layout_marginStart="8dp"
+                android:background="#f44336"
+                android:textColor="@android:color/white"/>
+
+        </LinearLayout>
+
+        <!-- Import/Export -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_export_config"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Export Config"
+                android:layout_marginEnd="8dp"
+                android:background="#1976d2"
+                android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/btn_import_config"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Import Config"
+                android:layout_marginStart="8dp"
+                android:background="#666"
+                android:textColor="@android:color/white"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
