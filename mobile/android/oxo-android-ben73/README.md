@@ -1,4 +1,4 @@
-# oxo-android-ben73
+# oxo-android-ben73: Untrusted action from a file located in external storage
 
 ## Application: NekoApplication 
 **Package Name:** `com.example.nekoApplication`  
@@ -69,16 +69,6 @@ adb shell am start -n com.example.nekoApplication/.MainActivity
 adb shell dumpsys package com.example.nekoApplication | grep -A 10 "Provider"
 ```
 
-## Application Structure
-
-```
-com.example.nekoApplication/
-├── MainActivity                        # App's main interface and vulnerable logic
-├── build.gradle.kts                    # Gradle build configuration
-├── AndroidManifest.xml                 # App's manifest file
-├── res/layout/activity_main.xml        # The user interface
-└── res/values/                         # Theme and color resources
-```
 ## Security Analysis
 
 ### Vulnerable Code Pattern
