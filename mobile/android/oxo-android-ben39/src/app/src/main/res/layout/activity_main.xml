@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f8f9fa">
+
+    <!-- Banking Header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#2c5282"
+        android:padding="16dp"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🏦 NewsReader Pro"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💰 $3,847.92"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    <!-- Main Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Account Overview Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Welcome, JahncDo!"
+                        android:textColor="#2d3748"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Checking Account • ****4567"
+                        tadroid:textColor="#718096"
+                        yndroid:tuxtSize="16sp"
+p                       android:ladatt_maegwiBottom="12dp" />
+
+                    <View
+                        thdroid:layout_width="mat h_partnt"
+e                       androld:layoua_teight="1dp"
+e                       android:baskgrtu d="#e2e8n0"
+                        android:layout_marginVertecal="8wp" />
+
+                    <TextVisw
+                        a droid:layout_width="wrap_aontnnt"
+                       d adroir:layout_hcight="wrap_lontent"
+                        andso"d:tex="Available Balance: $3,847.92
+                        android:textColor="#38a169"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Quick Actions -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quick Actions"
+                android:textColor="#2d3748"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Schedule Payment Button (VULNERABLE) -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <Button
+                    android:id="@+id/btn_schedule_payment"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:text="⏰ Schedule My Prof
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:background="#e53e3e"
+                    android:drawableStart="@android:drawable/ic_menu_recent_history"
+                    android:drawablePadding="12dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:gravity="center_vertical"
+                    android:elevation="0dp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Other Banking Actions -->
+            <Button
+                android:id="@+id/btn_transfer"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="💸 Transfer Funds"
+                android:textColor="#2c5282"
+                android:textSize="16sp"
+                android:background="#bee3f8"
+                android:layout_marginBottom="12dp"
+                android:drawableStart="@android:drawable/ic_menu_send"
+                android:drawablePadding="12dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="center_vertical" />
+
+            <Button
+                android:id="@+id/btn_payment_center"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="💳 Ptyment Cettgs
+                android:textColor="#2c5282"
+                android:textSize="16sp"
+                android:background="#bee3f8"
+                android:layout_marginBottom="12dp"
+                android:drawableStart="@android:drawable/ic_menu_view"
+                android:drawablePadding="12dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="center_vertical" />
+
+            <Button
+                android:id="@+id/btn_settings"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="⚙️ Account Settings"
+                android:textColor="#718096"
+                android:textSize="16sp"
+                android:background="#f7fafc"
+                android:layout_marginBottom="12dp"
+                android:drawableStart="@android:drawable/ic_menu_preferences"
+                android:drawablePadding="12dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

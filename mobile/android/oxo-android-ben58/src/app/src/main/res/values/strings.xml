@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">FitTracker Pro</string>
+    <!-- VULNERABLE: Hardcoded Firebase URL exposed in app resources -->
+    <string name="firebase_database_url">https://fittracker-sync-backend-default-rtdb.firebaseio.com</string>
+    <string name="firebase_project_id">fittracker-sync-backend</string>
+</resources>

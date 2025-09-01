@@ -7,38 +7,43 @@ public class SessionManager {
     private static final String PREF_NAME = "BankingSession";
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
     private static final String KEY_USERNAME = "username";
-    private static final String KEY_PASSWORD = "password";
+    private static final String KEY_TOKEN = "token";
     private static final String KEY_SESSION_ID = "sessionId";
-    
-    private static final String DEFAULT_USERNAME = "admin";
-    private static final String DEFAULT_PASSWORD = "admin123";
     
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private Context context;
+    private ApiService apiService;
     
     public SessionManager(Context context) {
         this.context = context;
+        this.apiService = new ApiService();
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = pref.edit();
-        
-        if (!pref.contains(KEY_PASSWORD)) {
-            editor.putString(KEY_PASSWORD, DEFAULT_PASSWORD);
-            editor.apply();
-        }
     }
     
-    public boolean login(String username, String password) {
-        String storedPassword = pref.getString(KEY_PASSWORD, DEFAULT_PASSWORD);
-        
-        if (DEFAULT_USERNAME.equals(username) && storedPassword.equals(password)) {
-            editor.putBoolean(KEY_IS_LOGGED_IN, true);
-            editor.putString(KEY_USERNAME, username);
-            editor.putString(KEY_SESSION_ID, generateSessionId());
-            editor.apply();
-            return true;
-        }
-        return false;
+    public interface LoginCallback {
+        void onSuccess(String username);
+        void onError(String error);
+    }
+    
+    public void login(String username, String password, LoginCallback callback) {
+        apiService.login(username, password, new ApiService.LoginCallback() {
+            @Override
+            public void onSuccess(String token, String user) {
+                editor.putBoolean(KEY_IS_LOGGED_IN, true);
+                editor.putString(KEY_USERNAME, user);
+                editor.putString(KEY_TOKEN, token);
+                editor.putString(KEY_SESSION_ID, generateSessionId());
+                editor.apply();
+                callback.onSuccess(user);
+            }
+            
+            @Override
+            public void onError(String error) {
+                callback.onError(error);
+            }
+        });
     }
     
     public boolean isLoggedIn() {
@@ -53,19 +58,40 @@ public class SessionManager {
         return pref.getString(KEY_SESSION_ID, "");
     }
     
-    public boolean changePassword(String currentPassword, String newPassword) {
-        String storedPassword = pref.getString(KEY_PASSWORD, DEFAULT_PASSWORD);
+    public interface PasswordChangeCallback {
+        void onSuccess();
+        void onError(String error);
+    }
+    
+    public void changePassword(String currentPassword, String newPassword, PasswordChangeCallback callback) {
+        String token = pref.getString(KEY_TOKEN, "");
         
-        if (storedPassword.equals(currentPassword)) {
-            editor.putString(KEY_PASSWORD, newPassword);
-            editor.apply();
-            return true;
-        }
-        return false;
+        apiService.changePassword(token, currentPassword, newPassword, new ApiService.PasswordChangeCallback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess();
+            }
+            
+            @Override
+            public void onError(String error) {
+                callback.onError(error);
+            }
+        });
+    }
+    
+    public String getToken() {
+        return pref.getString(KEY_TOKEN, "");
     }
     
     public void logout() {
         editor.clear();
+        editor.apply();
+    }
+    
+    public void invalidateSession() {
+        editor.putBoolean(KEY_IS_LOGGED_IN, false);
+        editor.remove(KEY_TOKEN);
+        editor.remove(KEY_SESSION_ID);
         editor.apply();
     }
     

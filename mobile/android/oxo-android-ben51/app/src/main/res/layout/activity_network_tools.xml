@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/background_color">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Network Tools"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_color"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hostname/IP:"
+        android:textSize="16sp"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/hostnameInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Enter hostname or IP address"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Port (optional):"
+        android:textSize="16sp"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/portInput"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Enter port number"
+        android:background="@drawable/edit_text_background"
+        android:inputType="number"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/portScanButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Scan Port"
+        android:backgroundTint="@color/primary_color"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/tracerouteButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Traceroute"
+        android:backgroundTint="@color/accent_color"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Back"
+        android:backgroundTint="@color/secondary_color"
+        android:layout_marginBottom="16dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/output_background">
+
+        <TextView
+            android:id="@+id/networkOutput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textSize="12sp"
+            android:textColor="@color/text_primary"
+            android:padding="12dp"
+            android:text="Network command output will appear here..." />
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ConnectCall</string>
+    <string name="contacts">Contacts</string>
+    <string name="call_history">Call History</string>
+    <string name="settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="start_call">Start Call</string>
+    <string name="end_call">End Call</string>
+    <string name="video_call">Video Call</string>
+    <string name="audio_call">Audio Call</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="recent_calls">Recent Calls</string>
+    <string name="no_contacts">No contacts available</string>
+    <string name="no_call_history">No call history</string>
+    <string name="connecting">Connecting...</string>
+    <string name="call_ended">Call Ended</string>
+</resources>
+
