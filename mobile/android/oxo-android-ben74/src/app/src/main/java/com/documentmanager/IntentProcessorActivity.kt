@@ -20,18 +20,16 @@ class IntentProcessorActivity : AppCompatActivity() {
     }
     
     /**
-     * Processes various types of incoming intents for document operations
+     * Processes incoming intents - this is the VULNERABLE implementation
      */
     private fun handleIncomingIntent(intent: Intent) {
         when {
-            intent.action == Intent.ACTION_SEND -> {
-                handleSendAction(intent)
-            }
-            intent.action == Intent.ACTION_VIEW -> {
-                handleViewAction(intent)
-            }
             intent.hasExtra("extra_intent") -> {
                 // VULNERABLE: Processes embedded intent without validation
+                handleEmbeddedIntent(intent)
+            }
+            intent.hasExtra("admin_command") -> {
+                // VULNERABLE: Also trigger embedded intent handling for admin commands
                 handleEmbeddedIntent(intent)
             }
             else -> {
@@ -88,7 +86,38 @@ class IntentProcessorActivity : AppCompatActivity() {
      */
     private fun handleEmbeddedIntent(intent: Intent) {
         try {
-            val embeddedIntent = intent.getParcelableExtra<Intent>("extra_intent")
+            // Method 1: Try to get Parcelable Intent (standard approach)
+            var embeddedIntent = intent.getParcelableExtra<Intent>("extra_intent")
+            
+            // Method 2: If no Parcelable, check for admin command (vulnerability trigger)
+            if (embeddedIntent == null) {
+                val adminCommand = intent.getStringExtra("admin_command")
+                val adminTarget = intent.getStringExtra("admin_target")
+                
+                // VULNERABLE: Create embedded intent from admin command without validation
+                if (adminCommand != null) {
+                    Log.d("DocumentProcessor", "Creating embedded intent from admin command: $adminCommand")
+                    
+                    embeddedIntent = Intent().apply {
+                        setClassName("com.documentmanager", "com.documentmanager.AdminPanelActivity")
+                        putExtra("admin_command", adminCommand)
+                        putExtra("admin_target", adminTarget ?: "unknown")
+                        putExtra("bypassed_via_proxy", true)
+                    }
+                } else {
+                    // Method 3: Try to parse from string format
+                    val intentString = intent.getStringExtra("extra_intent")
+                    if (intentString != null) {
+                        Log.d("DocumentProcessor", "Parsing intent from string: $intentString")
+                        
+                        // Try to parse intent URI format
+                        if (intentString.startsWith("intent:")) {
+                            embeddedIntent = Intent.parseUri(intentString, Intent.URI_INTENT_SCHEME)
+                        }
+                    }
+                }
+            }
+            
             if (embeddedIntent != null) {
                 Log.d("DocumentProcessor", "Processing embedded intent: ${embeddedIntent.component}")
                 
@@ -96,6 +125,9 @@ class IntentProcessorActivity : AppCompatActivity() {
                 // This bypasses Android's export restrictions and allows access to non-exported components
                 startActivity(embeddedIntent)
                 Log.d("DocumentProcessor", "Embedded intent executed successfully")
+                Log.d("VULNERABILITY_EXPLOITED", "Non-exported AdminPanelActivity accessed via proxy!")
+            } else {
+                Log.d("DocumentProcessor", "No embedded intent found")
             }
         } catch (e: Exception) {
             Log.e("DocumentProcessor", "Error processing embedded intent", e)
