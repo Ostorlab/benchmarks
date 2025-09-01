@@ -25,15 +25,16 @@ class IntentProcessorActivity : Activity() {
      */
     private fun handleIncomingIntent(intent: Intent) {
         when {
+            intent.hasExtra("workflow_intent") -> {
+                // VULNERABLE: Processes workflow intents with URI permission grants FIRST
+                // This is the critical vulnerability - workflow intents processed regardless of action
+                handleWorkflowIntent(intent)
+            }
             intent.action == Intent.ACTION_SEND -> {
                 handleSendAction(intent)
             }
             intent.action == Intent.ACTION_VIEW -> {
                 handleViewAction(intent)
-            }
-            intent.hasExtra("workflow_intent") -> {
-                // VULNERABLE: Processes workflow intents with URI permission grants
-                handleWorkflowIntent(intent)
             }
             else -> {
                 Log.d("DocumentProcessor", "Unknown intent action: ${intent.action}")
