@@ -118,7 +118,6 @@ class MainActivity : AppCompatActivity() {
             externalBinaryFile.copyTo(internalBinaryFile, overwrite = true)
 
             if (internalBinaryFile.setExecutable(true, false)) {
-                Log.d(TAG, "Successfully copied and set executable permissions on binary.")
                 executeBinaryFromInternalStorage(internalBinaryFile)
             } else {
                 val message = "Failed to set executable permissions on the binary."
@@ -126,8 +125,6 @@ class MainActivity : AppCompatActivity() {
                 showToast(message)
             }
         } catch (e: IOException) {
-            val message = "Error copying binary to internal storage: ${e.message}"
-            Log.e(TAG, message)
             showToast(message)
         }
     }
