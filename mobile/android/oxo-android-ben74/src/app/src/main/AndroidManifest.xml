@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="DocumentManager Pro"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication">
+        
+        <!-- Main Activities -->
+        <activity
+            android:name="com.documentmanager.MainActivity"
+            android:exported="true"
+            android:label="DocumentManager Pro">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.documentmanager.DocumentsActivity"
+            android:exported="false"
+            android:label="My Documents" />
+            
+        <activity
+            android:name="com.documentmanager.ShareActivity"
+            android:exported="false"
+            android:label="Share Documents" />
+            
+        <activity
+            android:name="com.documentmanager.SettingsActivity"
+            android:exported="false"
+            android:label="Settings" />
+            
+        <!-- Hidden sensitive activity -->
+        <activity
+            android:name="com.documentmanager.AdminPanelActivity"
+            android:exported="false"
+            android:label="Admin Panel" />
+            
+        <!-- Intent Processing Activity for deep links and sharing -->
+        <activity
+            android:name="com.documentmanager.IntentProcessorActivity"
+            android:exported="true"
+            android:label="Document Processor">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="docmanager" />
+            </intent-filter>
+        </activity>
+            
+    </application>
+
+</manifest>
