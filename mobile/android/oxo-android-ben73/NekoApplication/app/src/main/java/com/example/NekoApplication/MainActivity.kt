@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var statusTextView: TextView
     private lateinit var executeButton: Button
 
-    // Use the modern ActivityResultLauncher for permission requests
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -37,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Launcher for MANAGE_EXTERNAL_STORAGE on Android 11+
     private val allFilesAccessLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -59,14 +57,10 @@ class MainActivity : AppCompatActivity() {
         statusTextView = findViewById(R.id.status_text_view)
         executeButton = findViewById(R.id.execute_button)
 
-        // Check and request storage permissions
         checkStoragePermissions()
 
-        // This is the core of the vulnerability.
         executeButton.setOnClickListener {
-            // Check permissions again before attempting the vulnerable action
             if (hasStoragePermissions()) {
-                // The new logic: prepare the binary before executing
                 prepareAndExecuteBinary()
             } else {
                 showToast("Permissions not granted. Cannot execute binary.")
@@ -74,9 +68,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Checks if the app has the necessary storage permissions.
-     */
     private fun hasStoragePermissions(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Environment.isExternalStorageManager()
@@ -88,9 +79,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Requests the necessary storage permissions.
-     */
     private fun checkStoragePermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!Environment.isExternalStorageManager()) {
@@ -113,9 +101,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Prepares the binary from external storage by copying it to a location where it can be executed.
-     */
     private fun prepareAndExecuteBinary() {
         val externalBinaryFile = File(
             "${Environment.getExternalStorageDirectory().absolutePath}/ext/com.example.neko-application/binary"
@@ -130,10 +115,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         try {
-            // Copy the binary from the external storage to the app's private files directory
             externalBinaryFile.copyTo(internalBinaryFile, overwrite = true)
 
-            // Set executable permissions on the copied file
             if (internalBinaryFile.setExecutable(true, false)) {
                 Log.d(TAG, "Successfully copied and set executable permissions on binary.")
                 executeBinaryFromInternalStorage(internalBinaryFile)
@@ -149,14 +132,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * This method contains the vulnerability. It attempts to execute a binary
-     * from a trusted location. However, the binary itself came from untrusted external storage.
-     */
     private fun executeBinaryFromInternalStorage(binaryFile: File) {
         try {
-            // THE VULNERABLE ACTION: Blindly executing the binary.
-            // The file's source is external and has not been verified.
             val process = Runtime.getRuntime().exec(binaryFile.absolutePath)
             val exitCode = process.waitFor()
             val message = "Executed binary from internal storage.\nExit code: $exitCode"

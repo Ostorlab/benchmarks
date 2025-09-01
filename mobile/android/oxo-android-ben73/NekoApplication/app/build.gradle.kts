@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
 }
 
 android {
@@ -11,6 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.nekoApplication"
         minSdk = 24
+        //noinspection ExpiredTargetSdkVersion
         targetSdk = 24
         versionCode = 1
         versionName = "1.0"
@@ -33,9 +33,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
-    }
-    buildFeatures {
-        compose = true
     }
 }
 
