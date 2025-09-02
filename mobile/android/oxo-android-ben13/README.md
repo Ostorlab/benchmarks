@@ -26,7 +26,7 @@ Medium
 2. Add the following to the second app’s `AndroidManifest.xml` to declare intent query:
    ```xml
    <queries>
-       <package android:name="gaur.himanshu.aidlapp"/>
+       <package android:name="com.ostorlab.memo"/>
    </queries>```
 3. Bind to the exposed service using:
     ```kotlin
