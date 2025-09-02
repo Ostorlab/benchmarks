@@ -52,7 +52,6 @@ Medium
 - Can **overwrite application files** within internal storage.
 - May lead to **JavaScript injection** or modification of trusted content.
 
----
 
 ## Build Instructions
 
