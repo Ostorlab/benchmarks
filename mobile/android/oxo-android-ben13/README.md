@@ -30,8 +30,8 @@ Medium
    </queries>```
 3. Bind to the exposed service using:
     ```kotlin
-    val intentMemo = Intent("gaur.himanshu.aidlapp.IMemoService")
-    intentMemo.setPackage("gaur.himanshu.aidlapp")
+    val intentMemo = Intent("com.ostorlab.memo.IMemoService")
+    intentMemo.setPackage("com.ostorlab.memo")
     val didBindMemo = bindService(intentMemo, memoServiceConnection, BIND_AUTO_CREATE)```
 4. Once bound, the malicious app can perform unrestricted CRUD operations on Memos.
 
