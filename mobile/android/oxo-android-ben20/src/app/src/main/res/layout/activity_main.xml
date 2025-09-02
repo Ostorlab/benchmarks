@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btnSelectZip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select ZIP File" />
+
+    <Button
+        android:id="@+id/btnOpenWebView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open WebView Demo"
+        android:layout_marginTop="16dp"/>
+
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Status: Waiting for ZIP selection"
+        android:paddingTop="8dp"/>
+
+</LinearLayout>
