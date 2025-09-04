@@ -1,0 +1,20 @@
+# Xcode user-specific files
+*.xcuserstate
+*.xcuserdatad/
+
+# Workspace files (except the essential one)
+.xcworkspace/
+*.xcworkspace
+!*.xcworkspace/contents.xcworkspacedata
+
+# Scheme files
+xcschemes/
+*.xcscheme
+!default.xcscheme
+
+# Build generated files
+build/
+DerivedData/
+
+# macOS metadata
+.DS_Store
