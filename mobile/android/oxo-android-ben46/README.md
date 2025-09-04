@@ -1,21 +1,29 @@
-# oxo-android-ben46 Broadcast of sensitive information
+# oxo-android-ben46 Broadcast of Sensitive Information
 
 ### Description
 
-This project demonstrates a critical security vulnerability in an Android application where sensitive information is broadcast without proper protection. The app appears to function normally, but in the background, it exposes a secret token that can be intercepted by any other app on the device.
+This project demonstrates a critical security vulnerability in an Android application where sensitive information is broadcast without proper protection.  
+
+The app simulates a simple login/authentication flow. When the user clicks the **"Authenticate"** button:
+- A temporary session token is generated (randomized using `UUID.randomUUID()` to mimic realistic tokens).
+- This token is then **broadcast** using `context.sendBroadcast()` with the action `com.example.token`.  
+
+Since the broadcast is **unprotected**, any other app on the device can intercept the token.  
+
+After "authentication," the button changes to **"Go to Dashboard"**, which redirects the user to a webpage. This masks the vulnerability, as the user only sees expected app behavior.
 
 The vulnerability is located in the `MainActivity.kt` file.
 
-`MainActivity.kt:` The `WebPageButton` Composable sends an implicit broadcast using `context.sendBroadcast()`. This broadcast uses a custom action, `com.example.token`, and includes a sensitive string extra named `TOKEN`. There is no permission check or restriction on who can receive this broadcast.
+**Relevant Code (MainActivity.kt):**
+```kotlin
+val token = "temp_token_${UUID.randomUUID()}"
 
+// Broadcast token (insecure behavior)
+val tokenIntent = Intent("com.example.token").apply {
+    putExtra("TOKEN", token)
+}
+context.sendBroadcast(tokenIntent)
 ```
-    val tokenIntent = Intent("com.example.token").apply {
-            putExtra("TOKEN", "secret_api_key_12345")
-        }
-        context.sendBroadcast(tokenIntent)
-```
-
-The app's behavior is designed to appear innocuous. After broadcasting the token, it immediately opens a webpage using a secure intent (`ACTION_VIEW`). This dual action masks the security flaw, as the user only sees the normal, expected behavior of being redirected to a website.
 
 ### Vulnerability Type and Category
 -   **Type:** Unprotected broadcast of sensitive information
