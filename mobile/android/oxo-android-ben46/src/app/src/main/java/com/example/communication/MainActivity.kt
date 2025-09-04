@@ -1,6 +1,7 @@
 package com.example.communication
 
 import android.content.Intent
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,7 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        AuthFlow()
+                        ShareLocationButton()
                     }
                 }
             }
@@ -43,41 +44,34 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AuthFlow() {
+fun ShareLocationButton() {
     val context = LocalContext.current
-    var isAuthenticated by remember { mutableStateOf(false) }
-    var token by remember { mutableStateOf<String?>(null) }
 
-    if (!isAuthenticated) {
-        Button(onClick = {
-            isAuthenticated = true
-            token = "temp_access_token_${System.currentTimeMillis()}"
-        }) {
-            Text("Login")
+    Button(onClick = {
+        val location = Location("gps").apply {
+            latitude = 37.4219983   // Example: Googleplex
+            longitude = -122.084
         }
-    } else {
-        Button(onClick = {
-            // Broadcast sensitive token
-            val tokenIntent = Intent("com.example.token").apply {
-                putExtra("TOKEN", token)
-            }
-            context.sendBroadcast(tokenIntent)
+        val locationIntent = Intent("com.example.location").apply {
+            putExtra("LATITUDE", location.latitude)
+            putExtra("LONGITUDE", location.longitude)
+        }
+        context.sendBroadcast(locationIntent)
 
-            val webpageIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://www.example.com/dashboard")
-            )
-            context.startActivity(webpageIntent)
-        }) {
-            Text("Access Dashboard")
-        }
+        val mapsIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("geo:${location.latitude},${location.longitude}")
+        )
+        context.startActivity(mapsIntent)
+    }) {
+        Text("Share My Location")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AuthFlowPreview() {
+fun ShareLocationPreview() {
     CommunicationTheme {
-        AuthFlow()
+        ShareLocationButton()
     }
 }
