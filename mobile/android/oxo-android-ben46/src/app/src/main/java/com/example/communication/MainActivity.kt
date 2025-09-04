@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        WebPageButton()
+                        AuthFlow()
                     }
                 }
             }
@@ -43,27 +43,41 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun WebPageButton() {
+fun AuthFlow() {
     val context = LocalContext.current
-    Button(onClick = {
-        val tokenIntent = Intent("com.example.token").apply {
-            putExtra("TOKEN", "secret_api_key_12345")
+    var isAuthenticated by remember { mutableStateOf(false) }
+    var token by remember { mutableStateOf<String?>(null) }
+
+    if (!isAuthenticated) {
+        Button(onClick = {
+            isAuthenticated = true
+            token = "temp_access_token_${System.currentTimeMillis()}"
+        }) {
+            Text("Login")
         }
-        context.sendBroadcast(tokenIntent)
-        val webpageIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("https://www.example.com")
-        )
-        context.startActivity(webpageIntent)
-    }) {
-        Text("Open Example.com")
+    } else {
+        Button(onClick = {
+            // Broadcast sensitive token
+            val tokenIntent = Intent("com.example.token").apply {
+                putExtra("TOKEN", token)
+            }
+            context.sendBroadcast(tokenIntent)
+
+            val webpageIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.example.com/dashboard")
+            )
+            context.startActivity(webpageIntent)
+        }) {
+            Text("Access Dashboard")
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun WebPageButtonPreview() {
+fun AuthFlowPreview() {
     CommunicationTheme {
-        WebPageButton()
+        AuthFlow()
     }
 }
