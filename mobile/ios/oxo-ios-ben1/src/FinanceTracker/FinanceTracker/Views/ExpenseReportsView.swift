@@ -1,10 +1,3 @@
-//
-//  ExpenseReportsView.swift
-//  FinanceTracker
-//
-//  Created by Alaeddine Mesbahi on 9/4/25.
-//
-
 import SwiftUI
 
 struct ExpenseReportsView: View {

@@ -1,10 +1,3 @@
-//
-//  Budget.swift
-//  FinanceTracker
-//
-//  Created by Alaeddine Mesbahi on 9/4/25.
-//
-
 import Foundation
 
 struct Budget: Identifiable, Codable {
