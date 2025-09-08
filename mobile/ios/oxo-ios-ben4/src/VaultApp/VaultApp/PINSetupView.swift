@@ -1,9 +1,12 @@
 import SwiftUI
 
-struct PINEntryView: View {
+struct PINSetupView: View {
     @EnvironmentObject var authStore: AuthStore
     @State private var enteredPIN = ""
-    @State private var showWrongPassword = false
+    @State private var confirmPIN = ""
+    @State private var isPINConfirmation = false
+    @State private var showError = false
+    @State private var errorMessage = ""
     
     var body: some View {
         VStack(spacing: 20) {
@@ -11,7 +14,7 @@ struct PINEntryView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
-            Text("Enter 4-digit PIN")
+            Text(isPINConfirmation ? "Confirm your 4-digit PIN" : "Create a 4-digit PIN")
                 .font(.headline)
             
             HStack(spacing: 10) {
@@ -20,17 +23,18 @@ struct PINEntryView: View {
                         .stroke(Color.blue, lineWidth: 2)
                         .frame(width: 20, height: 20)
                         .overlay(
-                            enteredPIN.count > index ? 
+                            (isPINConfirmation ? confirmPIN.count > index : enteredPIN.count > index) ? 
                             Circle().fill(Color.blue) : nil
                         )
                 }
             }
             .padding(.vertical, 20)
             
-            if showWrongPassword {
-                Text("Wrong password")
+            if showError {
+                Text(errorMessage)
                     .foregroundColor(.red)
                     .font(.subheadline)
+                    .padding(.bottom, 10)
             }
             
             Spacer()
@@ -39,9 +43,7 @@ struct PINEntryView: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 20) {
                 ForEach(1...9, id: \.self) { number in
                     Button(action: {
-                        if enteredPIN.count < 4 {
-                            enteredPIN += "\(number)"
-                        }
+                        addDigit("\(number)")
                     }) {
                         Text("\(number)")
                             .font(.title)
@@ -51,14 +53,12 @@ struct PINEntryView: View {
                     }
                 }
                 
-                // Empty space where Face ID button was
+                // Empty space
                 Color.clear
                     .frame(width: 70, height: 70)
                 
                 Button(action: {
-                    if enteredPIN.count < 4 {
-                        enteredPIN += "0"
-                    }
+                    addDigit("0")
                 }) {
                     Text("0")
                         .font(.title)
@@ -68,9 +68,7 @@ struct PINEntryView: View {
                 }
                 
                 Button(action: {
-                    if !enteredPIN.isEmpty {
-                        enteredPIN.removeLast()
-                    }
+                    deleteDigit()
                 }) {
                     Image(systemName: "delete.left")
                         .font(.title)
@@ -82,16 +80,9 @@ struct PINEntryView: View {
             .padding(.horizontal)
             
             Button(action: {
-                let isValid = authStore.validatePIN(enteredPIN)
-                if !isValid {
-                    showWrongPassword = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        showWrongPassword = false
-                    }
-                }
-                enteredPIN = ""
+                processPIN()
             }) {
-                Text("Unlock")
+                Text(isPINConfirmation ? "Confirm PIN" : "Next")
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding(.vertical, 15)
@@ -101,14 +92,70 @@ struct PINEntryView: View {
             }
             .padding(.horizontal)
             .padding(.bottom, 30)
+            .disabled(isPINConfirmation ? confirmPIN.count < 4 : enteredPIN.count < 4)
         }
         .padding()
     }
+    
+    private func addDigit(_ digit: String) {
+        if isPINConfirmation {
+            if confirmPIN.count < 4 {
+                confirmPIN += digit
+            }
+        } else {
+            if enteredPIN.count < 4 {
+                enteredPIN += digit
+            }
+        }
+    }
+    
+    private func deleteDigit() {
+        if isPINConfirmation {
+            if !confirmPIN.isEmpty {
+                confirmPIN.removeLast()
+            }
+        } else {
+            if !enteredPIN.isEmpty {
+                enteredPIN.removeLast()
+            }
+        }
+    }
+    
+    private func processPIN() {
+        if !isPINConfirmation {
+            // First entry completed, move to confirmation
+            isPINConfirmation = true
+        } else {
+            // Confirm PIN matches
+            if enteredPIN == confirmPIN {
+                let success = authStore.setupPIN(enteredPIN)
+                if !success {
+                    showError = true
+                    errorMessage = "PIN must be 4 digits"
+                    isPINConfirmation = false
+                    enteredPIN = ""
+                    confirmPIN = ""
+                }
+            } else {
+                // PINs don't match
+                showError = true
+                errorMessage = "PINs don't match. Try again."
+                isPINConfirmation = false
+                enteredPIN = ""
+                confirmPIN = ""
+                
+                // Hide error after 2 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    showError = false
+                }
+            }
+        }
+    }
 }
 
-struct PINEntryView_Previews: PreviewProvider {
+struct PINSetupView_Previews: PreviewProvider {
     static var previews: some View {
-        PINEntryView()
+        PINSetupView()
             .environmentObject(AuthStore())
     }
 }

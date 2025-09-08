@@ -1,29 +1,46 @@
-// File: AuthStore.swift
-// FOR: VaultApp-BruteForce
-// VULN: Unlimited PIN Attempts (Brute Force)
-
 import Foundation
+import SwiftUI
 
 class AuthStore: ObservableObject {
-    // The correct PIN. In a real app, this would be hashed and salted.
-    private let correctPIN = "2002"
+    @Published var isAuthenticated = false
+    @Published var isPINSet = false
+    @Published var userPIN = ""
     
-    // Published properties that the UI will watch and update on change
-    @Published var isAuthenticated: Bool = false
-    @Published var remainingAttempts: Int = 100 // A decoy value that is not enforced
-
-    func validatePIN(_ pin: String) -> Bool {
-        let isCorrect = pin == correctPIN
-
-        if isCorrect {
-            // Successful authentication
-            isAuthenticated = true
-        } else {
-            // VULNERABILITY: The attempt count decrements but never triggers a lock.
-            // This allows for unlimited brute-force attempts.
-            remainingAttempts -= 1
-            print("Invalid PIN. Attempts left: \(remainingAttempts) (Not enforced - Brute Force possible)")
+    init() {
+        // Check if PIN is already set
+        if let storedPIN = UserDefaults.standard.string(forKey: "userPIN") {
+            userPIN = storedPIN
+            isPINSet = true
         }
-        return isCorrect
+    }
+    
+    func setupPIN(_ pin: String) -> Bool {
+        // Validate PIN format (4 digits)
+        if pin.count == 4 && pin.allSatisfy({ $0.isNumber }) {
+            userPIN = pin
+            isPINSet = true
+            
+            // Store PIN in UserDefaults (insecure by design)
+            UserDefaults.standard.set(pin, forKey: "userPIN")
+            return true
+        }
+        return false
+    }
+    
+    func validatePIN(_ pin: String) -> Bool {
+        if pin == userPIN {
+            isAuthenticated = true
+            return true
+        } else {
+            // Vulnerability: No lockout mechanism for failed attempts
+            return false
+        }
+    }
+    
+    func resetPIN() {
+        userPIN = ""
+        isPINSet = false
+        isAuthenticated = false
+        UserDefaults.standard.removeObject(forKey: "userPIN")
     }
 }

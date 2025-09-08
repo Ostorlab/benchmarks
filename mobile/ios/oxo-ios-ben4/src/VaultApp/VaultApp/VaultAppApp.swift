@@ -1,16 +1,23 @@
-// File: VaultApp.swift
+//
+//  VaultAppApp.swift
+//  VaultApp
+//
+//  Created by aitougrram on 5/9/2025.
+//
+
 import SwiftUI
 
 @main
-struct VaultApp_BruteForceApp: App {
-    // Create the authentication store and provide it to the whole app
+struct VaultAppApp: App {
+    // Create shared instances of our stores
     @StateObject private var authStore = AuthStore()
-
+    @StateObject private var secretsStore = SecretsStore()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(authStore) // Provide it here
+                .environmentObject(authStore)
+                .environmentObject(secretsStore)
         }
-        // Note: No background/foreground tracking needed for this vulnerability
     }
 }

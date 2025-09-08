@@ -1,13 +1,19 @@
-// File: ContentView.swift
+//
+//  ContentView.swift
+//  VaultApp
+//
+//  Created by aitougrram on 5/9/2025.
+//
+
 import SwiftUI
 
 struct ContentView: View {
-    // Access the authentication store from the environment
     @EnvironmentObject var authStore: AuthStore
-
+    
     var body: some View {
-        // Show the Vault if authenticated, otherwise show the PIN entry
-        if authStore.isAuthenticated {
+        if !authStore.isPINSet {
+            PINSetupView()
+        } else if authStore.isAuthenticated {
             VaultView()
         } else {
             PINEntryView()
@@ -18,4 +24,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(AuthStore())
+        .environmentObject(SecretsStore())
 }
