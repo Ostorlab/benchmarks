@@ -26,27 +26,29 @@ The application's promotional code validation system lacks essential security co
 
 **Attack Vector: Automated Promotion Code Enumeration**
 
-**Brief Explanation**: ShopZen processes promotional code validation requests without implementing rate limiting, account lockout mechanisms, or request throttling. This allows attackers to systematically test promotional codes using automated tools until valid codes are discovered.
+**Brief Explanation**: ShopZen processes promotional code validation requests without implementing rate limiting, account lockout mechanisms, or request throttling. The app uses SHA256 hashes to validate codes, preventing static analysis discovery but forcing attackers to systematically brute force codes through dynamic testing.
 
 ## Exploitation
 
 ### Attack Scenarios
 
-**1. Manual Pattern Testing**
-- Access shopping cart with items
-- Enter predictable promotional codes (SAVE10, WELCOME, VIP40, etc.)
-- No rate limiting allows unlimited attempts
+**1. Hash Analysis**
+- Reverse engineer app to discover SHA256 validation hashes
+- Hashes prevent direct code discovery but reveal validation approach
+- Must enumerate codes to find matches
 
 **2. Automated Brute Force**
-- Use mobile automation tools (Appium, Frida)
+- Use mobile automation tools (Appium, Frida) to test code combinations
 - Script systematic testing of common promotional code patterns
 - No authentication required for code validation attempts
+- No rate limiting allows rapid enumeration
 
-**3. Common Valid Codes**
-```
-SAVE10, SAVE20, WELCOME, NEWUSER, STUDENT15, 
-WEEKEND25, FLASH30, SUMMER20, AUTUMN15, WINTER10, 
-SPRING25, HOLIDAY50, VIP40, FIRST10, RETURN20
+**3. Example Attack Pattern**
+```bash
+# Common promo code patterns to test
+SAVE10, SAVE20, SAVE25, SAVE30, SAVE50
+WELCOME, HELLO, HI, DISCOUNT, PROMO
+VIP10, VIP20, VIP50, STUDENT, FIRST
 ```
 
 ### Testing Instructions
@@ -55,8 +57,8 @@ SPRING25, HOLIDAY50, VIP40, FIRST10, RETURN20
 2. **Add products to cart** from the main product list
 3. **Navigate to shopping cart** 
 4. **Test promotional codes** in the promo code field:
-   - Try invalid codes: no rate limiting prevents rapid attempts
-   - Try valid codes from the list above to confirm discounts apply
+   - Try invalid codes: no rate limiting prevents rapid attempts  
+   - Try common patterns to discover valid codes (SAVE20, WELCOME, VIP50 are valid)
 5. **Demonstrate automation potential** using mobile testing frameworks
 
 **Expected Result:** Successfully apply promotional discounts through brute force enumeration without encountering rate limiting or account lockout mechanisms.
@@ -82,4 +84,4 @@ func validatePromoCode(_ code: String, orderAmount: Double, completion: @escapin
 - **No attempt tracking** per user session or device
 - **No account lockout** after multiple failed attempts  
 - **No authentication required** for code validation
-- **Predictable code patterns** aid enumeration attacks
+- **Hash-based validation** prevents static analysis shortcuts but enables brute force attacks
