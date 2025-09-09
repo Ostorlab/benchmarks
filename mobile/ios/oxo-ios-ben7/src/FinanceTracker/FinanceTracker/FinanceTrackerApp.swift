@@ -1,10 +1,3 @@
-//
-//  FinanceTrackerApp.swift
-//  FinanceTracker
-//
-//  Created by Alaeddine Mesbahi on 9/8/25.
-//
-
 import SwiftUI
 
 @main

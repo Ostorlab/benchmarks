@@ -1,10 +1,3 @@
-//
-//  Account.swift
-//  FinanceTracker
-//
-//  Created by Alaeddine Mesbahi on 9/8/25.
-//
-
 import Foundation
 
 struct Account: Identifiable, Codable {

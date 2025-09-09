@@ -1,10 +1,3 @@
-//
-//  SettingsView.swift
-//  FinanceTracker
-//
-//  Created by Alaeddine Mesbahi on 9/8/25.
-//
-
 import SwiftUI
 
 struct SettingsView: View {

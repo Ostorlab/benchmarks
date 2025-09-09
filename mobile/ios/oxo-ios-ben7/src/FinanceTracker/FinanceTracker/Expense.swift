@@ -1,10 +1,3 @@
-//
-//  Expense.swift
-//  FinanceTracker
-//
-//  Created by Alaeddine Mesbahi on 9/8/25.
-//
-
 import Foundation
 
 enum ExpenseCategory: String, CaseIterable, Identifiable, Codable {
