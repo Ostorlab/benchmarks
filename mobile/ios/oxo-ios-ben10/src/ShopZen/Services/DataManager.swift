@@ -97,23 +97,4 @@ class DataManager {
         ]
     }
     
-    func loadValidPromoCodes() -> [String] {
-        return [
-            "SAVE10",
-            "SAVE20", 
-            "WELCOME",
-            "NEWUSER",
-            "STUDENT15",
-            "WEEKEND25",
-            "FLASH30",
-            "SUMMER20",
-            "AUTUMN15",
-            "WINTER10",
-            "SPRING25",
-            "HOLIDAY50",
-            "VIP40",
-            "FIRST10",
-            "RETURN20"
-        ]
-    }
 }
