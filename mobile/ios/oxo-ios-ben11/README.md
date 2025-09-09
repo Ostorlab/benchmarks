@@ -1,145 +1,147 @@
-# oxo-ios-ben11: iOS Deeplink Cross-Site Request Forgery (CSRF)
+# Finance Tracker iOS App
 
-## Vulnerability Overview
+A modern iOS finance tracking application built with SwiftUI that helps users manage their personal finances, track expenses, and monitor account balances.
 
-**iOS Deeplink Cross-Site Request Forgery (CSRF)** occurs when iOS applications register custom URL schemes that perform sensitive actions without proper CSRF protection or user confirmation. Attackers can exploit this by embedding malicious deeplinks in websites, QR codes, or messages that automatically execute unauthorized actions when the victim clicks the link, such as following users, making purchases, or changing settings.
+## Overview
 
-## Technical Details
+Finance Tracker is a comprehensive personal finance management app designed for iOS devices. The app provides an intuitive interface for managing multiple accounts, tracking expenses, and transferring money between accounts with seamless user experience.
 
-### Vulnerability Type
-- **OWASP Category**: A01:2021 – Broken Access Control
-- **CWE**: CWE-352 (Cross-Site Request Forgery)
-- **CVSS Score**: 6.5 (Medium-High)
+## Features
 
-### Root Cause
-The application registers a custom URL scheme (`financetracker://`) that directly processes deeplink parameters and executes sensitive actions without:
-1. CSRF tokens or nonces
-2. User confirmation dialogs
-3. Authentication verification
-4. Rate limiting or session validation
+### Account Management
+- Support for multiple account types (Checking, Savings, Credit Card)
+- Real-time balance tracking and updates
+- Easy account creation and management
+- Visual account overview with icons and balances
 
-### Attack Vector
-Attackers can craft malicious deeplinks that trigger unauthorized actions:
-- Social engineering via malicious websites
-- QR codes containing CSRF deeplinks  
-- Phishing emails with embedded deeplinks
-- SMS messages with malicious URLs
-- Cross-app link sharing exploits
+### Money Transfers
+- Quick transfers between accounts
+- Customizable transfer descriptions
+- Real-time balance updates
+- Transfer history and tracking
 
-## Vulnerable Endpoints
+### Expense Tracking
+- Add and categorize expenses
+- View expense history
+- Track spending patterns
+- Visual expense summaries
 
-The Finance Tracker app exposes several CSRF-vulnerable deeplink endpoints:
+### User Settings
+- Customizable user profile
+- Notification preferences
+- Biometric authentication support
+- Account statistics and insights
 
-### Single Transfer Endpoint (Simplified)
-```
-financetracker://transfer?amount=1000&recipient=AttackerAccount&description=CSRF_Attack
-```
+## Technical Specifications
 
-## Exploitation Examples
+### Requirements
+- iOS 17.0 or later
+- Xcode 15.0 or later
+- Swift 5.9+
+- SwiftUI framework
 
-### Basic CSRF Attack via CLI
-```bash
-# Simple transfer attack - no authentication required
-xcrun simctl openurl "iPhone 15 Pro" "financetracker://transfer?amount=1000&recipient=AttackerAccount&description=CSRF_Attack"
-```
+### Architecture
+- **Framework**: SwiftUI
+- **Data Management**: ObservableObject pattern
+- **Storage**: UserDefaults and local data persistence
+- **Navigation**: NavigationView and sheet presentations
 
-### QR Code Attack
-```
-QR Code Content: financetracker://settings/update?privacy=public&shareData=true
-```
-
-### Email Phishing Attack
-```
-Subject: Security Alert - Verify Your Account
-Body: Click here to secure your account: financetracker://settings/update?2fa=disabled
-```
-
-## Impact Assessment
-
-### High Risk Scenarios
-1. **Financial Theft**: Unauthorized money transfers to attacker accounts
-2. **Privacy Violation**: Changing privacy settings to public/exposed
-3. **Account Takeover**: Modifying email/phone to attacker-controlled values
-4. **Social Engineering**: Forced following of malicious accounts
-5. **Data Exfiltration**: Triggering data export to attacker email
-
-### Business Impact
-- Direct financial losses through unauthorized transfers
-- Regulatory compliance violations (PCI DSS, SOX)
-- User trust and reputation damage
-- Potential legal liability for security failures
-- Increased customer support costs
-
-## Testing Instructions
+## Installation
 
 ### Prerequisites
 - iOS device or simulator (iOS 17.0+)
-- Finance Tracker app installed (`oxo-ios-ben11.ipa`)
-- Web browser or QR code generator
-- Local web server (optional for hosted attacks)
+- Finance Tracker app file (`oxo-ios-ben11.ipa`)
+- Xcode for development and testing
 
-### Basic CSRF Test
-1. Install and launch the Finance Tracker app
-2. Create a test HTML file with malicious deeplink
-3. Open the HTML file in Safari on the same device
-4. Click the malicious link and observe unauthorized action execution
+### Setup Instructions
+1. Clone or download the project source code
+2. Open `FinanceTracker.xcodeproj` in Xcode
+3. Select your target device or simulator
+4. Build and run the project (⌘+R)
 
-### QR Code Test  
-1. Generate QR code with CSRF deeplink payload
-2. Scan QR code with device camera
-3. Tap the notification to trigger the deeplink
-4. Verify unauthorized action was performed
+### Using the IPA File
+1. Install the provided `oxo-ios-ben11.ipa` file
+2. Launch the Finance Tracker app
+3. Create your first account to get started
+4. Begin tracking your finances
 
-### Advanced Testing
-1. Set up local web server with malicious HTML pages
-2. Test various CSRF payloads and parameter combinations
-3. Verify actions execute without user confirmation
-4. Test cross-app attack scenarios
+## App Structure
 
-## Mitigation Strategies
+### Main Components
+- **ContentView**: Primary app interface with tabbed navigation
+- **SettingsView**: User preferences and account management
+- **MoneyTransferView**: Transfer money between accounts
+- **ExpenseEntryView**: Add and track expenses
+- **DataManager**: Core business logic and data management
 
-### Immediate Fixes
-1. **Add CSRF Tokens**: Include unpredictable tokens in all sensitive deeplinks
-2. **User Confirmation**: Require explicit user approval for sensitive actions
-3. **Authentication Check**: Verify user session before executing actions
-4. **Input Validation**: Sanitize and validate all deeplink parameters
+### Key Features
+- **Profile Management**: Customize user name and preferences
+- **Account Overview**: View all accounts with balances and types
+- **Quick Actions**: Easy access to common financial tasks
+- **Statistics**: Overview of spending and account totals
 
-### Long-term Solutions
-1. **Rate Limiting**: Implement per-user action rate limits
-2. **Intent Verification**: Use iOS app-to-app communication verification
-3. **Allowlist Origins**: Only accept deeplinks from trusted sources
-4. **Audit Logging**: Log all deeplink actions for security monitoring
+## Usage Guide
 
-### Code Examples
-```swift
-// SECURE: Deeplink handler with CSRF protection
-func handleDeeplink(url: URL) {
-    // 1. Verify CSRF token
-    guard let token = extractToken(from: url),
-          validateCSRFToken(token) else {
-        showError("Invalid security token")
-        return
-    }
-    
-    // 2. Require user confirmation
-    showConfirmationDialog(for: url) { confirmed in
-        if confirmed {
-            // 3. Verify authentication
-            guard isUserAuthenticated() else {
-                showLoginPrompt()
-                return
-            }
-            
-            // 4. Execute action safely
-            executeAction(url)
-        }
-    }
-}
+### Getting Started
+1. Launch the Finance Tracker app
+2. Set up your user profile in Settings
+3. Add your first account with initial balance
+4. Start tracking expenses and transfers
+
+### Adding Accounts
+1. Navigate to Settings
+2. Tap "Add New Account" 
+3. Enter account name, type, and initial balance
+4. Save to create the new account
+
+### Making Transfers
+1. Go to the Transfer tab
+2. Select source and destination accounts
+3. Enter transfer amount and description
+4. Confirm the transfer
+
+### Tracking Expenses
+1. Access the Expenses section
+2. Add new expense with amount and description
+3. View expense history and totals
+4. Monitor spending patterns
+
+## App Configuration
+
+### Custom URL Scheme
+The app supports deeplink integration with the custom URL scheme:
+```
+financetracker://
 ```
 
-## References
+This enables external apps and services to integrate with Finance Tracker for seamless money management workflows.
 
-- [HackerOne Report #583987 - Periscope iOS CSRF](https://hackerone.com/reports/583987)
-- [OWASP Cross-Site Request Forgery Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
-- [Apple iOS Security Guide - URL Schemes](https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app)
-- [CWE-352: Cross-Site Request Forgery (CSRF)](https://cwe.mitre.org/data/definitions/352.html)
+### Settings Options
+- **Notifications**: Enable/disable app notifications
+- **Biometric Auth**: Use Face ID or Touch ID for security
+- **Profile**: Customize user name and information
+- **Account Management**: Add, edit, and manage accounts
+
+## Support
+
+For technical support or questions about Finance Tracker:
+
+- **Version**: 1.0.0
+- **Support Email**: support@financetracker.com
+- **Platform**: iOS 17.0+
+- **Framework**: SwiftUI
+
+## Development
+
+### Building from Source
+1. Open the project in Xcode
+2. Ensure iOS 17.0 SDK is available
+3. Select target device or simulator
+4. Build and run the project
+
+### Key Development Files
+- `FinanceTrackerApp.swift`: Main app entry point
+- `DataManager.swift`: Core data management
+- `ContentView.swift`: Primary user interface
+- `SettingsView.swift`: User preferences
+- `Info.plist`: App configuration and permissions
