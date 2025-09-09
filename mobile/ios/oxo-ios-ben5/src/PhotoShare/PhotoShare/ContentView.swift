@@ -1,152 +1,90 @@
+//
+//  ContentView.swift
+//  PhotoShare
+//
+//  Created by elyousfi on 08/09/2025.
+//
+
 import SwiftUI
-import AVFoundation
+import Combine
 
 struct ContentView: View {
     @StateObject private var photoManager = PhotoManager()
     @State private var showingCamera = false
-    @State private var showingPhotoDetail = false
-    @State private var selectedPhoto: PhotoItem?
-
+    @State private var showingGallery = false
+    
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVGrid(columns: [
-                    GridItem(.flexible()),
-                    GridItem(.flexible()),
-                    GridItem(.flexible())
-                ], spacing: 2) {
-                    ForEach(photoManager.photos) { photo in
-                        AsyncImage(url: photo.thumbnailURL) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 120, height: 120)
-                                .clipped()
-                        } placeholder: {
-                            Rectangle()
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(width: 120, height: 120)
+            VStack(spacing: 20) {
+                if photoManager.photos.isEmpty {
+                    VStack(spacing: 16) {
+                        Image(systemName: "camera.fill")
+                            .font(.system(size: 60))
+                            .foregroundColor(.blue)
+                        
+                        Text("Welcome to PhotoShare")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        
+                        Text("Capture and share your favorite moments with enhanced quality and easy sharing features.")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                    }
+                    .padding(.top, 50)
+                    
+                    Spacer()
+                } else {
+                    PhotoGalleryView(photos: photoManager.photos, photoManager: photoManager)
+                }
+                
+                VStack(spacing: 12) {
+                    Button(action: {
+                        showingCamera = true
+                    }) {
+                        HStack {
+                            Image(systemName: UIImagePickerController.isSourceTypeAvailable(.camera) ? "camera.fill" : "photo")
+                            Text(UIImagePickerController.isSourceTypeAvailable(.camera) ? "Take Photo" : "Choose Photo")
                         }
-                        .onTapGesture {
-                            selectedPhoto = photo
-                            showingPhotoDetail = true
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(12)
+                    }
+                    
+                    if !photoManager.photos.isEmpty {
+                        Button(action: {
+                            showingGallery = true
+                        }) {
+                            HStack {
+                                Image(systemName: "photo.stack")
+                                Text("View Gallery")
+                            }
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue.opacity(0.1))
+                            .cornerRadius(12)
                         }
                     }
                 }
                 .padding()
             }
             .navigationTitle("PhotoShare")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showingCamera = true
-                    }) {
-                        Image(systemName: "camera.fill")
-                    }
-                }
-            }
             .sheet(isPresented: $showingCamera) {
                 CameraView(photoManager: photoManager)
             }
-            .sheet(isPresented: $showingPhotoDetail) {
-                if let photo = selectedPhoto {
-                    PhotoDetailView(photo: photo, photoManager: photoManager)
-                }
-            }
-            .onAppear {
-                photoManager.requestPermissions()
+            .sheet(isPresented: $showingGallery) {
+                GalleryView(photoManager: photoManager)
             }
         }
     }
 }
 
-struct CameraView: UIViewControllerRepresentable {
-    let photoManager: PhotoManager
-    @Environment(\.presentationMode) var presentationMode
-
-    func makeUIViewController(context: Context) -> UIImagePickerController {
-        let picker = UIImagePickerController()
-        picker.delegate = context.coordinator
-        picker.sourceType = .camera
-        picker.cameraDevice = .rear
-        return picker
-    }
-
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let parent: CameraView
-
-        init(_ parent: CameraView) {
-            self.parent = parent
-        }
-
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let image = info[.originalImage] as? UIImage {
-                parent.photoManager.capturePhoto(image: image)
-            }
-            parent.presentationMode.wrappedValue.dismiss()
-        }
-
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            parent.presentationMode.wrappedValue.dismiss()
-        }
-    }
-}
-
-struct PhotoDetailView: View {
-    let photo: PhotoItem
-    let photoManager: PhotoManager
-    @Environment(\.presentationMode) var presentationMode
-    @State private var showingShareSheet = false
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                AsyncImage(url: photo.fullURL) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } placeholder: {
-                    ProgressView()
-                }
-
-                Spacer()
-
-                VStack(spacing: 16) {
-                    if let location = photo.location {
-                        HStack {
-                            Image(systemName: "location.fill")
-                                .foregroundColor(.blue)
-                            Text("Photo taken at location")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-
-                    HStack(spacing: 20) {
-                        Button("Share") {
-                            photoManager.sharePhoto(photo)
-                        }
-                        .buttonStyle(.borderedProminent)
-
-                        Button("Save to Photos") {
-                            photoManager.exportToPhotos(photo)
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                }
-                .padding()
-            }
-            .navigationTitle("Photo")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Done") {
-                presentationMode.wrappedValue.dismiss()
-            })
-        }
-    }
+#Preview {
+    ContentView()
 }

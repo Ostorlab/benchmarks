@@ -1,196 +1,165 @@
-import SwiftUI
-import AVFoundation
-import CoreLocation
-import Photos
-import ImageIO
+//
+//  PhotoManager.swift
+//  PhotoShare
+//
+//  Created by elyousfi on 08/09/2025.
+//
 
-class PhotoManager: NSObject, ObservableObject {
+import SwiftUI
+import Photos
+import CoreLocation
+import UIKit
+import UniformTypeIdentifiers
+import Combine
+
+final class PhotoManager: NSObject, ObservableObject {
     @Published var photos: [PhotoItem] = []
     private let locationManager = CLLocationManager()
-    private var currentLocation: CLLocationCoordinate2D?
-
+    private var currentLocation: CLLocation?
+    
     override init() {
         super.init()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        setupLocationManager()
         loadPhotos()
     }
-
-    func requestPermissions() {
-        locationManager.requestWhenInUseAuthorization()
-        PHPhotoLibrary.requestAuthorization { _ in }
-    }
-
-    func capturePhoto(image: UIImage) {
-        locationManager.requestLocation()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.savePhotoWithLocation(image: image)
+    
+    private func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        // Request permission based on current authorization status
+        let authorizationStatus = locationManager.authorizationStatus
+        if authorizationStatus == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        } else if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
+            locationManager.startUpdatingLocation()
         }
     }
-
-    private func savePhotoWithLocation(image: UIImage) {
-        guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
-
-        let filename = "photo_\(Date().timeIntervalSince1970).jpg"
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let fullURL = documentsPath.appendingPathComponent(filename)
-        let thumbnailURL = documentsPath.appendingPathComponent("thumb_\(filename)")
-
-        let imageWithLocation = addLocationToImage(imageData: imageData, location: currentLocation)
-
-        do {
-            try imageWithLocation.write(to: fullURL)
-
-            let thumbnail = image.resized(to: CGSize(width: 300, height: 300))
-            if let thumbData = thumbnail.jpegData(compressionQuality: 0.7) {
-                try thumbData.write(to: thumbnailURL)
-            }
-
-            let photoItem = PhotoItem(
-                filename: filename,
-                thumbnailURL: thumbnailURL,
-                fullURL: fullURL,
-                location: currentLocation
-            )
-
-            DispatchQueue.main.async {
-                self.photos.insert(photoItem, at: 0)
-                self.savePhotos()
-            }
-
-        } catch {
-            print("Error saving photo: \(error)")
-        }
-    }
-
-    private func addLocationToImage(imageData: Data, location: CLLocationCoordinate2D?) -> Data {
-        guard let location = location,
-              let source = CGImageSourceCreateWithData(imageData as CFData, nil),
-              let imageType = CGImageSourceGetType(source) else {
-            return imageData
-        }
-
-        let mutableData = NSMutableData(data: imageData)
-        guard let destination = CGImageDestinationCreateWithData(mutableData, imageType, 1, nil) else {
-            return imageData
-        }
-
-        let gpsDict: [String: Any] = [
-            kCGImagePropertyGPSLatitude as String: abs(location.latitude),
-            kCGImagePropertyGPSLongitude as String: abs(location.longitude),
-            kCGImagePropertyGPSLatitudeRef as String: location.latitude >= 0 ? "N" : "S",
-            kCGImagePropertyGPSLongitudeRef as String: location.longitude >= 0 ? "E" : "W",
-            kCGImagePropertyGPSTimeStamp as String: DateFormatter.gpsTimestamp.string(from: Date()),
-            kCGImagePropertyGPSDateStamp as String: DateFormatter.gpsDateStamp.string(from: Date())
-        ]
-
-        let metadata: [String: Any] = [
-            kCGImagePropertyGPSDictionary as String: gpsDict
-        ]
-
-        CGImageDestinationAddImageFromSource(destination, source, 0, metadata as CFDictionary)
-        CGImageDestinationFinalize(destination)
-
-        return mutableData as Data
-    }
-
-    func sharePhoto(_ photo: PhotoItem) {
-        let activityController = UIActivityViewController(
-            activityItems: [photo.fullURL],
-            applicationActivities: nil
+    
+    func addPhoto(_ image: UIImage) {
+        let photoItem = PhotoItem(
+            id: UUID(),
+            image: image,
+            timestamp: Date(),
+            location: currentLocation
         )
-
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first {
-            window.rootViewController?.present(activityController, animated: true)
-        }
+        
+        photos.insert(photoItem, at: 0)
+        savePhoto(photoItem)
     }
-
-    func exportToPhotos(_ photo: PhotoItem) {
+    
+    private func savePhoto(_ photoItem: PhotoItem) {
+        // Save to user's photo library with location data preserved
         PHPhotoLibrary.requestAuthorization { status in
-            guard status == .authorized else { return }
-
-            do {
-                let imageData = try Data(contentsOf: photo.fullURL)
+            if status == .authorized {
                 PHPhotoLibrary.shared().performChanges({
-                    let request = PHAssetCreationRequest.forAsset()
-                    request.addResource(with: .photo, data: imageData, options: nil)
+                    let request = PHAssetChangeRequest.creationRequestForAsset(from: photoItem.image)
+                    
+                    // Preserve location data when saving to Photos
+                    if let location = photoItem.location {
+                        request.location = location
+                    }
+                    request.creationDate = photoItem.timestamp
                 }) { success, error in
-                    DispatchQueue.main.async {
-                        if success {
-                            print("Photo saved to Photos app with location data")
-                        }
+                    if let error = error {
+                        print("Error saving photo: \(error)")
                     }
                 }
-            } catch {
-                print("Error reading photo data: \(error)")
             }
         }
     }
-
+    
+    func exportPhoto(_ photoItem: PhotoItem) -> UIImage {
+        // This method preserves the original image with all metadata intact
+        // The vulnerability: Location data is not stripped during export
+        return addLocationMetadataToImage(photoItem.image, location: photoItem.location, timestamp: photoItem.timestamp)
+    }
+    
+    private func addLocationMetadataToImage(_ image: UIImage, location: CLLocation?, timestamp: Date) -> UIImage {
+        guard let imageData = image.jpegData(compressionQuality: 0.9) else {
+            return image
+        }
+        
+        guard let source = CGImageSourceCreateWithData(imageData as CFData, nil),
+              let imageProperties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [String: Any] else {
+            return image
+        }
+        
+        var mutableMetadata = imageProperties
+        
+        // Add timestamp
+        var exifDict = mutableMetadata[kCGImagePropertyExifDictionary as String] as? [String: Any] ?? [:]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy:MM:dd HH:mm:ss"
+        exifDict[kCGImagePropertyExifDateTimeOriginal as String] = dateFormatter.string(from: timestamp)
+        mutableMetadata[kCGImagePropertyExifDictionary as String] = exifDict
+        
+        // The vulnerability: Add GPS location data without user awareness
+        if let location = location {
+            var gpsDict: [String: Any] = [:]
+            
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
+            
+            gpsDict[kCGImagePropertyGPSLatitude as String] = abs(latitude)
+            gpsDict[kCGImagePropertyGPSLatitudeRef as String] = latitude >= 0 ? "N" : "S"
+            gpsDict[kCGImagePropertyGPSLongitude as String] = abs(longitude)
+            gpsDict[kCGImagePropertyGPSLongitudeRef as String] = longitude >= 0 ? "E" : "W"
+            gpsDict[kCGImagePropertyGPSAltitude as String] = location.altitude
+            gpsDict[kCGImagePropertyGPSTimeStamp as String] = dateFormatter.string(from: location.timestamp)
+            
+            mutableMetadata[kCGImagePropertyGPSDictionary as String] = gpsDict
+        }
+        
+        // Create new image with metadata
+        guard let mutableData = CFDataCreateMutable(nil, 0),
+              let destination = CGImageDestinationCreateWithData(mutableData, UTType.jpeg.identifier as CFString, 1, nil),
+              let cgImage = image.cgImage else {
+            return image
+        }
+        
+        CGImageDestinationAddImage(destination, cgImage, mutableMetadata as CFDictionary)
+        CGImageDestinationFinalize(destination)
+        
+        let finalImageData = mutableData as Data
+        return UIImage(data: finalImageData) ?? image
+    }
+    
     private func loadPhotos() {
-        // Load existing photos from documents directory
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-
-        do {
-            let files = try FileManager.default.contentsOfDirectory(at: documentsPath, includingPropertiesForKeys: nil)
-            let photoFiles = files.filter { $0.pathExtension == "jpg" && !$0.lastPathComponent.hasPrefix("thumb_") }
-
-            for file in photoFiles {
-                let filename = file.lastPathComponent
-                let thumbnailURL = documentsPath.appendingPathComponent("thumb_\(filename)")
-
-                if FileManager.default.fileExists(atPath: thumbnailURL.path) {
-                    let photo = PhotoItem(filename: filename, thumbnailURL: thumbnailURL, fullURL: file)
-                    photos.append(photo)
-                }
-            }
-
-            photos.sort { $0.dateCreated > $1.dateCreated }
-        } catch {
-            print("Error loading photos: \(error)")
-        }
-    }
-
-    private func savePhotos() {
-        // In a real app, you might save photo metadata to UserDefaults or Core Data
-        // For this benchmark, we're keeping it simple
+        // Load previously saved photos from UserDefaults for demo purposes
+        // In a real app, this might load from Core Data or other persistence
     }
 }
 
 extension PhotoManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations.last?.coordinate
+        currentLocation = locations.last
+        // Stop updating location after getting a fix to save battery
+        locationManager.stopUpdatingLocation()
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Location error: \(error)")
+        print("Location error: \(error.localizedDescription)")
+        // Don't crash the app if location fails - just continue without location data
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            locationManager.startUpdatingLocation()
+        case .denied, .restricted:
+            print("Location access denied - photos will be saved without location data")
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        @unknown default:
+            break
+        }
     }
 }
 
-extension UIImage {
-    func resized(to size: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        draw(in: CGRect(origin: .zero, size: size))
-        let resized = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return resized ?? self
-    }
-}
-
-extension DateFormatter {
-    static let gpsTimestamp: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm:ss.SSSSSS"
-        formatter.timeZone = TimeZone(abbreviation: "UTC")
-        return formatter
-    }()
-
-    static let gpsDateStamp: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy:MM:dd"
-        formatter.timeZone = TimeZone(abbreviation: "UTC")
-        return formatter
-    }()
+struct PhotoItem: Identifiable {
+    let id: UUID
+    let image: UIImage
+    let timestamp: Date
+    let location: CLLocation?
 }
