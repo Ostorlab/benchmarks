@@ -28,28 +28,6 @@ The application's promotional code validation system lacks essential security co
 
 **Brief Explanation**: ShopZen processes promotional code validation requests without implementing rate limiting, account lockout mechanisms, or request throttling. The app uses SHA256 hashes to validate codes, preventing static analysis discovery but forcing attackers to systematically brute force codes through dynamic testing.
 
-## Exploitation
-
-### Attack Scenarios
-
-**1. Hash Analysis**
-- Reverse engineer app to discover SHA256 validation hashes
-- Hashes prevent direct code discovery but reveal validation approach
-- Must enumerate codes to find matches
-
-**2. Automated Brute Force**
-- Use mobile automation tools (Appium, Frida) to test code combinations
-- Script systematic testing of common promotional code patterns
-- No authentication required for code validation attempts
-- No rate limiting allows rapid enumeration
-
-**3. Example Attack Pattern**
-```bash
-# Common promo code patterns to test
-SAVE10, SAVE20, SAVE25, SAVE30, SAVE50
-WELCOME, HELLO, HI, DISCOUNT, PROMO
-VIP10, VIP20, VIP50, STUDENT, FIRST
-```
 
 ### Testing Instructions
 

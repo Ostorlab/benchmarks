@@ -6,12 +6,16 @@
 //
 
 import Foundation
+import CryptoKit
 
 class PromoCodeService {
     static let shared = PromoCodeService()
     
-    private let baseURL = "https://api.shopzen.com/v1"
-    private let validCodes = DataManager.shared.loadValidPromoCodes()
+    private let validCodeHashes = [
+        "4373f458281cefac011a8d440a83c3ddf02288b2c466205c2731bb452f9c4fcb", // SAVE20
+        "26ded0381cd50f5eb2dbd2954958d050b79bc9a6afd3f5fc356580f9510f4483", // WELCOME  
+        "d8a8d6f484e8eb43af8b7823585204b06254c8900e4ea51a77106d854944d9c1"  // VIP50
+    ]
     
     private init() {}
     
@@ -24,7 +28,7 @@ class PromoCodeService {
     }
     
     private func processPromoCodeResponse(code: String, orderAmount: Double, data: Data?, response: URLResponse?, completion: @escaping (PromoCodeResult) -> Void) {
-        if validCodes.contains(code.uppercased()) {
+        if isValidPromoCode(code.uppercased()) {
             let discount = calculateDiscount(for: code, orderAmount: orderAmount)
             completion(.success(discount))
         } else {
@@ -32,26 +36,23 @@ class PromoCodeService {
         }
     }
     
+    private func isValidPromoCode(_ code: String) -> Bool {
+        guard let data = code.data(using: .utf8) else { return false }
+        let hash = SHA256.hash(data: data)
+        let hashString = hash.compactMap { String(format: "%02x", $0) }.joined()
+        return validCodeHashes.contains(hashString)
+    }
+    
     private func calculateDiscount(for code: String, orderAmount: Double) -> PromoDiscount {
         let upperCode = code.uppercased()
         
         switch upperCode {
-        case "SAVE10", "WINTER10", "FIRST10":
-            return PromoDiscount(type: .percentage, value: 10.0, code: code)
-        case "STUDENT15", "AUTUMN15":
-            return PromoDiscount(type: .percentage, value: 15.0, code: code)
-        case "SAVE20", "SUMMER20", "RETURN20":
+        case "SAVE20":
             return PromoDiscount(type: .percentage, value: 20.0, code: code)
-        case "WEEKEND25", "SPRING25":
-            return PromoDiscount(type: .percentage, value: 25.0, code: code)
-        case "FLASH30":
-            return PromoDiscount(type: .percentage, value: 30.0, code: code)
-        case "VIP40":
-            return PromoDiscount(type: .percentage, value: 40.0, code: code)
-        case "HOLIDAY50":
-            return PromoDiscount(type: .percentage, value: 50.0, code: code)
-        case "WELCOME", "NEWUSER":
+        case "WELCOME":
             return PromoDiscount(type: .fixedAmount, value: 15.0, code: code)
+        case "VIP50":
+            return PromoDiscount(type: .percentage, value: 50.0, code: code)
         default:
             return PromoDiscount(type: .percentage, value: 10.0, code: code)
         }
