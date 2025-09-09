@@ -113,9 +113,8 @@ struct WeatherCard: View {
                 VStack(alignment: .leading) {
                     Text("\(Int(weather.temperature))°")
                         .font(.system(size: 60, weight: .thin))
-                    Text(weather.description)
+                    Text(weather.description.capitalized)
                         .font(.headline)
-                        .textCase(.capitalized)
                 }
                 Spacer()
             }
