@@ -1,5 +1,6 @@
 import Foundation
 import Network
+import Combine
 
 class WeatherService: NSObject, ObservableObject {
     static let shared = WeatherService()

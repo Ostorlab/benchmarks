@@ -1,9 +1,9 @@
-# oxo-ios-ben6 WeatherNow - iOS TLS Certificate Validation Bypass
+# oxo-ios-ben6 WeatherNowApp - iOS TLS Certificate Validation Bypass
 
 ## Challenge Details
 
 ### Description
-WeatherNow is a clean and modern iOS weather application that provides real-time weather information, forecasts, and weather alerts for locations worldwide. The app features an intuitive interface with beautiful weather animations and detailed meteorological data. However, the application contains a critical security flaw in its SSL/TLS certificate validation implementation, allowing man-in-the-middle attacks and potential interception of API communications.
+WeatherNowApp is a clean and modern iOS weather application that provides real-time weather information, forecasts, and weather alerts for locations worldwide. The app features an intuitive interface with beautiful weather animations and detailed meteorological data. However, the application contains a critical security flaw in its SSL/TLS certificate validation implementation, allowing man-in-the-middle attacks and potential interception of API communications.
 
 ### Vulnerability Type and Category
 - **Type:** Improper Certificate Validation
@@ -21,7 +21,7 @@ iOS (Swift/SwiftUI)
 Medium
 
 ## Vulnerability Overview
-The WeatherNow application implements a custom URLSessionDelegate that bypasses standard SSL/TLS certificate validation checks when communicating with weather API endpoints. The app accepts any certificate presented by the server, including self-signed, expired, or certificates with mismatched hostnames. This vulnerability allows attackers to intercept HTTPS communications and potentially serve malicious weather data or capture location information.
+The WeatherNowApp application implements a custom URLSessionDelegate that bypasses standard SSL/TLS certificate validation checks when communicating with weather API endpoints. The app accepts any certificate presented by the server, including self-signed, expired, or certificates with mismatched hostnames. This vulnerability allows attackers to intercept HTTPS communications and potentially serve malicious weather data or capture location information.
 
 ## Exploitation Vectors
 1. **API Interception:** Weather API calls can be intercepted with invalid certificates
@@ -30,7 +30,7 @@ The WeatherNow application implements a custom URLSessionDelegate that bypasses 
 4. **Network Spoofing:** Fraudulent weather services can impersonate legitimate APIs
 
 ## Build Instructions
-This is a standard Xcode project. Open `WeatherNow.xcodeproj` and build for the iOS Simulator or a physical device.
+This is a standard Xcode project. Open `WeatherNowApp.xcodeproj` and build for the iOS Simulator or a physical device.
 
 1. **Run the app** in the simulator (`Cmd + R`).
 2. **Set up a proxy** like Charles Proxy or Burp Suite with invalid/self-signed certificates.
@@ -39,7 +39,7 @@ This is a standard Xcode project. Open `WeatherNow.xcodeproj` and build for the 
 5. **Observe** that the app accepts invalid certificates and retrieves data.
 
 ## Proof of Concept
-1. Launch WeatherNow app
+1. Launch WeatherNowApp
 2. Set up network proxy with self-signed certificate
 3. Configure iOS device to use the proxy
 4. Search for weather in various cities
