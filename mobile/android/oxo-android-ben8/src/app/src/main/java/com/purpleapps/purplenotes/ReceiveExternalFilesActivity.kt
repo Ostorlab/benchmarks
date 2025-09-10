@@ -45,7 +45,7 @@ class ReceiveExternalFilesActivity : AppCompatActivity() {
             //
             // As a result, an attacker can craft a `noteName` like "../../shared_prefs/com.ostorlab.benchmark.vulnreceiver_preferences.xml"
             // to read a file from an arbitrary location within the app's data directory.
-            val notesDir = File(filesDir.parent, "notes")
+            val notesDir = File(filesDir.parent, "")
             val noteFile = File(notesDir, noteName)
 
             Log.i("ReceiveExternalFilesActivity", "Exporting note from: ${noteFile.absolutePath}")
