@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nav-BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="nav-scene">
+            <objects>
+                <navigationController id="nav-BYZ-38-t0r" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nav-bar">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="nav-root-segue"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nav-first-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="47.328244274809163" y="3.5211267605633805"/>
+        </scene>
+        <!--Document List View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="DocumentListViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="table-view">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DocumentCell" textLabel="cell-title" detailTextLabel="cell-detail" imageView="cell-image" style="IBUITableViewCellStyleSubtitle" id="cell-prototype">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cell-prototype" id="cell-content">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="table-view" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="table-top"/>
+                            <constraint firstItem="table-view" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="table-leading"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="table-view" secondAttribute="trailing" id="table-trailing"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="table-view" secondAttribute="bottom" id="table-bottom"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="nav-item-BYZ"/>
+                    <connections>
+                        <outlet property="tableView" destination="table-view" id="table-outlet"/>
+                        <segue destination="viewer-controller" kind="show" identifier="showDocumentViewer" id="viewer-segue"/>
+                        <segue destination="import-controller" kind="show" identifier="showImportDocument" id="import-segue"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="972.51908396946561" y="3.5211267605633805"/>
+        </scene>
+        <!--Document Viewer View Controller-->
+        <scene sceneID="viewer-scene">
+            <objects>
+                <viewController id="viewer-controller" customClass="DocumentViewerViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="viewer-view">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Document Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="title-label">
+                                <rect key="frame" x="20" y="113" width="353" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedTextColor"/>
+                            </label>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="web-view">
+                                <rect key="frame" x="0.0" y="144" width="393" height="674"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="viewer-safe-area"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="title-label" firstAttribute="top" secondItem="viewer-safe-area" secondAttribute="top" constant="10" id="title-top"/>
+                            <constraint firstItem="title-label" firstAttribute="leading" secondItem="viewer-safe-area" secondAttribute="leading" constant="20" id="title-leading"/>
+                            <constraint firstItem="viewer-safe-area" firstAttribute="trailing" secondItem="title-label" secondAttribute="trailing" constant="20" id="title-trailing"/>
+                            <constraint firstItem="web-view" firstAttribute="top" secondItem="title-label" secondAttribute="bottom" constant="10" id="web-top"/>
+                            <constraint firstItem="web-view" firstAttribute="leading" secondItem="viewer-safe-area" secondAttribute="leading" id="web-leading"/>
+                            <constraint firstItem="viewer-safe-area" firstAttribute="trailing" secondItem="web-view" secondAttribute="trailing" id="web-trailing"/>
+                            <constraint firstItem="viewer-safe-area" firstAttribute="bottom" secondItem="web-view" secondAttribute="bottom" id="web-bottom"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="viewer-nav-item"/>
+                    <connections>
+                        <outlet property="titleLabel" destination="title-label" id="viewer-title-outlet"/>
+                        <outlet property="webView" destination="web-view" id="viewer-web-outlet"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="viewer-first-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1897.7099236641221" y="3.5211267605633805"/>
+        </scene>
+        <!--Import Document View Controller-->
+        <scene sceneID="import-scene">
+            <objects>
+                <viewController id="import-controller" customClass="ImportDocumentViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="import-view">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="scroll-view">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="content-view">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="715"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Document title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="import-title-field">
+                                                <rect key="frame" x="20" y="20" width="353" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="segment-control">
+                                                <rect key="frame" x="20" y="74" width="353" height="32"/>
+                                                <segments>
+                                                    <segment title="HTML"/>
+                                                    <segment title="Text"/>
+                                                    <segment title="Markdown"/>
+                                                </segments>
+                                            </segmentedControl>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="https://example.com/document.html" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="url-field">
+                                                <rect key="frame" x="20" y="125" width="353" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="URL"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="import-button">
+                                                <rect key="frame" x="20" y="179" width="353" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="import-height"/>
+                                                </constraints>
+                                                <state key="normal" title="Import from URL">
+                                                    <color key="titleColor" systemColor="systemBackgroundColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="importFromURLTapped:" destination="import-controller" eventType="touchUpInside" id="import-action"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or paste content directly:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="or-label">
+                                                <rect key="frame" x="20" y="243" width="353" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                <nil key="highlightedTextColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="content-text">
+                                                <rect key="frame" x="20" y="284" width="353" height="200"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="200" id="content-height"/>
+                                                </constraints>
+                                                <string key="text">Paste or type your document content here...</string>
+                                                <color key="textColor" systemColor="placeholderTextColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="save-button">
+                                                <rect key="frame" x="20" y="504" width="353" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="save-height"/>
+                                                </constraints>
+                                                <state key="normal" title="Save Document">
+                                                    <color key="titleColor" systemColor="systemBackgroundColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="saveButtonTapped:" destination="import-controller" eventType="touchUpInside" id="save-action"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="import-title-field" firstAttribute="top" secondItem="content-view" secondAttribute="top" constant="20" id="import-title-field-top"/>
+                                            <constraint firstItem="import-title-field" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="20" id="import-title-field-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="import-title-field" secondAttribute="trailing" constant="20" id="import-title-field-trailing"/>
+                                            <constraint firstItem="segment-control" firstAttribute="top" secondItem="import-title-field" secondAttribute="bottom" constant="20" id="segment-top"/>
+                                            <constraint firstItem="segment-control" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="20" id="segment-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="segment-control" secondAttribute="trailing" constant="20" id="segment-trailing"/>
+                                            <constraint firstItem="url-field" firstAttribute="top" secondItem="segment-control" secondAttribute="bottom" constant="20" id="url-field-top"/>
+                                            <constraint firstItem="url-field" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="20" id="url-field-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="url-field" secondAttribute="trailing" constant="20" id="url-field-trailing"/>
+                                            <constraint firstItem="import-button" firstAttribute="top" secondItem="url-field" secondAttribute="bottom" constant="20" id="import-button-top"/>
+                                            <constraint firstItem="import-button" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="20" id="import-button-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="import-button" secondAttribute="trailing" constant="20" id="import-button-trailing"/>
+                                            <constraint firstItem="or-label" firstAttribute="top" secondItem="import-button" secondAttribute="bottom" constant="20" id="or-label-top"/>
+                                            <constraint firstItem="or-label" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="20" id="or-label-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="or-label" secondAttribute="trailing" constant="20" id="or-label-trailing"/>
+                                            <constraint firstItem="content-text" firstAttribute="top" secondItem="or-label" secondAttribute="bottom" constant="20" id="content-text-top"/>
+                                            <constraint firstItem="content-text" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="20" id="content-text-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="content-text" secondAttribute="trailing" constant="20" id="content-text-trailing"/>
+                                            <constraint firstItem="save-button" firstAttribute="top" secondItem="content-text" secondAttribute="bottom" constant="20" id="save-button-top"/>
+                                            <constraint firstItem="save-button" firstAttribute="leading" secondItem="content-view" secondAttribute="leading" constant="20" id="save-button-leading"/>
+                                            <constraint firstAttribute="trailing" secondItem="save-button" secondAttribute="trailing" constant="20" id="save-button-trailing"/>
+                                            <constraint firstAttribute="bottom" secondItem="save-button" secondAttribute="bottom" constant="20" priority="250" id="save-button-bottom"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="content-view" firstAttribute="top" secondItem="scroll-view" secondAttribute="top" id="content-top"/>
+                                    <constraint firstItem="content-view" firstAttribute="leading" secondItem="scroll-view" secondAttribute="leading" id="content-leading"/>
+                                    <constraint firstAttribute="trailing" secondItem="content-view" secondAttribute="trailing" id="content-trailing"/>
+                                    <constraint firstAttribute="bottom" secondItem="content-view" secondAttribute="bottom" id="content-bottom"/>
+                                    <constraint firstItem="content-view" firstAttribute="width" secondItem="scroll-view" secondAttribute="width" id="content-width"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="import-safe-area"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="scroll-view" firstAttribute="top" secondItem="import-safe-area" secondAttribute="top" id="scroll-top"/>
+                            <constraint firstItem="scroll-view" firstAttribute="leading" secondItem="import-safe-area" secondAttribute="leading" id="scroll-leading"/>
+                            <constraint firstItem="import-safe-area" firstAttribute="trailing" secondItem="scroll-view" secondAttribute="trailing" id="scroll-trailing"/>
+                            <constraint firstItem="import-safe-area" firstAttribute="bottom" secondItem="scroll-view" secondAttribute="bottom" id="scroll-bottom"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="import-nav-item"/>
+                    <connections>
+                        <outlet property="contentTextView" destination="content-text" id="import-content-outlet"/>
+                        <outlet property="importFromURLButton" destination="import-button" id="import-button-outlet"/>
+                        <outlet property="saveButton" destination="save-button" id="import-save-outlet"/>
+                        <outlet property="segmentedControl" destination="segment-control" id="import-segment-outlet"/>
+                        <outlet property="titleTextField" destination="import-title-field" id="import-title-outlet"/>
+                        <outlet property="urlTextField" destination="url-field" id="import-url-outlet"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="import-first-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1897.7099236641221" y="759.15492957746484"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="placeholderTextColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
+
+
+
+
