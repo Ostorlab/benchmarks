@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  MedicalRecords
-//
-//  Created by Alaeddine Mesbahi on 9/10/25.
-//
-
 import SwiftUI
 
 struct ContentView: View {
