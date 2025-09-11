@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9pv-A4-QxB">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Social Share Hub-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="hZ8-2d-fNO">
+                                <rect key="frame" x="32" y="120" width="329" height="460"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.2.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="QfY-8h-9mD">
+                                        <rect key="frame" x="144.66666666666666" y="0.83333333333334281" width="40" height="39.666666666666657"/>
+                                        <color key="tintColor" systemColor="systemBlueColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="4fL-bS-8wY"/>
+                                            <constraint firstAttribute="width" constant="40" id="mE9-6A-dKj"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to SocialShare Hub" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dK-vX-gqL">
+                                        <rect key="frame" x="0.0" y="64.333333333333343" width="329" height="33.666666666666657"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect your social accounts to start managing all your content in one place" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZXz-dL-bJK">
+                                        <rect key="frame" x="0.0" y="122" width="329" height="38.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="bKX-0T-Yjq">
+                                        <rect key="frame" x="0.0" y="184.33333333333334" width="329" height="120"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rvl-nE-K3P">
+                                                <rect key="frame" x="0.0" y="0.0" width="329" height="52"/>
+                                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="52" id="e3o-bg-cZX"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <inset key="titleEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                                <state key="normal" title="Continue with Facebook">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="12"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="facebookLoginTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xPz-yJ-YqH"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGF-ze-SaL">
+                                                <rect key="frame" x="0.0" y="68" width="329" height="52"/>
+                                                <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="52" id="OZc-9p-Q2n"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <inset key="titleEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                                <state key="normal" title="Continue with Twitter">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="12"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="twitterLoginTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4bv-hG-m7O"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fh-x4-HnZ">
+                                        <rect key="frame" x="164.33333333333334" y="420" width="0.3333333333333357" height="40"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Wrp-mU-4q0"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="8dK-vX-gqL" firstAttribute="leading" secondItem="hZ8-2d-fNO" secondAttribute="leading" id="6Lt-nE-BX9"/>
+                                    <constraint firstItem="ZXz-dL-bJK" firstAttribute="leading" secondItem="hZ8-2d-fNO" secondAttribute="leading" id="BI9-Bc-O8V"/>
+                                    <constraint firstItem="bKX-0T-Yjq" firstAttribute="leading" secondItem="hZ8-2d-fNO" secondAttribute="leading" id="NbE-Z7-yrY"/>
+                                    <constraint firstItem="ZXz-dL-bJK" firstAttribute="trailing" secondItem="hZ8-2d-fNO" secondAttribute="trailing" id="V7f-X8-e6t"/>
+                                    <constraint firstItem="8dK-vX-gqL" firstAttribute="trailing" secondItem="hZ8-2d-fNO" secondAttribute="trailing" id="YAj-OY-h5y"/>
+                                    <constraint firstItem="bKX-0T-Yjq" firstAttribute="trailing" secondItem="hZ8-2d-fNO" secondAttribute="trailing" id="mWC-oB-FqR"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hZ8-2d-fNO" secondAttribute="trailing" constant="32" id="A1V-Qr-q5X"/>
+                            <constraint firstItem="hZ8-2d-fNO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="Hng-bd-PfD"/>
+                            <constraint firstItem="hZ8-2d-fNO" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-76" id="rh6-A8-8ZQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Social Share Hub" id="NNJ-pN-2ps"/>
+                    <connections>
+                        <outlet property="facebookLoginButton" destination="Rvl-nE-K3P" id="oKq-gL-2pJ"/>
+                        <outlet property="logoImageView" destination="QfY-8h-9mD" id="f7D-Zm-6nz"/>
+                        <outlet property="subtitleLabel" destination="ZXz-dL-bJK" id="kxz-Ot-cVe"/>
+                        <outlet property="twitterLoginButton" destination="cGF-ze-SaL" id="w4O-wc-WvY"/>
+                        <outlet property="welcomeLabel" destination="8dK-vX-gqL" id="3vc-wl-zSY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1063.358778625954" y="3.5211267605633805"/>
+        </scene>
+        <!--Dashboard-->
+        <scene sceneID="eGF-QH-hgD">
+            <objects>
+                <viewController storyboardIdentifier="DashboardViewController" id="2Lq-9E-s7J" customClass="DashboardViewController" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iEz-6Q-3q2">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wvQ-d8-7lW">
+                                <rect key="frame" x="20" y="103" width="353" height="82"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome back!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="12K-8g-xY3">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="28.666666666666668"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdD-jt-xMK">
+                                        <rect key="frame" x="0.0" y="44.666666666666664" width="353" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected: None" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfa-iJ-o85">
+                                        <rect key="frame" x="0.0" y="84.666666666666671" width="353" height="19.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" systemColor="tertiaryLabelColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6Bc-eo-iuZ">
+                                <rect key="frame" x="0.0" y="201" width="393" height="517"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="oHu-Nd-hgA">
+                                <rect key="frame" x="20" y="734" width="353" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VcM-lf-5YV">
+                                        <rect key="frame" x="0.0" y="0.0" width="168.66666666666666" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Mec-x8-PvO"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                        <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="12" maxY="0.0"/>
+                                        <state key="normal" title="Account Settings">
+                                            <color key="titleColor" systemColor="labelColor"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="settingsButtonTapped:" destination="2Lq-9E-s7J" eventType="touchUpInside" id="Diq-xb-kFd"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Fo-Fx-gSF">
+                                        <rect key="frame" x="184.66666666666663" y="0.0" width="168.33333333333337" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="fzh-fv-mfL"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="12" maxY="0.0"/>
+                                        <state key="normal" title="Sign Out">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="logoutButtonTapped:" destination="2Lq-9E-s7J" eventType="touchUpInside" id="LjN-qU-hAf"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="reN-2m-4Xs"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Bc-eo-iuZ" firstAttribute="top" secondItem="wvQ-d8-7lW" secondAttribute="bottom" constant="16" id="3pI-Zs-B88"/>
+                            <constraint firstItem="reN-2m-4Xs" firstAttribute="trailing" secondItem="6Bc-eo-iuZ" secondAttribute="trailing" id="76a-t5-daO"/>
+                            <constraint firstItem="wvQ-d8-7lW" firstAttribute="leading" secondItem="reN-2m-4Xs" secondAttribute="leading" constant="20" id="8dk-WC-LB4"/>
+                            <constraint firstItem="reN-2m-4Xs" firstAttribute="trailing" secondItem="oHu-Nd-hgA" secondAttribute="trailing" constant="20" id="Cxn-9j-8zD"/>
+                            <constraint firstItem="6Bc-eo-iuZ" firstAttribute="leading" secondItem="reN-2m-4Xs" secondAttribute="leading" id="Eir-gp-B8t"/>
+                            <constraint firstItem="oHu-Nd-hgA" firstAttribute="top" secondItem="6Bc-eo-iuZ" secondAttribute="bottom" constant="16" id="GYH-xc-iuW"/>
+                            <constraint firstItem="wvQ-d8-7lW" firstAttribute="top" secondItem="reN-2m-4Xs" secondAttribute="top" id="OsW-cr-3kH"/>
+                            <constraint firstItem="reN-2m-4Xs" firstAttribute="bottom" secondItem="oHu-Nd-hgA" secondAttribute="bottom" constant="34" id="fFw-jz-r6p"/>
+                            <constraint firstItem="reN-2m-4Xs" firstAttribute="trailing" secondItem="wvQ-d8-7lW" secondAttribute="trailing" constant="20" id="kCm-QZ-HW7"/>
+                            <constraint firstItem="oHu-Nd-hgA" firstAttribute="leading" secondItem="reN-2m-4Xs" secondAttribute="leading" constant="20" id="wLs-2j-H1K"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Dashboard" id="8XQ-8R-4MF"/>
+                    <connections>
+                        <outlet property="accountsTableView" destination="6Bc-eo-iuZ" id="nbg-nS-4a1"/>
+                        <outlet property="connectedAccountsLabel" destination="Lfa-iJ-o85" id="4u4-gO-O0h"/>
+                        <outlet property="logoutButton" destination="3Fo-Fx-gSF" id="3WN-2w-8Jr"/>
+                        <outlet property="settingsButton" destination="VcM-lf-5YV" id="3kx-Tp-uMf"/>
+                        <outlet property="userNameLabel" destination="wdD-jt-xMK" id="IYq-LY-pv2"/>
+                        <outlet property="welcomeBackLabel" destination="12K-8g-xY3" id="A3T-eY-YBo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VKH-vH-eqO" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1894" y="4"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="aNm-qf-JfX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9pv-A4-QxB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uya-Yb-85E">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="CTw-8t-5aZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m0p-1Q-VfZ" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.64122137404578" y="3.5211267605633805"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="person.2.circle.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
