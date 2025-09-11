@@ -1,12 +1,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var messages: [Message] = [
-        Message(text: "Welcome to Corporate Messenger!", sender: "System", timestamp: Date()),
-        Message(text: "Check out our company portal: https://company-portal.com", sender: "HR Team", timestamp: Date()),
-        Message(text: "New security guidelines: <https://malicious-site.com|https://security.company.com>", sender: "IT Security", timestamp: Date())
-    ]
+    @State private var messages: [Message] = []
     @State private var newMessage = ""
+    @StateObject private var firebaseService = FirebaseService()
     
     var body: some View {
         NavigationView {
@@ -26,7 +23,7 @@ struct ContentView: View {
                     
                     Button("Send") {
                         if !newMessage.isEmpty {
-                            messages.append(Message(text: newMessage, sender: "You", timestamp: Date()))
+                            firebaseService.sendMessage(text: newMessage, sender: "You")
                             newMessage = ""
                         }
                     }
@@ -35,6 +32,14 @@ struct ContentView: View {
                 .padding()
             }
             .navigationTitle("Corporate Chat")
+            .onAppear {
+                firebaseService.fetchMessages { fetchedMessages in
+                    self.messages = fetchedMessages
+                }
+            }
+            .onDisappear {
+                firebaseService.removeMessageListener()
+            }
         }
     }
 }

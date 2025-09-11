@@ -13,6 +13,8 @@
 		32D6C5002E71C40C00C7D505 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32D6C4FF2E71C40C00C7D505 /* Preview Assets.xcassets */; };
 		32D6C5082E71C88D00C7D505 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D6C5062E71C88D00C7D505 /* MessageView.swift */; };
 		32D6C5092E71C88D00C7D505 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D6C5072E71C88D00C7D505 /* NetworkService.swift */; };
+		32D6C50A2E71C89000C7D505 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D6C50B2E71C89000C7D505 /* FirebaseService.swift */; };
+		32D6C50C2E71C89100C7D505 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32D6C50D2E71C89100C7D505 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +25,8 @@
 		32D6C4FF2E71C40C00C7D505 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		32D6C5062E71C88D00C7D505 /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		32D6C5072E71C88D00C7D505 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		32D6C50B2E71C89000C7D505 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		32D6C50D2E71C89100C7D505 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +61,10 @@
 			children = (
 				32D6C5062E71C88D00C7D505 /* MessageView.swift */,
 				32D6C5072E71C88D00C7D505 /* NetworkService.swift */,
+				32D6C50B2E71C89000C7D505 /* FirebaseService.swift */,
 				32D6C4F82E71C40A00C7D505 /* CorporateMessengerApp.swift */,
 				32D6C4FA2E71C40A00C7D505 /* ContentView.swift */,
+				32D6C50D2E71C89100C7D505 /* GoogleService-Info.plist */,
 				32D6C4FC2E71C40C00C7D505 /* Assets.xcassets */,
 				32D6C4FE2E71C40C00C7D505 /* Preview Content */,
 			);
@@ -133,6 +139,7 @@
 			files = (
 				32D6C5002E71C40C00C7D505 /* Preview Assets.xcassets in Resources */,
 				32D6C4FD2E71C40C00C7D505 /* Assets.xcassets in Resources */,
+				32D6C50C2E71C89100C7D505 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +153,7 @@
 				32D6C5082E71C88D00C7D505 /* MessageView.swift in Sources */,
 				32D6C4FB2E71C40A00C7D505 /* ContentView.swift in Sources */,
 				32D6C5092E71C88D00C7D505 /* NetworkService.swift in Sources */,
+				32D6C50A2E71C89000C7D505 /* FirebaseService.swift in Sources */,
 				32D6C4F92E71C40A00C7D505 /* CorporateMessengerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
