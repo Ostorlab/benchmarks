@@ -1,0 +1,12 @@
+{
+  "source": "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/NewsReader/NewsWebView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Done"
+      }
+    ]
+  },
+  "version": 1
+}

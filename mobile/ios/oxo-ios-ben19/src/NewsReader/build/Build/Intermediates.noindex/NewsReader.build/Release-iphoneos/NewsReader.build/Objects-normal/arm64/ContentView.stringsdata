@@ -1,0 +1,20 @@
+{
+  "source": "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/NewsReader/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "News Reader"
+      },
+      {
+        "comment": "",
+        "key": "Category"
+      },
+      {
+        "comment": "",
+        "key": "Read Full Article"
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,35 @@
+{
+  "" : {
+    "const-values" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsReader-master.swiftconstvalues",
+    "dependencies" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsReader-master.d",
+    "diagnostics" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsReader-master.dia",
+    "emit-module-dependencies" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsReader-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsReader-master-emit-module.dia",
+    "swift-dependencies" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsReader-master.swiftdeps"
+  },
+  "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  },
+  "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/NewsReader/ContentView.swift" : {
+    "index-unit-output-path" : "/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/ContentView.o"
+  },
+  "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/NewsReader/DataService.swift" : {
+    "index-unit-output-path" : "/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/DataService.o",
+    "llvm-bc" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/DataService.bc",
+    "object" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/DataService.o"
+  },
+  "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/NewsReader/NewsReaderApp.swift" : {
+    "index-unit-output-path" : "/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsReaderApp.o",
+    "llvm-bc" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsReaderApp.bc",
+    "object" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsReaderApp.o"
+  },
+  "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/NewsReader/NewsWebView.swift" : {
+    "index-unit-output-path" : "/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsWebView.o",
+    "llvm-bc" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsWebView.bc",
+    "object" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/NewsReader.build/Release-iphoneos/NewsReader.build/Objects-normal/arm64/NewsWebView.o"
+  }
+}

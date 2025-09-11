@@ -1,0 +1,75 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "b46dbcfd4569463c4589c70eae64975f7576c15f73858605d3f8d7bc39d443c7"
+    }
+  ],
+  "containerPath" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/NewsReader.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "undefined_arch",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : true,
+      "platform" : "iphoneos",
+      "sdk" : "iphoneos17.5",
+      "sdkVariant" : "iphoneos",
+      "supportedArchitectures" : [
+        "armv4t",
+        "armv5",
+        "armv6",
+        "armv7",
+        "armv7f",
+        "armv7s",
+        "armv7k",
+        "arm64",
+        "arm64e"
+      ],
+      "targetArchitecture" : "undefined_arch"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Products",
+      "derivedDataPath" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build",
+      "indexDataStoreFolderPath" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/alaeddinemesbahi/Desktop/pentest/benchmarks/mobile/ios/oxo-ios-ben19/src/NewsReader/build/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Release",
+    "overrides" : {
+      "commandLine" : {
+        "table" : {
+          "CODE_SIGN_IDENTITY" : "",
+          "CODE_SIGNING_ALLOWED" : "NO",
+          "CODE_SIGNING_REQUIRED" : "NO",
+          "SDKROOT" : "iphoneos17.5"
+        }
+      },
+      "synthesized" : {
+        "table" : {
+          "ACTION" : "build",
+          "COLOR_DIAGNOSTICS" : "YES",
+          "diagnostic_message_length" : "74",
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "NO",
+          "ONLY_ACTIVE_ARCH" : "YES"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
