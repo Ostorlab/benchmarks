@@ -33,106 +33,27 @@ The vulnerability occurs when an attacker serves HTML content (with correct `Con
 
 ## Attack Scenario
 
-### Step 1: Malicious Server Setup
-An attacker hosts an HTML file containing JavaScript on their server:
-
-```html
-<!DOCTYPE html>
-<html>
-<head><title>Important Business Document</title></head>
-<body>
-<h1>Q4 Financial Report</h1>
-<p>Loading document data...</p>
-<script>
-alert('XSS Executed in DocuShare Pro!\n' + 
-      'User Agent: ' + navigator.userAgent + '\n' + 
-      'Origin: ' + location.origin);
-</script>
-</body>
-</html>
-```
-
-### Step 2: Server Response
-The attacker configures their server to serve HTML content with standard headers:
-
-```http
-HTTP/1.1 200 OK
-Content-Type: text/html
-Content-Length: 284
-
-[HTML content with JavaScript payload]
-```
-
-### Step 3: Social Engineering
-The attacker sends the victim a convincing URL:
-- "Check out our Q4 financial report: `https://malicious-server.com/report.pdf`"
-- The URL appears legitimate and ends with `.pdf`
-- Victim trusts the source and adds it to DocuShare Pro
-
-### Step 4: XSS Execution
-1. Victim opens DocuShare Pro and taps "+" to add document
-2. Victim enters the malicious URL and taps "Add Document"
-3. Document appears in library with proper PDF icon (based on URL extension)
-4. Victim taps document to view it
-5. WebView loads the URL and receives HTML content
-6. **VULNERABILITY**: WebView renders HTML content while user expects PDF document
-7. JavaScript executes within the app's WebView context, enabling data theft, credential harvesting, or further attacks
+Attackers exploit the URL deception by serving HTML content from document-like URLs. Users expect to view safe documents but instead execute malicious JavaScript in the app's trusted context.
 
 ## Business Impact
 
-### Immediate Risks
-- **Data Access**: JavaScript can access other documents loaded in the same WebView context
-- **Session Hijacking**: Potential access to authentication tokens and session data
-- **Credential Theft**: Display fake login prompts to steal user credentials
-- **Privacy Violation**: Access device information, geolocation, and user data
+- **Data Access**: JavaScript execution in trusted app context
+- **Credential Theft**: Fake authentication prompts in professional interface
+- **Document Access**: Potential access to other documents in app storage
+- **Corporate Deception**: Professional appearance reduces user suspicion
 
-### Advanced Attack Scenarios
-1. **Corporate Document Theft**: Access sensitive business documents stored in the app
-2. **Phishing Attacks**: Display convincing fake corporate login screens
-3. **Malware Distribution**: Redirect to App Store malware or malicious profiles
-4. **Social Engineering**: Display fake urgent security warnings or notifications
+## Exploitation Hints
 
-## Exploitation Methods
+### Testing Approaches
+- **URL Deception**: Document-like URLs serving HTML content
+- **JavaScript Payloads**: DOM manipulation, external callbacks
+- **Network Proof**: Use services like interactsh for execution confirmation
+- **Visual Indicators**: Background color changes to verify script execution
 
-### Basic XSS Proof-of-Concept
-Test URL that demonstrates the vulnerability:
-```
-1. Set up web server serving HTML content from PDF-like URL
-2. Add URL to DocuShare Pro: https://attacker-server.com/report.pdf
-3. Server responds with HTML content and Content-Type: text/html
-4. User taps document expecting PDF viewer
-5. Result: JavaScript executes in WebView context - XSS achieved
-```
-
-### Advanced Payloads
-- **Data Exfiltration**: `fetch()` sensitive data to attacker server
-- **Credential Harvesting**: Display fake authentication dialogs
-- **Persistent Attacks**: Use localStorage to persist malicious scripts
-- **Cross-Document Access**: Access other documents via WebView history
-
-## Testing Methodology
-
-### Manual Testing Steps
-1. Set up a web server serving HTML with incorrect Content-Type headers
-2. Create HTML content with visible JavaScript payload (alert, console.log)
-3. Add the malicious URL to DocuShare Pro as a new document
-4. Tap the document to open it in the viewer
-5. Verify JavaScript execution through alert dialog or console output
-
-### Required Server Configuration
-```bash
-# Example nginx configuration  
-location /malicious.pdf {
-    add_header Content-Type text/html;
-    return 200 '<!DOCTYPE html><html><body><h1>Business Document</h1><script>alert("XSS in DocuShare Pro!");</script></body></html>';
-}
-```
-
-### Automated Testing
-- **Content-Type Fuzzing**: Test various MIME types with HTML content
-- **URL Extension Testing**: Test different file extensions with HTML responses  
-- **Payload Injection**: Test various JavaScript injection techniques
-- **Browser Behavior Analysis**: Document WebView rendering decisions
+### Discovery Methods
+- **Systematic URL Testing**: Try various file extensions with web content
+- **Dynamic Analysis**: Monitor WebView behavior with different content types
+- **Social Engineering**: Test realistic document sharing scenarios
 
 ## Risk Assessment
 
@@ -161,16 +82,8 @@ This vulnerability mirrors real-world issues found in popular applications:
 
 The vulnerability demonstrates how legitimate business functionality can become a security risk when proper input validation is missing from WebView implementations.
 
-## Technical Details
-
-### WebView Behavior
-- WKWebView attempts to determine content type from server headers
-- When Content-Type conflicts with actual content, rendering decision varies
-- Default behavior tends to favor HTML rendering over binary download prompts
-- No built-in protection against Content-Type spoofing attacks
-
-### Attack Requirements
-- **Attacker Server**: Web server with configurable Content-Type headers
-- **Social Engineering**: Convincing document URL or context
+## Attack Requirements
+- **Attacker Server**: Web server serving HTML content from document-like URLs
+- **Social Engineering**: Convincing document URL or business context
 - **User Action**: Victim must add malicious URL and open document
 - **Network Access**: App must be able to reach attacker-controlled server
