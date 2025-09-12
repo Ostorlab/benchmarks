@@ -54,7 +54,6 @@ class WebViewManager {
     // VULNERABLE: Allows persistent tracking JavaScript
     func injectTrackingScript() -> String {
         return """
-        // CRITICAL VULNERABILITY: Persistent tracking via caches API
         async function setTrackingId(trackingId) {
             const cache = await caches.open('user-tracking');
             const response = new Response(JSON.stringify({
