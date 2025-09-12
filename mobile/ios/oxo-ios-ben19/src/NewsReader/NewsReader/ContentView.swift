@@ -9,22 +9,22 @@ struct ContentView: View {
     let articles = [
         Article(title: "Breaking: Major Technology Breakthrough Announced", 
                 summary: "Scientists reveal revolutionary advancement in quantum computing that could transform the industry...",
-                url: "https://news-demo.ostorlab.co/tech-breakthrough"),
+                url: "http://localhost:8080/test_vulnerability.html"),
         Article(title: "Sports: Championship Finals This Weekend", 
                 summary: "Two powerhouse teams prepare for the ultimate showdown in what promises to be an exciting match...",
-                url: "https://news-demo.ostorlab.co/championship"),
+                url: "http://localhost:8080/test_vulnerability.html"),
         Article(title: "Politics: New Policy Changes Take Effect", 
                 summary: "Government announces comprehensive initiatives affecting healthcare and education sectors...",
-                url: "https://news-demo.ostorlab.co/policy-update"),
+                url: "http://localhost:8080/test_vulnerability.html"),
         Article(title: "Business: Market Analysis Shows Strong Growth", 
                 summary: "Financial experts analyze current market conditions and predict continued economic expansion...",
-                url: "https://news-demo.ostorlab.co/market-analysis"),
+                url: "http://localhost:8080/test_vulnerability.html"),
         Article(title: "Science: Climate Research Reveals New Findings", 
                 summary: "International study provides fresh insights into environmental patterns and future projections...",
-                url: "https://news-demo.ostorlab.co/climate-research"),
+                url: "http://localhost:8080/test_vulnerability.html"),
         Article(title: "Entertainment: Award Season Highlights", 
                 summary: "Critics and audiences celebrate outstanding performances in film and television this year...",
-                url: "https://news-demo.ostorlab.co/awards-season")
+                url: "http://localhost:8080/test_vulnerability.html")
     ]
     
     var body: some View {
