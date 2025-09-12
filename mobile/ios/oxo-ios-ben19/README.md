@@ -80,7 +80,6 @@ class WebViewManager {
             return null;
         }
         
-        // DANGEROUS: Persistent tracking across sessions
         async function trackUser() {
             let trackingId = await getTrackingId();
             if (!trackingId) {
