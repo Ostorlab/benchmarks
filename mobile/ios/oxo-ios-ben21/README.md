@@ -75,4 +75,4 @@ The application requires user registration to access features:
 2. **Register a new account** with any email/password combination
 3. **Create a malicious document**:
    - Tap the "+" button in the Documents tab to add it
-4. **Open the malicious document** to trigger the vulnerability
+4. **Open the malicious document `exploit.html`** to trigger the vulnerability
