@@ -2,6 +2,7 @@ package com.themeengine.activities;
 
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,17 +22,18 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private void loadInstalledThemes() {
         ListView themeList = findViewById(R.id.theme_list);
         PackageInfo[] themes = ThemeLoader.getInstalledThemes(this);
-
-        // Vulnerability: Loads any package that matches the prefix without verification
-        themeList.setOnItemClickListener((parent, view, position, id) -> {
-            PackageInfo themePackage = themes[position];
+        ArrayAdapter<PackageInfo> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, themes);
+        themeList.setAdapter(adapter);
+        for (int i = 0; i < themes.length; i++) {
+            PackageInfo themePackage = themes[i];
             IThemePlugin theme = ThemeLoader.loadTheme(this, themePackage.packageName);
-            
+
             if (theme != null) {
                 theme.applyTheme();
-                Toast.makeText(this, "Theme " + theme.getThemeName() + " applied!", 
-                    Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Theme " + theme.getThemeName() + " applied!",
+                        Toast.LENGTH_SHORT).show();
             }
-        });
+        }
     }
 }
