@@ -19,7 +19,7 @@ Ostorlab Security Testing Benchmarks provides a comprehensive collection of vuln
 
 ### **Key Features**
 
-- ✨ **98 Vulnerable Applications** - 75 Android and 23 iOS apps with realistic functionality
+- ✨ **93 Vulnerable Applications** - 72 Android and 21 iOS apps with realistic functionality
 - 🎯 **70+ Vulnerability Classes** - From authentication bypasses to complex logic flaws
 - 💰 **Bug Bounty Inspired** - Every vulnerability based on real findings worth actual bounties
 - 🔧 **Automation Challenges** - Includes "impossible to automate" logical bugs
