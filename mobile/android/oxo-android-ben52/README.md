@@ -1,4 +1,4 @@
-# oxo-android-ben75: Grant URI Permission Escalation via Proxy Activity
+# oxo-android-ben52: Grant URI Permission Escalation via Proxy Activity
 
 ## Vulnerability Overview
 
@@ -162,7 +162,7 @@ class DataReceiver : Activity() {
 
 ```bash
 # Install the vulnerable DocumentManager Pro app with URI permission escalation
-adb install -r oxo-android-ben75.apk
+adb install -r oxo-android-ben52.apk
 
 # Launch DocumentManager Pro to initialize sensitive data
 adb shell am start -n com.documentmanager/.MainActivity
