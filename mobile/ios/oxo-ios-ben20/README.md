@@ -1,4 +1,4 @@
-# oxo-ios-ben22: Content-Type Confusion XSS
+# oxo-ios-ben20: Content-Type Confusion XSS
 
 ## Description
 

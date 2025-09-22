@@ -1,4 +1,4 @@
-# oxo-android-ben73: Untrusted action from a file located in external storage
+# oxo-android-ben65: Untrusted action from a file located in external storage
 
 ## Application: NekoApplication 
 **Package Name:** `com.example.nekoApplication`  
@@ -42,7 +42,7 @@ This application contains an Untrusted Action from a File Located in External St
 
 ### Install from APK
 ```bash
-adb install apks/oxo-android-ben73.apk
+adb install apks/oxo-android-ben65.apk
 ```
 
 ### Build from Source

@@ -1,4 +1,4 @@
-# oxo-android-ben74: Direct Proxy Activity Exploitation
+# oxo-android-ben64: Direct Proxy Activity Exploitation
 
 ## Vulnerability Overview
 
@@ -133,7 +133,7 @@ class DirectProxyExploit {
 
 ```bash
 # Install the vulnerable DocumentManager Pro app with proxy activity
-adb install apks/oxo-android-ben74.apk
+adb install apks/oxo-android-ben64.apk
 
 # Launch DocumentManager Pro to initialize
 adb shell am start -n com.documentmanager/.MainActivity
