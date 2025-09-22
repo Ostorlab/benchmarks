@@ -1,8 +1,8 @@
 # Ostorlab Security Testing Benchmarks
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Android Apps](https://img.shields.io/badge/Android%20Apps-75-green.svg)](benchmarks/mobile/android)
-[![iOS Apps](https://img.shields.io/badge/iOS%20Apps-23-blue.svg)](benchmarks/mobile/ios)
+[![Android Apps](https://img.shields.io/badge/Android%20Apps-72-green.svg)](benchmarks/mobile/android)
+[![iOS Apps](https://img.shields.io/badge/iOS%20Apps-21-blue.svg)](benchmarks/mobile/ios)
 [![Twitter Follow](https://img.shields.io/twitter/follow/OstorlabSec?style=social)](https://twitter.com/OstorlabSec)
 
 **Real vulnerabilities. Real impact. Real testing.**
