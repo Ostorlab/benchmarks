@@ -1,8 +1,8 @@
 # Ostorlab Security Testing Benchmarks
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Android Apps](https://img.shields.io/badge/Android%20Apps-72-green.svg)](benchmarks/mobile/android)
-[![iOS Apps](https://img.shields.io/badge/iOS%20Apps-21-blue.svg)](benchmarks/mobile/ios)
+[![Android Apps](https://img.shields.io/badge/Android%20Apps-72-green.svg)](mobile/android)
+[![iOS Apps](https://img.shields.io/badge/iOS%20Apps-21-blue.svg)](mobile/ios)
 [![Twitter Follow](https://img.shields.io/twitter/follow/OstorlabSec?style=social)](https://twitter.com/OstorlabSec)
 
 **Real vulnerabilities. Real impact. Real testing.**
@@ -130,7 +130,7 @@ See our [Contribution Guide](CONTRIBUTING.md) for detailed instructions.
 
 Join our growing community of security professionals working toward more realistic security testing:
 
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/Ostorlab/benchmarks/discussions) - Ask questions and share ideas
+- 💬 **Community**: [GitHub Repository](https://github.com/Ostorlab/benchmarks) - Ask questions and share ideas
 - 🐛 **Issues**: [Report bugs](https://github.com/Ostorlab/benchmarks/issues) or request features
 - 🐦 **Twitter**: Follow [@OstorlabSec](https://twitter.com/OstorlabSec) for updates
 
