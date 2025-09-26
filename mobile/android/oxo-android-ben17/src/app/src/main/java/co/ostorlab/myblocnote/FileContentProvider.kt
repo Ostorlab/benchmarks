@@ -1,10 +1,10 @@
 package co.ostorlab.myblocnote
 
 import android.content.ContentProvider
+import android.content.ContentUris
 import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.text.TextUtils
 
@@ -28,7 +28,7 @@ class FileContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         dbHelper = FileDatabaseHelper(context!!)
         uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
-            addURI(AUTHORITY, "file/#", SINGLE_FILE)
+            addURI(AUTHORITY, "file/*", SINGLE_FILE)
             addURI(AUTHORITY, "directory/#", DIRECTORY)
             addURI(AUTHORITY, "root", ROOT_DIRECTORY)
             addURI(AUTHORITY, "shares/#", SHARES)
@@ -92,8 +92,48 @@ class FileContentProvider : ContentProvider() {
         selectionArgs: Array<String>?,
         sortOrder: String?
     ): Cursor? {
-        // Implementation for query
-        return null
+        val db = dbHelper.readableDatabase
+        val cursor: Cursor?
+
+        when (uriMatcher.match(uri)) {
+            SINGLE_FILE -> {
+                cursor = db.query(
+                    FileTableMeta.FILE_TABLE_NAME,
+                    projection,
+                    FileTableMeta._ID + " = ?",
+                    arrayOf(uri.lastPathSegment),
+                    null,
+                    null,
+                    sortOrder
+                )
+            }
+            DIRECTORY -> {
+                cursor = db.query(
+                    FileTableMeta.FILE_TABLE_NAME,
+                    projection,
+                    FileTableMeta._ID + " = ?",
+                    arrayOf(uri.lastPathSegment),
+                    null,
+                    null,
+                    sortOrder
+                )
+            }
+            ROOT_DIRECTORY -> {
+                cursor = db.query(
+                    FileTableMeta.FILE_TABLE_NAME,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    sortOrder
+                )
+            }
+            else -> throw IllegalArgumentException("Unknown URI: $uri")
+        }
+
+        cursor?.setNotificationUri(context?.contentResolver, uri)
+        return cursor
     }
 
     override fun getType(uri: Uri): String? {
@@ -102,7 +142,22 @@ class FileContentProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        // Implementation for insert
+        val db = dbHelper.writableDatabase
+        val tableName = when (uriMatcher.match(uri)) {
+            SINGLE_FILE, DIRECTORY, ROOT_DIRECTORY -> FileTableMeta.FILE_TABLE_NAME
+            CAPABILITIES -> FileTableMeta.CAPABILITIES_TABLE_NAME
+            UPLOADS -> FileTableMeta.UPLOADS_TABLE_NAME
+            CAMERA_UPLOADS_SYNC -> FileTableMeta.CAMERA_UPLOADS_SYNC_TABLE_NAME
+            QUOTAS -> FileTableMeta.USER_QUOTAS_TABLE_NAME
+            else -> throw IllegalArgumentException("Unknown URI: $uri")
+        }
+
+        val id = db.insert(tableName, null, values)
+        if (id > 0) {
+            val newUri = ContentUris.withAppendedId(uri, id)
+            context?.contentResolver?.notifyChange(newUri, null)
+            return newUri
+        }
         return null
     }
 
