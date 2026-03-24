@@ -1,0 +1,27 @@
+{
+  "version-name": "2.0.0",
+  "version-code": 2,
+  "app-distribution-type": "os_integration",
+  "uuid": "5027b99e-5f9e-465d-9508-a9e0134ffe18",
+  "validity": {
+    "not-before": 1594865258,
+    "not-after": 1689473258
+  },
+  "type": "release",
+  "bundle-info": {
+    "developer-id": "OpenHarmony",
+    "distribution-certificate": "-----BEGIN CERTIFICATE-----\nMIICPDCCAb+gAwIBAgIEN6dtvjAMBggqhkjOPQQDAwUAMGMxCzAJBgNVBAYTAkNO\nMRQwEgYDVQQKEwtPcGVuSGFybW9ueTEZMBcGA1UECxMQT3Blbkhhcm1vbnkgVGVh\nbTEjMCEGA1UEAxMaT3Blbkhhcm1vbnkgQXBwbGljYXRpb24gQ0EwHhcNMjEwMjAy\nMTIyMTA1WhcNNDkxMjMxMTIyMTA1WjBwMQswCQYDVQQGEwJDTjEUMBIGA1UEChML\nT3Blbkhhcm1vbnkxGTAXBgNVBAsTEE9wZW5IYXJtb255IFRlYW0xMDAuBgNVBAMT\nJ09wZW5IYXJtb255IEFwcGxpY2F0aW9uIFByb2ZpbGUgUmVsZWFzZTBZMBMGByqG\nSM49AgEGCCqGSM49AwEHA0IABFfPAuu5prLiQXG+FcmSKJqtRjeDDZgfAeitKsSM\n3tzhHk2oN/UD0vHGbgIrVD8fv8igUZEJFsOTNM4DbovGGJqjUjBQMB8GA1UdIwQY\nMBaAFNuGtyIW1QuhS7fdJXu58QV9oi1HMA4GA1UdDwEB/wQEAwIHgDAdBgNVHQ4E\nFgQUy2Hpvad6TtTPlbOE7AX99l8NAVIwDAYIKoZIzj0EAwMFAANpADBmAjEArI6u\nCYJiea5IJBFC7JBluWgGshKdEHdGPv3sopi34kKPZNxm9eGn9OGNBjZg/qqdAjEA\noIZqet/+DDpB7CRdTAUhisGmgE8w3ETgiibdUhrAAUOo6SSzozUQeKn+c37l5A+z\n-----END CERTIFICATE-----\n",
+    "bundle-name": "co.ostorlab.insecure_harmony_app",
+    "apl": "normal",
+    "app-feature": "hos_normal_app"
+  },
+  "acls": {
+    "allowed-acls": [
+      ""
+    ]
+  },
+  "permissions": {
+    "restricted-permissions": []
+  },
+  "issuer": "pki_internal"
+}
