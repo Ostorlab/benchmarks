@@ -1,0 +1,10 @@
+/node_modules
+/oh_modules
+/.preview
+/build
+/.cxx
+/.test
+
+# Windows ADS metadata files copied onto non-NTFS filesystems
+*:Zone.Identifier
+*Zone.Identifier
