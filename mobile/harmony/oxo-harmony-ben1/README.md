@@ -1,11 +1,34 @@
-# oxo-harmony-ben1 Initial Harmony App Setup (Hello World)
+# oxo-harmony-ben1 Hardcoded Keys/Secrets -
 
-## Overview
+## Challenge Details
 
-This benchmark currently has no known vulnerabilities.
+### Description
 
-It is the initial Harmony mobile app setup based on the default project template (Hello World).
+This HarmonyOS app sample demonstrates a hardcoded secrets vulnerability:
 
-The goal of this PR is to establish a clean starting point for upcoming development and experimentation.
+- Hardcoded Keys/Secrets via embedding credentials directly in source code (for example, static username/password values in login logic).
 
-No product features are being introduced yet.
+This pattern makes secrets recoverable through source disclosure or reverse engineering and can lead to unauthorized access.
+
+### Vulnerability Type and Category
+- **Type:** Hardcoded Keys/Secrets
+- **Category:** Insecure Cryptographic Storage / Sensitive Data Exposure
+- **CWE:** CWE-798 (Use of Hard-coded Credentials)
+
+### Difficulty
+Easy
+
+### Severity
+
+High
+
+### Severity Rationale
+
+This vulnerability is considered high severity because:
+
+- Credentials are directly exposed in the source code
+- No protection or mitigation exists (e.g., encryption, secure storage)
+- Attackers can easily extract secrets via:
+    - Static analysis (reading source)
+    - Reverse engineering the APK/HAP
+    - Leads to unauthorized access to protected functionality
