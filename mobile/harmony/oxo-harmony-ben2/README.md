@@ -53,7 +53,7 @@ The absence of:
    ability lifecycle callbacks
 
 ### Example Vulnerable Declaration (`module.json5`)
-
+```
 {
   "abilities": [
     {
@@ -64,7 +64,7 @@ The absence of:
     }
   ]
 }
-
+```
 ### Mitigation
 
 - Set a custom permission in the ability declaration:
