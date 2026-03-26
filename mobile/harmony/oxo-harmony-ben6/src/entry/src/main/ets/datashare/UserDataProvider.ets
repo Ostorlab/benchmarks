@@ -9,7 +9,7 @@ class UserRow {
   role: string = '';
 }
 
-export default class VulnerableDataAbility {
+export default class UserDataProvider {
   private rdbStore: relationalStore.RdbStore | null = null;
   context: common.Context | null = null;
 

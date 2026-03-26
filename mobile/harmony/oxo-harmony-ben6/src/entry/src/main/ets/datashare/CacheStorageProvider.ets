@@ -7,7 +7,7 @@ class FileResult {
   content: string = '';
 }
 
-export default class VulnerableFileDataAbility {
+export default class CacheFileManager {
   private basePath: string = '';
   context: common.Context | null = null;
 

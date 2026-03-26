@@ -60,10 +60,10 @@ These vulnerabilities are considered high severity because:
 
 ## Vulnerability Details
 
-### 1. SQL Injection in VulnerableDataAbility
+### 1. SQL Injection in UserDataProvider
 
 #### Location
-- **File:** `entry/src/main/ets/datashare/VulnerableDataAbility.ets`
+- **File:** `entry/src/main/ets/datashare/UserDataProvider.ets`
 - **URI:** `content://com.example.vulnerable/data`
 
 #### Vulnerable Code
@@ -112,10 +112,10 @@ Result: Injects new record and deletes all user records
 
 ---
 
-### 2. Path Traversal in VulnerableFileDataAbility
+### 2. Path Traversal in CacheStorageProvider
 
 #### Location
-- **File:** `entry/src/main/ets/datashare/VulnerableFileDataAbility.ets`
+- **File:** `entry/src/main/ets/datashare/CacheStorageProvider.ets`
 - **URI:** `content://com.example.vulnerable/files`
 
 #### Vulnerable Code
@@ -195,16 +195,16 @@ Result: Deletes application database
 {
   "extensionAbilities": [
     {
-      "name": "VulnerableDataAbility",
-      "srcEntry": "./ets/datashare/VulnerableDataAbility.ets",
+      "name": "UserDataProvider",
+      "srcEntry": "./ets/datashare/UserDataProvider.ets",
       "type": "dataShare",
       "exported": true,  // ❌ Exposed to all apps
       "uri": "content://com.example.vulnerable/data"
       // ❌ Missing: Input validation, parameterized queries, permissions
     },
     {
-      "name": "VulnerableFileDataAbility",
-      "srcEntry": "./ets/datashare/VulnerableFileDataAbility.ets",
+      "name": "CacheStorageProvider",
+      "srcEntry": "./ets/datashare/CacheStorageProvider.ets",
       "type": "dataShare",
       "exported": true,  // ❌ Exposed to all apps
       "uri": "content://com.example.vulnerable/files"

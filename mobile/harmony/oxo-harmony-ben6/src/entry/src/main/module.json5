@@ -46,15 +46,15 @@
         ]
       },
       {
-        "name": "VulnerableDataAbility",
-        "srcEntry": "./ets/datashare/VulnerableDataAbility.ets",
+        "name": "UserDataProvider",
+        "srcEntry": "./ets/datashare/UserDataProvider.ets",
         "type": "dataShare",
         "exported": true,
         "uri": "content://com.example.vulnerable/data"
       },
       {
-        "name": "VulnerableFileDataAbility",
-        "srcEntry": "./ets/datashare/VulnerableFileDataAbility.ets",
+        "name": "CacheStorageProvider",
+        "srcEntry": "./ets/datashare/CacheStorageProvider.ets",
         "type": "dataShare",
         "exported": true,
         "uri": "content://com.example.vulnerable/files"
