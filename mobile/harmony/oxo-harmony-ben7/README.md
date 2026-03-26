@@ -18,7 +18,7 @@ or business data directly from the transferred payload. If an attacker can
 tamper with or replay that payload, they may be able to resume the app in a
 logged-in or privileged state on another device.
 
-In this sample, the vulnerability is implemented by restoring continuation-like
+In this sample, the vulnerability is implemented by restoring continuation
 state from `Want.parameters` and route parameters without integrity validation,
 caller trust verification, device binding, or fresh authentication checks.
 
