@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "Distributed notes benchmark"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "Receives cross-device note updates"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "Notes App"
+    }
+  ]
+}
