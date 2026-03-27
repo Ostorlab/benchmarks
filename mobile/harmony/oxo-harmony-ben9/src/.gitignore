@@ -1,0 +1,38 @@
+# Unified gitignore for oxo-harmony-ben1/src
+
+# OpenHarmony / Oniro
+oh_modules/
+.openharmony_sdk/
+local.properties
+.hvigor/
+*.hvigor/
+
+# Build and test artifacts
+build/
+dist/
+.cache/
+**/build
+**/.test
+.test/
+.cxx/
+
+# IDE and tooling
+.idea/
+.vscode/
+.clangd
+.clang-format
+.clang-tidy
+
+# Node / JS
+node_modules/
+
+# Testing / analysis
+.appanalyzer
+
+# Logs and metadata
+*.log
+*:Zone.Identifier
+*Zone.Identifier
+
+# Generated previews
+.preview/
