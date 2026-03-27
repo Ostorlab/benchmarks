@@ -61,7 +61,7 @@ The absence of:
   "extensionAbilities": [
     {
       "name": "NotesSyncService",
-      "type": "service",
+      "type": "appService",
       "exported": true
       // ❌ Missing: "permissions": ["com.notes.app.permission.SYNC_NOTES"]
     }
