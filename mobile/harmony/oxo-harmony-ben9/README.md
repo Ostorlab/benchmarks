@@ -73,7 +73,7 @@ The absence of:
   "extensionAbilities": [
     {
       "name": "DistributedNotesBridgeService",
-      "type": "service",
+      "type": "appService",
       "exported": true,
       "visible": true
       // Missing: "permissions": ["com.notes.app.permission.DISTRIBUTED_SYNC"]
