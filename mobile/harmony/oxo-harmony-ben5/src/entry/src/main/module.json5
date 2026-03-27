@@ -48,7 +48,7 @@
       {
         "name": "NotesSyncService",
         "srcEntry": "./ets/entryability/NotesSyncService.ets",
-        "type": "service",
+        "type": "appService",
         "exported": true,
         "description": "Background service for syncing notes - INTENTIONALLY VULNERABLE",
         "visible": true

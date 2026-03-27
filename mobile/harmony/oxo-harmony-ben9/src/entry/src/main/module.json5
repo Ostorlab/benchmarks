@@ -48,7 +48,7 @@
       {
         "name": "DistributedNotesBridgeService",
         "srcEntry": "./ets/entryability/DistributedNotesBridgeService.ets",
-        "type": "service",
+        "type": "appService",
         "exported": true,
         "visible": true,
         "description": "Distributed notes bridge for cross-device sync - intentionally vulnerable"
