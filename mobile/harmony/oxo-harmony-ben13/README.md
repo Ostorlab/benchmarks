@@ -11,7 +11,6 @@ through an explicit Harmony IDL-generated stub/proxy interface pattern.
   returns a generated IPC stub and executes privileged operations
   without enforcing caller permissions or validating the calling app identity.
 
-This benchmark is intentionally different from a generic exposed service sample.
 The vulnerable path is modeled as a generated IDL contract split into:
 
 - `INoteVaultService.idl`
@@ -64,22 +63,6 @@ The absence of:
    privileged request codes
 4. Runtime verification of caller trust when privileged service methods execute
 
-### Why This Is Different From `oxo-harmony-ben5`
-
-`oxo-harmony-ben5` demonstrates a manually written exported service with an RPC
-stub that lacks caller checks.
-
-This benchmark keeps the same underlying access-control failure but presents it
-through a more specific and realistic implementation pattern:
-
-- a real Harmony IDL contract
-- a real generated stub class
-- a real generated proxy class used by external clients
-
-That difference matters because teams may incorrectly assume generated IPC code
-already enforces security policy, when in reality permissions still need to be
-declared and caller trust still needs to be validated explicitly.
-
 ### Example Vulnerable Service Declaration (`module.json5`)
 
 ```json5
@@ -125,26 +108,18 @@ async onRemoteMessageRequest(code: number, data: rpc.MessageSequence, reply: rpc
 }
 ```
 
-The matching generated proxy lets an attacker app invoke the interface as if it were a
-legitimate client:
-
-```ts
-const service = new NoteVaultServiceProxy(remoteObject);
-service.exportAllNotes((errCode, exported) => {});
-service.deleteNote('note-2', (errCode, deleted) => {});
-service.enableEmergencySync(true, (errCode, applied) => {});
-```
-
 ### Attack Flow
 
-1. **Discovery:** A low-privilege attacker app discovers the exported
+1. **Discovery:** A low-privilege app on the same device discovers the exported
    `NoteVaultServiceAbility`
-2. **Binding:** The attacker binds through `connectAbility()` and receives the
+2. **Binding:** The untrusted app connects to the service and receives the
    remote object
-3. **Proxy Use:** The attacker wraps the remote object using the generated
-   `NoteVaultServiceProxy`
-4. **Privilege Escalation:** The attacker calls privileged methods that should
-   have required higher trust
+3. **Invocation:** The generated IPC interface is used to call methods such as:
+   - `exportAllNotes`
+   - `deleteNote`
+   - `enableEmergencySync`
+4. **Privilege Escalation:** The service executes those requests without
+   verifying caller identity or permission
 5. **Impact:** Sensitive notes are exposed or modified, and privileged service
    state is changed without authorization
 
