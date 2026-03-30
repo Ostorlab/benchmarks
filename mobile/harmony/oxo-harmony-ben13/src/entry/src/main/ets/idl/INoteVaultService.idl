@@ -1,0 +1,5 @@
+interface INoteVaultService {
+  void exportAllNotes([out] String notesJson);
+  void deleteNote([in] String noteId, [out] boolean deleted);
+  void enableEmergencySync([in] boolean enabled, [out] boolean applied);
+}
