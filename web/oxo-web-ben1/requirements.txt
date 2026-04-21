@@ -4,5 +4,5 @@ Flask-Migrate==4.1.0
 SQLAlchemy==2.0.44
 alembic==1.17.1
 requests==2.33.0
-python-dotenv==1.0.0
+python-dotenv==1.2.2
 Werkzeug==3.1.6
