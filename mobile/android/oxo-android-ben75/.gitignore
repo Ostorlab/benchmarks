@@ -1,0 +1,26 @@
+# Android Studio / IntelliJ
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local SDK path (machine-specific)
+local.properties
+
+# Build outputs (except the pre-built APK in apks/)
+app/build/
+
+# Android captures
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Lint reports
+lint/
+
+# OS files
+.DS_Store
+Thumbs.db
