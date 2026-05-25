@@ -7,13 +7,50 @@
 
 ## Overview
 
-HeartConnect is a minimal dating application that demonstrates a critical privacy vulnerability: **location trilateration through high-precision distance broadcasts**. The app calculates exact Haversine distances between the current user and nearby matches, then broadcasts this data via **implicit broadcast intents** that any malicious application on the device can intercept.
+HeartConnect is a minimal dating application that demonstrates a critical privacy vulnerability: **location trilateration through high-precision distance broadcasts**. The app fetches match profiles (including exact coordinates) from a backend server, calculates Haversine distances client-side, and then broadcasts this data via **implicit broadcast intents** that any malicious application on the device can intercept.
 
-While the app never directly shares match coordinates, the **precise distances** (to 2 decimal places in meters) combined with the **reference point** (current user location) enable an attacker to solve for exact match locations using trilateration.
+While the app never directly shares match coordinates externally, the **precise distances** (to 2 decimal places in meters) combined with the **reference point** (current user location) enable an attacker to solve for exact match locations using trilateration.
+
+## Architecture
+
+```
+┌─────────────────┐     GET /profiles      ┌─────────────────┐
+│  FastAPI Server │  ───────────────────>  │   Android App   │
+│   (port 8000)   │  [{id, name, lat,     │  (HeartConnect) │
+│                 │    lon, ...}, ...]     │                 │
+└─────────────────┘                        └─────────────────┘
+                                                  │
+                                                  │ Haversine
+                                                  │ calculation
+                                                  │ (client-side)
+                                                  ▼
+                                        ┌─────────────────┐
+                                        │ Implicit Broadcast│
+                                        │  NEARBY_USERS_UPDATE
+                                        │  {reference_lat,
+                                        │   reference_lon,
+                                        │   user_1_distance_m:
+                                        │     1019.87}
+                                        └─────────────────┘
+                                                  │
+                                                  ▼
+                                        ┌─────────────────┐
+                                        │  Malicious App  │
+                                        │ (trilateration  │
+                                        │  attack)        │
+                                        └─────────────────┘
+```
 
 ## Vulnerability Description
 
-### Location Trilateration via Broadcast Intents
+### Data Flow: Server → App → Broadcast
+
+1. **Server provides raw coordinates**: `GET /profiles` returns match profiles with exact `latitude` and `longitude`
+2. **App calculates distances client-side**: Uses Haversine formula to compute distance from current user to each match
+3. **App broadcasts only distances**: Via implicit broadcast intent — match coordinates are **never included** in the broadcast
+4. **Attacker performs trilateration**: With 3 distance readings from known reference points, solves for exact match location
+
+### The Vulnerable Broadcast
 
 The application sends an implicit broadcast intent with action `co.ostorlab.ben75.NEARBY_USERS_UPDATE` containing:
 - `reference_lat` / `reference_lon`: The current user's GPS coordinates
@@ -31,7 +68,7 @@ val intent = Intent("co.ostorlab.ben75.NEARBY_USERS_UPDATE").apply {
         val distance = calculateHaversineDistance(match)
         putExtra("user_${index + 1}_id", match.id)
         putExtra("user_${index + 1}_name", match.name)
-        putExtra("user_${index + 1}_distance_m", distance) // e.g., 1245.67
+        putExtra("user_${index + 1}_distance_m", distance) // e.g., 1019.87
     }
 }
 // VULNERABLE: Implicit broadcast — any app can receive
@@ -39,8 +76,6 @@ sendBroadcast(intent)
 ```
 
 ### Why Trilateration Works
-
-Trilateration is the process of determining absolute or relative locations of points by measurement of distances, using the geometry of circles, spheres or triangles.
 
 Given:
 - 3 known reference points: `(lat₁, lon₁)`, `(lat₂, lon₂)`, `(lat₃, lon₃)`
@@ -52,10 +87,6 @@ The attacker's device is the reference point. By physically moving to 3 differen
 - Circle 3: center = `(lat₃, lon₃)`, radius = `d₃`
 
 The intersection of these three circles is the **exact location** of the victim.
-
-**Precision Impact:**
-- Distance rounded to **100m**: Trilateration becomes highly inaccurate (city-block level at best)
-- Distance precise to **2 decimal meters** (as in this app): Trilateration pinpoints location to within **a few meters**
 
 ### Temporal Tracking
 
@@ -69,23 +100,40 @@ The `timestamp_ms` field allows an attacker to:
 
 The application also logs all precise distances to the system logcat with a predictable tag (`HeartConnect`), making the data accessible to any app with `READ_LOGS` permission or ADB access.
 
-## Application Features
+## Backend Server
 
-### Core Functionality
-- **Nearby Matches List**: Displays 5 mock dating profiles with exact distances
-- **Refresh Button**: Recalculates distances and re-broadcasts the data
-- **Auto-broadcast**: Sends the vulnerable broadcast automatically on app launch
+The FastAPI backend provides match profiles with exact coordinates to the Android app.
+
+### Endpoints
+
+| Endpoint | Method | Returns |
+|----------|--------|---------|
+| `/profiles` | GET | List of all profiles with `id`, `name`, `age`, `bio`, `latitude`, `longitude` |
+| `/profiles/{id}` | GET | Single profile by ID |
+
+### Server Setup
+
+```bash
+cd backend/
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python run.py
+```
+
+The server will start on `http://0.0.0.0:8000`.
 
 ### Mock Data
-Current user location: **Times Square, NYC** (40.7580, -73.9855)
 
-| ID | Name | Age | Distance |
-|----|------|-----|----------|
-| user_001 | Sarah | 26 | ~1,020 m |
-| user_002 | Mike | 29 | ~380 m |
-| user_003 | Jessica | 24 | ~850 m |
-| user_004 | David | 31 | ~860 m |
-| user_005 | Emma | 27 | ~2,030 m |
+| ID | Name | Age | Coordinates |
+|----|------|-----|-------------|
+| user_001 | Sarah | 26 | 40.7489, -73.9680 |
+| user_002 | Mike | 29 | 40.7614, -73.9776 |
+| user_003 | Jessica | 24 | 40.7505, -73.9934 |
+| user_004 | David | 31 | 40.7656, -73.9782 |
+| user_005 | Emma | 27 | 40.7398, -73.9847 |
+
+Current user location: **Times Square, NYC** (40.7580, -73.9855)
 
 ## Building and Installation
 
@@ -93,18 +141,46 @@ Current user location: **Times Square, NYC** (40.7580, -73.9855)
 - Android Studio Arctic Fox or later
 - Android SDK 35
 - Gradle 8.0+
+- Python 3.9+ (for backend server)
 
-### Install from APK
+### 1. Start the Backend Server
+
 ```bash
-adb install apks/oxo-android-ben75.apk
+cd backend/
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python run.py
 ```
 
-### Build from Source
+The server will be available at `http://localhost:8000`.
+
+### 2. Build the Android App
+
 ```bash
 cd src/
 ./gradlew clean assembleDebug
 ```
+
 The APK will be located at `app/build/outputs/apk/debug/app-debug.apk`.
+
+### 3. Install the APK
+
+```bash
+adb install apks/oxo-android-ben75.apk
+```
+
+### 4. Configure for Physical Device (if needed)
+
+If testing on a physical device instead of the emulator, update the server URL in `UserRepository.kt`:
+
+```kotlin
+// Change from emulator localhost:
+private const val BASE_URL = "http://10.0.2.2:8000"
+
+// To your machine's actual IP:
+private const val BASE_URL = "http://192.168.1.100:8000"
+```
 
 ## Verification Commands
 
@@ -118,19 +194,28 @@ adb shell pm list packages | grep co.ostorlab.ben75
 adb shell am start -n co.ostorlab.ben75/.MainActivity
 ```
 
-### 1. Intercept the Broadcast Intent
+### 1. Verify Backend Server
+```bash
+# Test the API directly
+curl http://localhost:8000/profiles
+
+# Expected response includes raw coordinates:
+# [{"id":"user_001","name":"Sarah","age":26,"bio":"...","latitude":40.7489,"longitude":-73.9680}, ...]
+```
+
+### 2. Intercept the Broadcast Intent
 ```bash
 # Monitor logcat for broadcast data
 adb logcat -s HeartConnect:D
 
-# Expected output shows precise distances:
+# Expected output shows server-fetched profiles and precise distances:
+# HeartConnect: Fetched 5 profiles from server
+# HeartConnect: Profile from server: user_001 at (40.7489, -73.968)
 # HeartConnect: Reference: lat=40.758, lon=-73.9855, time=1716374400000
 # HeartConnect: Match user_001 (Sarah): 1019.87m away
-# HeartConnect: Match user_002 (Mike): 379.52m away
-# HeartConnect: Match user_003 (Jessica): 847.23m away
 ```
 
-### 2. Register a Malicious Broadcast Receiver
+### 3. Register a Malicious Broadcast Receiver
 ```bash
 # Create a simple test receiver app or use adb shell
 # The malicious app registers:
@@ -141,7 +226,7 @@ adb logcat -s HeartConnect:D
 # </receiver>
 ```
 
-### 3. Simulate the Trilateration Attack
+### 4. Simulate the Trilateration Attack
 ```bash
 # Step 1: Attacker at Location A (e.g., Times Square)
 # Broadcast shows: user_001 is 1019.87m away
@@ -159,7 +244,7 @@ adb logcat -s HeartConnect:D
 # Result: approximately (40.7489, -73.9680)
 ```
 
-### 4. Verify Predictable Broadcast Action
+### 5. Verify Predictable Broadcast Action
 ```bash
 # Search for the broadcast action string in the APK
 adb shell "run-as co.ostorlab.ben75 strings /data/app/~~*/co.ostorlab.ben75*/base.apk | grep NEARBY_USERS_UPDATE"
@@ -167,7 +252,7 @@ adb shell "run-as co.ostorlab.ben75 strings /data/app/~~*/co.ostorlab.ben75*/bas
 # Expected: co.ostorlab.ben75.NEARBY_USERS_UPDATE
 ```
 
-### 5. Verify High-Precision Distance in UI
+### 6. Verify High-Precision Distance in UI
 ```bash
 # Dump UI hierarchy to confirm precise distance display
 adb shell uiautomator dump /sdcard/window_dump.xml
@@ -179,31 +264,38 @@ adb pull /sdcard/window_dump.xml
 
 ### Vulnerable Code Patterns
 
+**Network Layer — Server Returns Raw Coordinates:**
+```python
+# backend/heartconnect/main.py
+@app.get("/profiles")
+async def get_profiles() -> list[UserProfile]:
+    return PROFILES  # Each profile includes exact lat/lon
+```
+
+**App Layer — Fetches Coordinates, Calculates Distance, Broadcasts:**
+```kotlin
+// UserRepository.kt
+fun fetchNearbyMatches(context: Context): List<UserProfile> {
+    // Fetches raw coordinates from server
+    val profiles: List<UserProfile> = gson.fromJson(body, listType)
+    return profiles
+}
+
+fun calculateDistance(match: UserProfile): Double {
+    // VULNERABLE: 2-decimal precision enables trilateration
+    return round(distanceMeters * 100.0) / 100.0
+}
+```
+
 **Broadcast Layer — Implicit Broadcast with Sensitive Data:**
 ```kotlin
 // MainActivity.kt
 val intent = Intent("co.ostorlab.ben75.NEARBY_USERS_UPDATE").apply {
     putExtra("reference_lat", currentLat)
     putExtra("reference_lon", currentLon)
-    putExtra("timestamp_ms", System.currentTimeMillis())
     putExtra("user_1_distance_m", 1019.87) // precise to 2 decimals
 }
-// No permission required, no receiver restriction
-sendBroadcast(intent)
-```
-
-**Distance Calculation — High Precision:**
-```kotlin
-// UserRepository.kt
-fun calculateDistance(match: UserProfile): Double {
-    val r = 6371000.0 // Earth radius in meters
-    val a = sin(deltaLat / 2).pow(2) +
-            cos(lat1Rad) * cos(lat2Rad) * sin(deltaLon / 2).pow(2)
-    val c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    val distanceMeters = r * c
-    // VULNERABLE: 2-decimal precision enables trilateration
-    return round(distanceMeters * 100.0) / 100.0
-}
+sendBroadcast(intent) // No permission required
 ```
 
 **Logging Layer — Distance Leakage to Logcat:**
@@ -236,9 +328,14 @@ To fix this privacy vulnerability:
 2. **Use explicit broadcasts**: Send broadcasts only to trusted components with `setPackage()`
 3. **Require permissions**: Define a custom permission for receiving location broadcasts
 4. **Remove log statements**: Never log precise distances to system logs
-5. **Server-side calculation**: Calculate distances on the server and return only coarse-grained results
+5. **Server-side distance calculation**: Calculate distances on the server and return only coarse-grained results
 6. **Opt-in consent**: Allow users to disable distance display entirely
 
 ## Notes
 
-This benchmark demonstrates that even "indirect" location data (distance only, no coordinates) can completely compromise user privacy when precision is too high. The vulnerability is subtle because the app never explicitly shares GPS coordinates — yet trilateration makes them recoverable. This is a classic example of how privacy vulnerabilities often arise from the **combination** of seemingly harmless data points rather than a single obvious leak.
+This benchmark demonstrates that even "indirect" location data (distance only, no coordinates) can completely compromise user privacy when precision is too high. The vulnerability is subtle because:
+- The server returns raw coordinates (normal for a dating app backend)
+- The app never explicitly shares GPS coordinates in the broadcast
+- Yet trilateration makes them recoverable from distance + reference point alone
+
+This is a classic example of how privacy vulnerabilities often arise from the **combination** of seemingly harmless data points (high-precision distance + known reference point) rather than a single obvious leak.

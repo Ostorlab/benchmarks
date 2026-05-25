@@ -21,6 +21,11 @@ captures/
 # Lint reports
 lint/
 
+# Python backend
+venv/
+__pycache__/
+*.pyc
+
 # OS files
 .DS_Store
 Thumbs.db

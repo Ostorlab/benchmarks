@@ -13,9 +13,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import co.ostorlab.ben75.data.UserProfile
 import co.ostorlab.ben75.data.UserRepository
 import co.ostorlab.ben75.ui.theme.HeartConnectTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
 
@@ -35,14 +39,11 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NearbyMatchesScreen(
-                        onRefresh = { broadcastNearbyUsers() }
+                        onRefresh = { matches -> broadcastNearbyUsers(matches) }
                     )
                 }
             }
         }
-
-        // VULNERABLE: Broadcast sent automatically on app launch
-        broadcastNearbyUsers()
     }
 
     /**
@@ -57,8 +58,7 @@ class MainActivity : ComponentActivity() {
      * from different reference points can solve for exact location via
      * trilateration.
      */
-    private fun broadcastNearbyUsers() {
-        val matches = UserRepository.getNearbyMatches()
+    fun broadcastNearbyUsers(matches: List<UserProfile>) {
         val currentLat = UserRepository.currentUserLat
         val currentLon = UserRepository.currentUserLon
         val timestamp = System.currentTimeMillis()
@@ -94,15 +94,32 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NearbyMatchesScreen(onRefresh: () -> Unit) {
-    var matches by remember { mutableStateOf<List<Pair<UserProfile, Double>>>(emptyList()) }
+fun NearbyMatchesScreen(onRefresh: (List<UserProfile>) -> Unit) {
+    var matches by remember { mutableStateOf<List<UserProfile>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var errorMessage by remember { mutableStateOf("") }
     var lastUpdated by remember { mutableStateOf(0L) }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val scope = rememberCoroutineScope()
 
+    // Load profiles from server on first composition
     LaunchedEffect(Unit) {
-        val repo = UserRepository
-        val list = repo.getNearbyMatches().map { it to repo.calculateDistance(it) }
-        matches = list
-        lastUpdated = System.currentTimeMillis()
+        scope.launch {
+            isLoading = true
+            errorMessage = ""
+            val fetched = withContext(Dispatchers.IO) {
+                UserRepository.fetchNearbyMatches(context)
+            }
+            if (fetched.isEmpty()) {
+                errorMessage = "Failed to load profiles from server.\nEnsure backend is running at http://10.0.2.2:8000"
+            } else {
+                matches = fetched
+                lastUpdated = System.currentTimeMillis()
+                // Auto-broadcast on successful load
+                (context as? MainActivity)?.broadcastNearbyUsers(fetched)
+            }
+            isLoading = false
+        }
     }
 
     Column(
@@ -124,16 +141,44 @@ fun NearbyMatchesScreen(onRefresh: () -> Unit) {
 
         Button(
             onClick = {
-                onRefresh()
-                val repo = UserRepository
-                matches = repo.getNearbyMatches().map { it to repo.calculateDistance(it) }
-                lastUpdated = System.currentTimeMillis()
+                scope.launch {
+                    isLoading = true
+                    errorMessage = ""
+                    val fetched = withContext(Dispatchers.IO) {
+                        UserRepository.fetchNearbyMatches(context)
+                    }
+                    if (fetched.isEmpty()) {
+                        errorMessage = "Failed to load profiles from server.\nEnsure backend is running at http://10.0.2.2:8000"
+                    } else {
+                        matches = fetched
+                        lastUpdated = System.currentTimeMillis()
+                        onRefresh(fetched)
+                    }
+                    isLoading = false
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         ) {
             Text("Refresh Location")
+        }
+
+        if (errorMessage.isNotEmpty()) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.errorContainer
+                )
+            ) {
+                Text(
+                    text = errorMessage,
+                    color = MaterialTheme.colorScheme.onErrorContainer,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
 
         if (lastUpdated > 0) {
@@ -145,11 +190,21 @@ fun NearbyMatchesScreen(onRefresh: () -> Unit) {
             )
         }
 
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(matches) { (profile, distance) ->
-                MatchCard(profile = profile, distanceMeters = distance)
+        if (isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else if (matches.isNotEmpty()) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(matches) { profile ->
+                    val distance = UserRepository.calculateDistance(profile)
+                    MatchCard(profile = profile, distanceMeters = distance)
+                }
             }
         }
     }

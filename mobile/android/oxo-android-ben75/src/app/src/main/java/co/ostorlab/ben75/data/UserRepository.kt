@@ -1,65 +1,77 @@
 package co.ostorlab.ben75.data
 
+import android.content.Context
+import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import kotlin.math.*
 
 object UserRepository {
 
+    private const val TAG = "HeartConnect"
+
+    /**
+     * Base URL for the HeartConnect backend server.
+     * 10.0.2.2 is the special IP for the host machine when running in Android Emulator.
+     * For a physical device, replace with the actual server IP (e.g., http://192.168.1.100:8000).
+     */
+    private const val BASE_URL = "http://10.0.2.2:8000"
+
     /**
      * Current user location: Times Square, NYC
-     * This is hardcoded for the benchmark demo.
+     * This is hardcoded locally for the benchmark demo.
      */
     val currentUserLat: Double = 40.7580
     val currentUserLon: Double = -73.9855
 
-    /**
-     * Mock nearby matches with hardcoded coordinates.
-     * These coordinates are NEVER broadcast externally.
-     * Only Haversine distance (in meters) is leaked via broadcast.
-     */
-    private val nearbyMatches = listOf(
-        UserProfile(
-            id = "user_001",
-            name = "Sarah",
-            age = 26,
-            bio = "Coffee lover & weekend hiker. Let's grab a latte!",
-            latitude = 40.7489,   // ~1.02 km south
-            longitude = -73.9680
-        ),
-        UserProfile(
-            id = "user_002",
-            name = "Mike",
-            age = 29,
-            bio = "Photography enthusiast. Always chasing golden hour.",
-            latitude = 40.7614,   // ~380 m north
-            longitude = -73.9776
-        ),
-        UserProfile(
-            id = "user_003",
-            name = "Jessica",
-            age = 24,
-            bio = "Yoga instructor. Looking for positive vibes only.",
-            latitude = 40.7505,   // ~850 m south-west
-            longitude = -73.9934
-        ),
-        UserProfile(
-            id = "user_004",
-            name = "David",
-            age = 31,
-            bio = "Foodie exploring NYC's best pizza spots.",
-            latitude = 40.7656,   // ~860 m north-east
-            longitude = -73.9782
-        ),
-        UserProfile(
-            id = "user_005",
-            name = "Emma",
-            age = 27,
-            bio = "Art gallery curator. Let's visit a museum together.",
-            latitude = 40.7398,   // ~2.03 km south
-            longitude = -73.9847
-        )
-    )
+    private val client = OkHttpClient()
+    private val gson = Gson()
 
-    fun getNearbyMatches(): List<UserProfile> = nearbyMatches
+    /**
+     * Fetches nearby match profiles from the backend server.
+     * The server returns raw coordinates (latitude, longitude) for each match.
+     *
+     * VULNERABLE DATA FLOW:
+     * 1. Server sends raw coordinates via HTTP API
+     * 2. App receives coordinates and calculates Haversine distance client-side
+     * 3. App broadcasts precise distances via implicit intent
+     * 4. Attacker intercepts broadcasts and performs trilateration
+     */
+    fun fetchNearbyMatches(context: Context): List<UserProfile> {
+        val request = Request.Builder()
+            .url("$BASE_URL/profiles")
+            .build()
+
+        return try {
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) {
+                    Log.e(TAG, "Failed to fetch profiles: ${response.code}")
+                    return emptyList()
+                }
+
+                val body = response.body?.string()
+                if (body.isNullOrEmpty()) {
+                    Log.e(TAG, "Empty response from server")
+                    return emptyList()
+                }
+
+                val listType = object : TypeToken<List<UserProfile>>() {}.type
+                val profiles: List<UserProfile> = gson.fromJson(body, listType)
+
+                Log.d(TAG, "Fetched ${profiles.size} profiles from server")
+                profiles.forEach { profile ->
+                    Log.d(TAG, "Profile from server: ${profile.id} at (${profile.latitude}, ${profile.longitude})")
+                }
+
+                profiles
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error fetching profiles from server", e)
+            emptyList()
+        }
+    }
 
     /**
      * Calculates Haversine distance between current user and a match.
