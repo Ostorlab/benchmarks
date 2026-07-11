@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: insecure-deserialization-benchmark
+    ports:
+      - "5005:5000"
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-production}
+      - PROFILE_STATE_HMAC_KEY=${PROFILE_STATE_HMAC_KEY:-benchmark-hmac-key}
+    restart: unless-stopped
+    networks:
+      - insecure-deserialization-network
+
+networks:
+  insecure-deserialization-network:
+    driver: bridge
